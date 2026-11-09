@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>读懂一张行情页 · 同花顺个股页逐字段拆解（SpaceX / SPCX）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4eee2;
+  --paper-2:#ebe3d2;
+  --ink:#1c1a17;
+  --ink-2:#4a453d;
+  --ink-3:#8a8273;
+  --rule:#cfc4ae;
+  --red:#c8261d;
+  --red-soft:#f3d6cf;
+  --green:#1f7a4a;
+  --green-soft:#d5e8da;
+  --gold:#d38a12;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB",sans-serif;
+  --mono:"IBM Plex Mono","SFMono-Regular",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{ /* paper grain */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .18 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 32px}
+.num{font-family:var(--mono);font-feature-settings:"tnum"}
+.up{color:var(--red)} .down{color:var(--green)}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:3px double var(--ink);padding:28px 0 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.masthead .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase}
+.masthead .meta{font-family:var(--mono);font-size:12px;color:var(--ink-3);text-align:right;line-height:1.6}
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:end;border-bottom:1px solid var(--rule)}
+.hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,6.6vw,92px);line-height:1.02;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--red);position:relative}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.12em;background:var(--red);opacity:.18}
+.hero .sub{font-family:var(--serif);font-size:20px;color:var(--ink-2);margin-top:20px;max-width:30em}
+.ticker{border:1.5px solid var(--ink);background:#fbf8f1;padding:20px 22px;box-shadow:8px 8px 0 var(--ink)}
+.ticker .row1{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed var(--rule);padding-bottom:10px}
+.ticker .name{font-family:var(--serif);font-weight:900;font-size:26px}
+.ticker .code{font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.ticker .px{font-family:var(--mono);font-size:54px;font-weight:600;color:var(--red);line-height:1.1;margin-top:10px}
+.ticker .chg{font-family:var(--mono);color:var(--red);font-size:18px}
+.ticker dl{display:grid;grid-template-columns:repeat(3,1fr);gap:6px 14px;margin-top:14px;font-size:13px}
+.ticker dt{color:var(--ink-3);font-size:12px}
+.ticker dd{font-family:var(--mono);font-weight:500}
+
+/* ---------- section titles ---------- */
+.sec{padding:72px 0 20px}
+.sec-head{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:start;margin-bottom:36px}
+.sec-no{font-family:var(--mono);font-size:64px;line-height:1;color:var(--red);font-weight:500}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:38px;line-height:1.2}
+.sec-head p{color:var(--ink-2);margin-top:8px;max-width:46em}
+
+/* ---------- annotated screenshot ---------- */
+.anatomy{display:grid;grid-template-columns:400px 1fr;gap:48px;align-items:start}
+.phone{position:sticky;top:20px;border:10px solid var(--ink);border-radius:38px;overflow:hidden;background:#000;box-shadow:0 30px 60px -20px rgba(40,30,10,.45)}
+.phone img{display:block;width:100%;height:auto}
+.phone .fallback{display:none;color:#fff;padding:40px 20px;font-size:13px;text-align:center}
+.pin{
+  position:absolute;transform:translate(-50%,-50%);
+  width:26px;height:26px;border-radius:50%;
+  background:var(--ink);color:#fff;border:2px solid #fff;
+  font:600 12px/22px var(--mono);text-align:center;text-decoration:none;
+  box-shadow:0 2px 8px rgba(0,0,0,.35);transition:transform .2s, background .2s;z-index:3;
+}
+.pin::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--gold);opacity:0;animation:ping 2.4s infinite}
+.pin:nth-child(odd)::after{animation-delay:1.2s}
+@keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+.pin:hover,.pin.on{background:var(--red);transform:translate(-50%,-50%) scale(1.25)}
+.phone-inner{position:relative}
+
+.legend{counter-reset:none}
+.legend h3{font-family:var(--serif);font-size:15px;color:var(--ink-3);letter-spacing:.1em;margin-bottom:10px}
+.idx{list-style:none;border-top:1.5px solid var(--ink)}
+.idx li{border-bottom:1px solid var(--rule)}
+.idx a{display:grid;grid-template-columns:40px 1fr auto;gap:12px;padding:11px 4px;color:inherit;text-decoration:none;align-items:baseline;transition:background .15s,padding .15s}
+.idx a:hover,.idx a.on{background:var(--paper-2);padding-left:12px}
+.idx .n{font-family:var(--mono);color:var(--red);font-weight:600}
+.idx .t{font-weight:700}
+.idx .t small{font-weight:400;color:var(--ink-3);margin-left:8px;font-size:13px}
+.idx .v{font-family:var(--mono);font-size:13px;color:var(--ink-2)}
+
+/* ---------- field cards ---------- */
+.field{display:grid;grid-template-columns:120px 1fr;gap:24px;padding:36px 0;border-top:1px solid var(--rule);scroll-margin-top:20px}
+.field:target{animation:flash 1.6s ease}
+@keyframes flash{0%{background:var(--red-soft)}100%{background:transparent}}
+.field .fno{font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.field .fno b{display:block;font-size:44px;color:var(--ink);font-weight:500;line-height:1}
+.field h3{font-family:var(--serif);font-size:28px;font-weight:900;line-height:1.25;margin-bottom:16px}
+.field h3 .tag{font-family:var(--mono);font-size:12px;font-weight:500;background:var(--ink);color:var(--paper);padding:2px 8px;vertical-align:middle;margin-left:10px;letter-spacing:.06em}
+table.def{width:100%;border-collapse:collapse;margin:6px 0 18px;font-size:15px}
+table.def th,table.def td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.def th{font-size:12px;letter-spacing:.12em;color:var(--ink-3);font-weight:500;border-bottom:1.5px solid var(--ink)}
+table.def td:first-child{font-weight:700;white-space:nowrap}
+table.def td.val{font-family:var(--mono);white-space:nowrap}
+.pm{
+  position:relative;background:#fffdf7;border-left:4px solid var(--red);
+  padding:16px 20px 16px 22px;margin-top:14px;font-size:15px;
+}
+.pm::before{content:"基金经理批注";position:absolute;top:-11px;left:14px;background:var(--red);color:#fff;font-size:11px;letter-spacing:.15em;padding:1px 8px}
+.pm p+p{margin-top:8px}
+.calc{font-family:var(--mono);font-size:13.5px;background:var(--ink);color:#efe7d6;padding:14px 18px;margin-top:14px;line-height:1.9;overflow-x:auto}
+.calc .c{color:#9b937f}
+.calc .h{color:#ffb15c}
+.warn{border:1.5px dashed var(--green);background:var(--green-soft);padding:12px 16px;margin-top:14px;font-size:14.5px}
+.warn b{color:var(--green)}
+
+/* ---------- range ruler ---------- */
+.ruler{background:#fbf8f1;border:1.5px solid var(--ink);padding:34px 28px 26px;margin-top:10px}
+.ruler svg{width:100%;height:auto;display:block}
+.ruler .cap{font-size:13px;color:var(--ink-3);margin-top:10px}
+
+/* ---------- synthesis ---------- */
+.verdict{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1.5px solid var(--ink)}
+.verdict > div{padding:24px 22px;border-right:1px solid var(--rule)}
+.verdict > div:last-child{border-right:0}
+.verdict h4{font-family:var(--serif);font-size:20px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.verdict h4 i{font-style:normal;font-family:var(--mono);font-size:11px;padding:2px 7px;color:#fff}
+.verdict .pos i{background:var(--red)} .verdict .neu i{background:var(--gold)} .verdict .neg i{background:var(--green)}
+.verdict ul{list-style:none;font-size:14.5px}
+.verdict li{padding:8px 0;border-top:1px dotted var(--rule)}
+.verdict li:first-child{border-top:0}
+
+/* ---------- checklist ---------- */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:s}
+.step{background:#fbf8f1;border:1.5px solid var(--ink);padding:18px 16px 20px;position:relative;counter-increment:s;transition:transform .2s, box-shadow .2s}
+.step:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--red)}
+.step::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:30px;color:var(--red);display:block;line-height:1;margin-bottom:10px}
+.step h5{font-family:var(--serif);font-size:18px;margin-bottom:6px}
+.step p{font-size:14px;color:var(--ink-2);line-height:1.7}
+.step .q{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:8px;border-top:1px dashed var(--rule);padding-top:6px}
+
+.myths{columns:2;column-gap:40px;margin-top:10px}
+.myth{break-inside:avoid;padding:16px 0;border-top:1px solid var(--rule)}
+.myth h5{font-family:var(--serif);font-size:18px;margin-bottom:4px}
+.myth h5 s{color:var(--ink-3);text-decoration-color:var(--red);text-decoration-thickness:2px}
+.myth p{font-size:14.5px;color:var(--ink-2)}
+
+footer{margin-top:80px;border-top:3px double var(--ink);padding:24px 0 60px;font-size:13px;color:var(--ink-3);line-height:1.8}
+
+/* ---------- motion ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.hero > *{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.hero > *:nth-child(2){animation-delay:.18s}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+@media (max-width:1000px){
+  .hero,.anatomy{grid-template-columns:1fr}
+  .phone{position:relative;max-width:380px;margin:0 auto}
+  .steps{grid-template-columns:1fr 1fr}
+  .verdict{grid-template-columns:1fr}
+  .verdict > div{border-right:0;border-bottom:1px solid var(--rule)}
+  .myths{columns:1}
+  .field,.sec-head{grid-template-columns:1fr;gap:8px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div>
+    <div class="kicker">投资者教育 · 看盘基本功 · 第 01 讲</div>
+  </div>
+  <div class="meta">案例：同花顺 App 美股个股页<br>标的：SpaceX（SPCX.US） · 交易日收盘后截图</div>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>读懂一张<br><em>行情页</em>，<br>比追一条消息值钱。</h1>
+    <p class="sub">以一位券商基金经理的视角，把同花顺个股页上的每一个数字拆开讲：它是什么、怎么算、以及普通投资者该怎么用它，而不是被它牵着走。</p>
+  </div>
+  <aside class="ticker" aria-label="截图核心数据">
+    <div class="row1"><span class="name">SpaceX</span><span class="code">SPCX · US · 美元</span></div>
+    <div class="px num">134.270</div>
+    <div class="chg num">+10.650 &nbsp; +8.62%</div>
+    <dl>
+      <div><dt>开盘</dt><dd>130.940</dd></div>
+      <div><dt>最高</dt><dd class="up">135.320</dd></div>
+      <div><dt>最低</dt><dd>128.570</dd></div>
+      <div><dt>昨收</dt><dd>123.620</dd></div>
+      <div><dt>成交额</dt><dd>152.73亿</dd></div>
+      <div><dt>换手率</dt><dd>2.69%</dd></div>
+      <div><dt>量比</dt><dd>0.97</dd></div>
+      <div><dt>市值</dt><dd>1.82万亿</dd></div>
+      <div><dt>盘后</dt><dd class="up">135.639</dd></div>
+    </dl>
+  </aside>
+</section>
+
+<!-- ================= 01 地图 ================= -->
+<section class="sec reveal">
+  <div class="sec-head">
+    <div class="sec-no">01</div>
+    <div>
+      <h2>先看地图：这张页面有 16 个信息区</h2>
+      <p>点截图上的编号或右侧目录，直接跳到对应讲解。从上到下的顺序，大致就是专业人士看盘的顺序：<b>它是谁 → 今天涨跌多少 → 怎么走出来的 → 有多少钱参与 → 为什么。</b></p>
+    </div>
+  </div>
+
+  <div class="anatomy">
+    <div class="phone">
+      <div class="phone-inner" id="phoneInner">
+        <img src="同花顺.png" alt="同花顺 SpaceX 个股页截图" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <div class="fallback">截图文件「同花顺.png」需与本 HTML 放在同一目录才能显示。</div>
+        <a class="pin" data-k="1"  href="#f1"  style="left:50%;top:8.6%">1</a>
+        <a class="pin" data-k="2"  href="#f2"  style="left:14%;top:15.6%">2</a>
+        <a class="pin" data-k="3"  href="#f3"  style="left:39%;top:15.6%">3</a>
+        <a class="pin" data-k="4"  href="#f4"  style="left:63%;top:15.6%">4</a>
+        <a class="pin" data-k="5"  href="#f5"  style="left:86%;top:15.6%">5</a>
+        <a class="pin" data-k="6"  href="#f6"  style="left:31%;top:20.9%">6</a>
+        <a class="pin" data-k="7"  href="#f7"  style="left:58%;top:24.4%">7</a>
+        <a class="pin" data-k="8"  href="#f8"  style="left:44%;top:29%">8</a>
+        <a class="pin" data-k="9"  href="#f9"  style="left:68%;top:32.2%">9</a>
+        <a class="pin" data-k="10" href="#f10" style="left:36%;top:45%">10</a>
+        <a class="pin" data-k="11" href="#f11" style="left:30%;top:38.5%">11</a>
+        <a class="pin" data-k="12" href="#f12" style="left:86%;top:38.5%">12</a>
+        <a class="pin" data-k="13" href="#f13" style="left:85%;top:62%">13</a>
+        <a class="pin" data-k="14" href="#f14" style="left:36%;top:74%">14</a>
+        <a class="pin" data-k="15" href="#f15" style="left:50%;top:88.6%">15</a>
+        <a class="pin" data-k="16" href="#f16" style="left:9%;top:95.6%">16</a>
+      </div>
+    </div>
+
+    <div class="legend">
+      <h3>目录 · INDEX</h3>
+      <ul class="idx">
+        <li><a data-k="1"  href="#f1"><span class="n">01</span><span class="t">标题栏<small>名称 / 代码 / 市场标签</small></span><span class="v">SPCX US 空 L1</span></a></li>
+        <li><a data-k="2"  href="#f2"><span class="n">02</span><span class="t">现价与涨跌<small>最重要的三个数</small></span><span class="v">134.270 +8.62%</span></a></li>
+        <li><a data-k="3"  href="#f3"><span class="n">03</span><span class="t">高 / 低 / 开<small>当日价格区间</small></span><span class="v">135.32 / 128.57 / 130.94</span></a></li>
+        <li><a data-k="4"  href="#f4"><span class="n">04</span><span class="t">昨收 / 市值 / 市盈TTM<small>基准与估值</small></span><span class="v">123.62 / 1.82万亿 / 亏损</span></a></li>
+        <li><a data-k="5"  href="#f5"><span class="n">05</span><span class="t">量比 / 换手 / 成交额<small>人气与资金</small></span><span class="v">0.97 / 2.69% / 152.73亿</span></a></li>
+        <li><a data-k="6"  href="#f6"><span class="n">06</span><span class="t">盘后<small>收盘之后的延长交易</small></span><span class="v">135.639 +1.02%</span></a></li>
+        <li><a data-k="7"  href="#f7"><span class="n">07</span><span class="t">同花顺速递 · 异动解读<small>新闻归因</small></span><span class="v">AI反弹+马斯克</span></a></li>
+        <li><a data-k="8"  href="#f8"><span class="n">08</span><span class="t">周期切换栏<small>盘中 / 日K / 周K…</small></span><span class="v">—</span></a></li>
+        <li><a data-k="9"  href="#f9"><span class="n">09</span><span class="t">均价 / 最新 读数行<small>分时图抬头</small></span><span class="v">均价 132.438</span></a></li>
+        <li><a data-k="10" href="#f10"><span class="n">10</span><span class="t">分时走势图与坐标轴<small>白线 / 0轴 / ±9.46%</small></span><span class="v">22:30–05:00</span></a></li>
+        <li><a data-k="11" href="#f11"><span class="n">11</span><span class="t">黄色均价线<small>机构最在意的一条线</small></span><span class="v">VWAP</span></a></li>
+        <li><a data-k="12" href="#f12"><span class="n">12</span><span class="t">盘口 卖1 / 买1<small>挂单</small></span><span class="v">-- / --</span></a></li>
+        <li><a data-k="13" href="#f13"><span class="n">13</span><span class="t">成交明细<small>逐笔成交</small></span><span class="v">05:00 404.32万</span></a></li>
+        <li><a data-k="14" href="#f14"><span class="n">14</span><span class="t">分时量柱<small>每分钟成交量</small></span><span class="v">量 410.86万</span></a></li>
+        <li><a data-k="15" href="#f15"><span class="n">15</span><span class="t">资讯 / F10 / 诊股 / 财务 / 盘口<small>深度信息入口</small></span><span class="v">—</span></a></li>
+        <li><a data-k="16" href="#f16"><span class="n">16</span><span class="t">底部指数条<small>大盘参照</small></span><span class="v">道指 −0.46%</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 逐字段 ================= -->
+<section class="sec">
+  <div class="sec-head reveal">
+    <div class="sec-no">02</div>
+    <div>
+      <h2>逐字段拆解</h2>
+      <p>每个字段都按「定义 → 本例数值 → 怎么看」来讲。黑底框里是我亲手验算的过程——养成验算的习惯，你会发现很多「看不懂」其实只是没算过。</p>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <article class="field reveal" id="f1">
+    <div class="fno">FIELD<b>01</b></div>
+    <div>
+      <h3>标题栏：它是谁、在哪交易<span class="tag">IDENTITY</span></h3>
+      <table class="def">
+        <tr><th>元素</th><th>本例</th><th>含义</th></tr>
+        <tr><td>证券名称</td><td class="val">SpaceX</td><td>公司简称。左右两个三角箭头 ◀ ▶ 用于在自选股列表中切换上一只 / 下一只。</td></tr>
+        <tr><td>交易代码</td><td class="val">SPCX</td><td>美股用英文字母做代码（Ticker），下单、搜索都以它为准。<b>同名、近似代码的股票很多，下单前一定核对代码。</b></td></tr>
+        <tr><td>US</td><td class="val">US</td><td>市场标识：美股。意味着以<b>美元</b>计价、T+0、无涨跌停板、交易时间与 A 股完全不同。</td></tr>
+        <tr><td>空</td><td class="val">空</td><td>该股支持<b>卖空（做空）</b>。即可以先借股卖出、日后再买回。它提醒你：这只股票上既有看多的钱，也有看空的钱。</td></tr>
+        <tr><td>L1-标</td><td class="val">L1-标</td><td>行情权限等级：Level-1 标准行情。只能看到最优一档买卖价和逐笔成交的基础信息；Level-2 才能看到更深的挂单队列。对普通投资者而言 L1 已够用。</td></tr>
+        <tr><td>右上图标</td><td class="val">🤖 / 🔍</td><td>机器人是 AI 问答助手，放大镜是搜索。</td></tr>
+      </table>
+      <div class="pm">
+        <p>第一步永远是「确认身份」。美股里同一家公司可能有多类股份（A 类 / B 类）、有 ADR、还有名字蹭热点的小公司。热门新股上市初期，<b>买错代码</b>是散户最常见、也最冤的亏损来源之一。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="field reveal" id="f2">
+    <div class="fno">FIELD<b>02</b></div>
+    <div>
+      <h3>现价与涨跌：134.270 · +10.650 · +8.62%<span class="tag">PRICE</span></h3>
+      <table class="def">
+        <tr><th>字段</th><th>本例</th><th>含义</th></tr>
+        <tr><td>最新价（大字）</td><td class="val up">134.270</td><td>最近一笔成交的价格。截图在收盘后，所以这就是<b>当日常规交易时段收盘价</b>。</td></tr>
+        <tr><td>涨跌额</td><td class="val up">+10.650</td><td>最新价 − 昨收。单位：美元/股。</td></tr>
+        <tr><td>涨跌幅</td><td class="val up">+8.62%</td><td>涨跌额 ÷ 昨收。</td></tr>
+      </table>
+      <div class="calc">
+<span class="c"># 验算</span><br>
+134.270 − 123.620 = <span class="h">10.650</span><br>
+10.650 ÷ 123.620 = 0.08615 ≈ <span class="h">8.62%</span>（分时图抬头显示更精确的 8.615%）
+      </div>
+      <div class="warn"><b>颜色提醒：</b>同花顺沿用中国习惯——<b class="up" style="color:var(--red)">红涨绿跌</b>。而美国本土软件（如券商官方 App、Yahoo Finance）是绿涨红跌。两边切换看盘时千万别看反。</div>
+      <div class="pm">
+        <p>单日 +8.6% 对一只市值上万亿的公司是非常大的波动——同级别的老牌巨头一年也就几次这样的日子。这说明它仍处于<b>高波动、强叙事驱动</b>阶段。买入前问自己：如果明天反向跌 8%，我睡得着吗？</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="field reveal" id="f3">
+    <div class="fno">FIELD<b>03</b></div>
+    <div>
+      <h3>高 / 低 / 开：一天的价格边界<span class="tag">RANGE</span></h3>
+      <table class="def">
+        <tr><th>字段</th><th>本例</th><th>含义</th></tr>
+        <tr><td>高（最高价）</td><td class="val up">135.320</td><td>常规交易时段内的最高成交价。</td></tr>
+        <tr><td>低（最低价）</td><td class="val up">128.570</td><td>常规时段内的最低成交价。注意它仍是红色——因为高于昨收，全天任何时刻都是上涨状态。</td></tr>
+        <tr><td>开（开盘价）</td><td class="val up">130.940</td><td>美东 9:30 开盘集合竞价产生的第一个价格。</td></tr>
+      </table>
+
+      <div class="ruler" aria-label="当日价格标尺">
+        <svg viewBox="0 0 900 150" role="img" aria-label="昨收、最低、开盘、均价、收盘、最高、盘后在价格标尺上的位置">
+          <!-- scale 123 → 136 : x = 40 + (p-123)*63.08 -->
+          <line x1="40" y1="80" x2="860" y2="80" stroke="#1c1a17" stroke-width="1.5"/>
+          <!-- gap zone -->
+          <rect x="79" y="70" width="312" height="20" fill="#f3d6cf"/>
+          <text x="235" y="62" text-anchor="middle" font-family="Noto Sans SC" font-size="12" fill="#c8261d">跳空区（昨收→今日最低，全天未回补）</text>
+          <!-- today's range -->
+          <rect x="391" y="72" width="426" height="16" fill="#c8261d" opacity=".85"/>
+          <g font-family="IBM Plex Mono" font-size="12" fill="#1c1a17">
+            <line x1="79" y1="66" x2="79" y2="96" stroke="#1c1a17" stroke-dasharray="3 3"/>
+            <text x="79" y="114" text-anchor="middle">昨收</text><text x="79" y="130" text-anchor="middle">123.62</text>
+            <line x1="391" y1="88" x2="391" y2="100" stroke="#1c1a17"/>
+            <text x="391" y="114" text-anchor="middle" fill="#1f7a4a">低</text><text x="391" y="130" text-anchor="middle">128.57</text>
+            <line x1="541" y1="72" x2="541" y2="40" stroke="#1c1a17"/>
+            <text x="541" y="34" text-anchor="middle">开 130.94</text>
+            <line x1="635" y1="88" x2="635" y2="100" stroke="#d38a12" stroke-width="2"/>
+            <text x="635" y="114" text-anchor="middle" fill="#b57208">均价</text><text x="635" y="130" text-anchor="middle">132.44</text>
+            <line x1="751" y1="72" x2="751" y2="40" stroke="#1c1a17" stroke-width="2"/>
+            <text x="740" y="34" text-anchor="middle" font-weight="600" fill="#c8261d">收 134.27</text>
+            <line x1="817" y1="88" x2="817" y2="100" stroke="#1c1a17"/>
+            <text x="817" y="114" text-anchor="middle" fill="#c8261d">高</text><text x="817" y="130" text-anchor="middle">135.32</text>
+            <circle cx="837" cy="80" r="6" fill="#fbf8f1" stroke="#c8261d" stroke-width="2"/>
+            <text x="852" y="34" text-anchor="middle" fill="#c8261d">盘后 135.64</text>
+            <line x1="837" y1="74" x2="837" y2="40" stroke="#c8261d" stroke-dasharray="2 2"/>
+          </g>
+        </svg>
+        <div class="cap">价格标尺（按比例绘制）。红色实条 = 当日常规时段成交区间；粉色 = 跳空缺口。</div>
+      </div>
+
+      <div class="calc">
+<span class="c"># 三个衍生指标，同花顺不直接显示，但值得心算</span><br>
+高开幅度 = (130.94 − 123.62) ÷ 123.62 = <span class="h">+5.92%</span>   <span class="c">← 开盘就跳空高开近 6%</span><br>
+振幅     = (135.32 − 128.57) ÷ 123.62 = <span class="h">5.46%</span>    <span class="c">← 日内最高最低差</span><br>
+收盘位置 = (134.27 − 128.57) ÷ (135.32 − 128.57) = <span class="h">84%</span> <span class="c">← 收在全天区间的上 1/6</span>
+      </div>
+      <div class="pm">
+        <p><b>这三个数连起来就是一个故事：</b>消息驱动下大幅高开 → 开盘后有获利盘砸出，一度跌到 128.57（低于开盘价） → 但没有回补跳空缺口 → 下午持续走强，收在接近最高点。</p>
+        <p>「收在高位」通常说明买方力量坚持到了最后，比「冲高回落」健康得多；而「缺口未补」是短线强势的标志，但缺口也常在之后几天被回补，是短线投资者的潜在回撤目标位。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="field reveal" id="f4">
+    <div class="fno">FIELD<b>04</b></div>
+    <div>
+      <h3>昨收 · 市值 · 市盈 TTM<span class="tag">VALUATION</span></h3>
+      <table class="def">
+        <tr><th>字段</th><th>本例</th><th>含义</th></tr>
+        <tr><td>昨收</td><td class="val">123.620</td><td>上一交易日常规时段的收盘价，是今天所有涨跌幅的计算基准，也是分时图中间那条虚线（0.00%）。</td></tr>
+        <tr><td>市值</td><td class="val">1.82万亿</td><td>总市值 = 现价 × 总股本。美股页面一般以美元计。它衡量「市场给整家公司标的价钱」。</td></tr>
+        <tr><td>市盈 TTM</td><td class="val">亏损</td><td>市盈率 = 市值 ÷ 最近 12 个月（Trailing Twelve Months）净利润。公司过去 12 个月净利润为负，市盈率没有意义，故显示「亏损」。</td></tr>
+      </table>
+      <div class="calc">
+<span class="c"># 由市值反推总股本</span><br>
+1.82万亿 ÷ 134.27 ≈ <span class="h">135.5 亿股</span><br>
+<span class="c"># 市值单日变化</span><br>
+135.5亿股 × 10.65 ≈ <span class="h">1,440 亿美元</span>  <span class="c">← 一天涨出一家大型上市公司的市值</span>
+      </div>
+      <div class="pm">
+        <p><b>「亏损」两个字是这页上最该停下来想的地方。</b>没有利润，就没有市盈率这把尺子，股价完全由「未来故事」定价——星链用户增长、发射业务、星舰进度、外加创始人的公开表态。</p>
+        <p>这类公司更适合用 <b>市销率（市值 ÷ 营收）</b>、营收增速、现金流、关键业务里程碑来跟踪，去「财务」和「简况（F10）」标签里找。估值对叙事极其敏感：好消息能一天涨 8%，里程碑延误也能一天跌掉同样多。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="field reveal" id="f5">
+    <div class="fno">FIELD<b>05</b></div>
+    <div>
+      <h3>量比 · 换手 · 成交额：今天有多少人、多少钱<span class="tag">ACTIVITY</span></h3>
+      <table class="def">
+        <tr><th>字段</th><th>本例</th><th>含义</th></tr>
+        <tr><td>量比</td><td class="val">0.97</td><td>今日每分钟平均成交量 ÷ 过去 5 个交易日每分钟平均成交量。<br>&lt;0.8 偏冷清；0.8–1.5 正常；1.5–2.5 温和放量；&gt;3 明显放量（通常有事件）。</td></tr>
+        <tr><td>换手（换手率）</td><td class="val">2.69%</td><td>今日成交股数 ÷ 流通股本。代表今天有多大比例的可交易股份换了主人。</td></tr>
+        <tr><td>额（成交额）</td><td class="val">152.73亿</td><td>今日成交的总金额（美元）。比成交量更能横向比较不同股价的股票。</td></tr>
+      </table>
+      <div class="calc">
+<span class="c"># 用成交额和均价反推成交量，再用换手率反推流通股</span><br>
+成交量 ≈ 152.73亿 ÷ 132.438 ≈ <span class="h">1.15 亿股</span><br>
+流通股 ≈ 1.15亿 ÷ 2.69% ≈ <span class="h">42.9 亿股</span><br>
+流通比例 ≈ 42.9 ÷ 135.5 ≈ <span class="h">32%</span>  <span class="c">← 约 2/3 股份暂不在市场上流通（估算）</span>
+      </div>
+      <div class="pm">
+        <p><b>量比 0.97 是这张图里最「反直觉」的数字。</b>涨了 8.6%，成交量却和过去 5 天的平均水平差不多。两种解读：一是前几天本来就很活跃（新股 / 热门股常态如此），今天只是维持高热度；二是这次上涨更多靠「卖盘惜售」而非「买盘蜂拥」。</p>
+        <p>经验法则：<b>放量突破更可信，缩量上涨要观察持续性</b>。明天若继续上涨且量比放大，趋势更扎实；若高开低走且放量，则要提防今天是「消息兑现」。</p>
+        <p>流通比例只有约三成意味着：未来若有大批限售股解禁，供给会显著增加，这是此类股票的中期风险点，可在 F10 中查询解禁时间表。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="field reveal" id="f6">
+    <div class="fno">FIELD<b>06</b></div>
+    <div>
+      <h3>盘后：135.639 · +1.369 · +1.02%<span class="tag">AFTER-HOURS</span></h3>
+      <table class="def">
+        <tr><th>元素</th><th>本例</th><th>含义</th></tr>
+        <tr><td>盘后价</td><td class="val up">135.639</td><td>美股收盘（16:00）后到 20:00 的延长交易时段里的最新成交价。</td></tr>
+        <tr><td>盘后涨跌</td><td class="val up">+1.369 / +1.02%</td><td>注意基准是<b>今日收盘价 134.270</b>，不是昨收。</td></tr>
+        <tr><td>20:00 美东时间</td><td class="val">20:00 ET</td><td>盘后交易已于美东 20:00 结束，此价为最终盘后价。</td></tr>
+      </table>
+      <div class="calc">
+135.639 − 134.270 = <span class="h">1.369</span>；1.369 ÷ 134.270 = <span class="h">1.02%</span>
+      </div>
+      <div class="pm">
+        <p>美股一天分为：<b>盘前</b>（04:00–09:30 ET）、<b>常规</b>（09:30–16:00）、<b>盘后</b>（16:00–20:00）。盘后继续小涨，说明利好情绪没有在收盘后立刻消散。</p>
+        <p>但盘前盘后<b>成交稀薄、买卖价差大、波动被放大</b>，参考价值低于常规时段。散户尽量别在盘后用市价单追单。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="field reveal" id="f7">
+    <div class="fno">FIELD<b>07</b></div>
+    <div>
+      <h3>同花顺速递 ·「异动解读」<span class="tag">NEWS</span></h3>
+      <p>本例：<b>「AI 板块反弹 + 马斯克惊人目标」</b>。当个股涨跌幅、成交量超过阈值时，平台自动推送一条归因解释，点开可看全文。</p>
+      <div class="pm">
+        <p>把它当作<b>「线索」，不要当作「结论」</b>。异动解读是事后归因：先有价格，再找理由。同一天的同一条消息，可以被用来解释上涨，也可以在第二天被用来解释回落。</p>
+        <p>正确用法：看完后问三个问题——① 这个消息改变了公司未来的收入或利润吗？② 是一次性情绪，还是会持续发酵？③ 价格已经涨了 8.6%，有多少已经被「定价」了？「CEO 的惊人目标」属于愿景型信息，兑现周期长、不确定性高。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="field reveal" id="f8">
+    <div class="fno">FIELD<b>08</b></div>
+    <div>
+      <h3>周期切换：盘中 / 日K / 周K / 月K / 五日 / 更多<span class="tag">TIMEFRAME</span></h3>
+      <table class="def">
+        <tr><th>选项</th><th>看什么</th><th>适合谁</th></tr>
+        <tr><td>盘中（分时）</td><td>当天每分钟的价格轨迹，即当前页面</td><td>短线、观察当日强弱</td></tr>
+        <tr><td>五日</td><td>最近 5 个交易日的分时连在一起</td><td>判断今天的放量 / 缩量是否异常</td></tr>
+        <tr><td>日K</td><td>每根 K 线 = 一天的开高低收</td><td>判断趋势、支撑压力</td></tr>
+        <tr><td>周K / 月K</td><td>更长周期，过滤日内噪音</td><td>中长线投资者首选</td></tr>
+        <tr><td>更多 ▾</td><td>1 / 5 / 15 / 30 / 60 分钟 K、季K、年K 等</td><td>按需</td></tr>
+        <tr><td>⚙ 设置</td><td>切换指标（MACD、KDJ、成交量等）、复权方式</td><td>—</td></tr>
+      </table>
+      <div class="pm"><p>一个好习惯：<b>看完分时一定切到日 K 和周 K</b>。今天 +8.6% 放在一年走势里，可能是突破新高，也可能只是大跌后的反弹——意义完全不同。</p></div>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="field reveal" id="f9">
+    <div class="fno">FIELD<b>09</b></div>
+    <div>
+      <h3>分时图抬头：均价 132.438 · 最新 134.270 · 10.650 · 8.615%<span class="tag">READOUT</span></h3>
+      <p>手指在分时图上长按滑动时，这一行会显示<b>光标所在那一分钟</b>的均价、价格、涨跌额、涨跌幅；不触摸时显示最新数据。涨跌幅在这里精确到小数点后三位。</p>
+    </div>
+  </article>
+
+  <!-- 10 -->
+  <article class="field reveal" id="f10">
+    <div class="fno">FIELD<b>10</b></div>
+    <div>
+      <h3>分时走势图与坐标轴<span class="tag">INTRADAY</span></h3>
+      <table class="def">
+        <tr><th>元素</th><th>本例</th><th>含义</th></tr>
+        <tr><td>白 / 黑色折线</td><td class="val">—</td><td>每分钟最后一笔成交价连成的价格线。</td></tr>
+        <tr><td>中间虚线</td><td class="val">123.620 · 0.00%</td><td>昨收基准线。线上方 = 上涨，下方 = 下跌。</td></tr>
+        <tr><td>上下边界</td><td class="val">135.320 / 111.920<br>+9.46% / −9.46%</td><td>纵轴按「当日偏离昨收最大的幅度」对称设置，所以上沿正好是最高价，下沿是镜像值，<b>111.920 并非真实成交价</b>。</td></tr>
+        <tr><td>横轴</td><td class="val">22:30 — 05:00</td><td>北京时间。11 月美国已切回冬令时，美东 9:30–16:00 = 北京 22:30–次日 05:00（夏令时为 21:30–04:00）。</td></tr>
+      </table>
+      <div class="calc">
+135.320 ÷ 123.620 − 1 = <span class="h">9.46%</span><br>
+123.620 × (1 − 9.46%) = <span class="h">111.92</span>  <span class="c">← 纯粹为了图形对称</span>
+      </div>
+      <div class="pm">
+        <p>本例走势分三段：<b>① 开盘急跌后反抽</b>（22:30 刚开盘有一根向下的尖刺，即最低价出现的位置）→ <b>② 前半场围绕均价线横盘震荡</b> → <b>③ 后半场稳步上台阶</b>，最后一小时在高位横盘、没有跳水。机构资金通常在尾盘调仓，尾盘不跌是一个积极信号。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 11 -->
+  <article class="field reveal" id="f11">
+    <div class="fno">FIELD<b>11</b></div>
+    <div>
+      <h3>黄色均价线：今天所有买家的平均成本<span class="tag">VWAP</span></h3>
+      <p>均价 = 截至当前的累计成交额 ÷ 累计成交量，也就是专业交易员说的 <b>VWAP（成交量加权平均价）</b>。收盘时它是 <span class="num">132.438</span>。</p>
+      <div class="pm">
+        <p><b>这是我每天必看的一条线。</b>机构执行大单时，常以「成交均价不差于 VWAP」作为考核标准。</p>
+        <p>价格在均价线<b>之上</b>：今天买入的人整体是赚钱的，买方占优；<b>之下</b>：今天进场的人整体被套，抛压会更大。本例下午起价格始终在均价线上方，且均价线本身缓慢上翘——这是典型的<b>「日内强势」</b>形态。收盘价比均价高 1.4%，当天进场的人平均浮盈。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 12 -->
+  <article class="field reveal" id="f12">
+    <div class="fno">FIELD<b>12</b></div>
+    <div>
+      <h3>盘口：卖 1 / 买 1<span class="tag">ORDER BOOK</span></h3>
+      <p>「卖 1」是当前挂单中<b>最低的卖出价及数量</b>，「买 1」是<b>最高的买入价及数量</b>。两者之差叫<b>买卖价差（Spread）</b>，价差越小流动性越好。本例显示「--」，因为截图时所有交易时段已结束，挂单簿已清空。</p>
+      <div class="pm"><p>交易时间内，大盘股的价差通常只有 1 美分左右；如果你看到价差很大（比如盘前盘后），用<b>限价单</b>而不是市价单，否则可能以远差于预期的价格成交。</p></div>
+    </div>
+  </article>
+
+  <!-- 13 -->
+  <article class="field reveal" id="f13">
+    <div class="fno">FIELD<b>13</b></div>
+    <div>
+      <h3>成交明细：每一笔真实成交<span class="tag">TAPE</span></h3>
+      <table class="def">
+        <tr><th>列</th><th>示例</th><th>含义</th></tr>
+        <tr><td>时间</td><td class="val">04:59</td><td>北京时间，即美东 15:59，收盘前最后一分钟。</td></tr>
+        <tr><td>价格</td><td class="val up">134.240</td><td>成交价。红色 = 高于昨收。</td></tr>
+        <tr><td>数量</td><td class="val">394 / 18346</td><td>成交股数（美股单位是「股」，不是 A 股的「手」）。<b>红色数字 = 主动买入</b>（按卖价成交，外盘），<b>绿色 = 主动卖出</b>（按买价成交，内盘）。</td></tr>
+        <tr><td>最后一行</td><td class="val">05:00 134.270 404.32万</td><td><b>收盘集合竞价（Closing Cross）</b>：一笔成交 404 万股，约合 5.4 亿美元，确定了官方收盘价 134.270。</td></tr>
+        <tr><td>明细 / 成交</td><td class="val">tab</td><td>「明细」是逐笔列表；「成交」通常是按价格统计的分价成交量。</td></tr>
+      </table>
+      <div class="calc">
+404.32万股 × 134.27 ≈ <span class="h">5.43 亿美元</span><br>
+占全天成交量 ≈ 404万 ÷ 1.15亿 ≈ <span class="h">3.5%</span>，集中在一瞬间完成
+      </div>
+      <div class="pm">
+        <p>收盘竞价的巨量主要来自<b>指数基金、ETF 和机构</b>——它们必须以收盘价调仓。这不代表「主力抢筹」，是美股的日常结构。</p>
+        <p>注意 04:59 那一分钟大部分万股级成交是<b>绿色</b>（主动卖出），且价格从 134.26 降到 134.17 附近：尾盘有人在兑现利润，但最终收盘竞价把价格拉回 134.27。单笔明细信息噪音很大，<b>不要试图从几笔成交里「看出主力意图」</b>，美股还有大量暗池和算法拆单，看到的只是一部分。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 14 -->
+  <article class="field reveal" id="f14">
+    <div class="fno">FIELD<b>14</b></div>
+    <div>
+      <h3>分时量柱：每分钟成交了多少股<span class="tag">VOLUME</span></h3>
+      <table class="def">
+        <tr><th>元素</th><th>本例</th><th>含义</th></tr>
+        <tr><td>分时量 ▾</td><td class="val">下拉</td><td>可切换成其他副图指标（如分时 MACD、资金流等）。</td></tr>
+        <tr><td>量</td><td class="val">410.86万</td><td>光标所在分钟（此处为最后一分钟，含收盘竞价）的成交股数。</td></tr>
+        <tr><td>现手</td><td class="val">0</td><td>最近一笔的成交数量；收盘后无新成交，故为 0。</td></tr>
+        <tr><td>右侧刻度</td><td class="val">1046.39万 / 523.19万</td><td>量柱纵轴最大值及其一半。最大值来自开盘那一分钟（开盘竞价）。</td></tr>
+        <tr><td>柱子颜色</td><td class="val">红 / 绿</td><td>该分钟价格较上一分钟上涨为红、下跌为绿。</td></tr>
+      </table>
+      <div class="pm"><p>美股分时量的典型形态是<b>「U 型」</b>：开盘和收盘两头大，中间小。本例正是如此——中间的量柱很矮，几乎被开盘与收盘两根巨柱「压扁」。判断盘中是否有异动，看的是中段有没有突然冒出的高柱，比如图中下午约 2/3 处那根较高的红柱，对应价格向上突破的时刻。</p></div>
+    </div>
+  </article>
+
+  <!-- 15 -->
+  <article class="field reveal" id="f15">
+    <div class="fno">FIELD<b>15</b></div>
+    <div>
+      <h3>资讯 / 简况(F10) / 诊股 / 财务 / 盘口<span class="tag">DEEP DIVE</span></h3>
+      <table class="def">
+        <tr><th>标签</th><th>内容</th><th>我的使用优先级</th></tr>
+        <tr><td>资讯</td><td>新闻、公告、研报摘要</td><td>★★★ 先看公司公告（一手），再看媒体报道（二手）</td></tr>
+        <tr><td>简况（F10）</td><td>公司概况、主营业务、股本结构、股东、解禁、分红</td><td>★★★★★ 买之前必须看，尤其是股本与解禁</td></tr>
+        <tr><td>诊股</td><td>平台自动生成的技术面 / 资金面评分</td><td>★ 仅作参考，算法评分不构成投资依据</td></tr>
+        <tr><td>财务</td><td>营收、利润、现金流、资产负债表</td><td>★★★★★ 亏损公司重点看营收增速和经营现金流</td></tr>
+        <tr><td>盘口</td><td>更完整的买卖档位、内外盘统计</td><td>★★ 短线交易者使用</td></tr>
+      </table>
+      <div class="pm"><p>F10 这个名字来自早年行情终端上按 F10 键调出公司资料的习惯。<b>一个只看行情页、从不看 F10 和财务的投资者，本质上是在赌价格，而不是在投资公司。</b></p></div>
+    </div>
+  </article>
+
+  <!-- 16 -->
+  <article class="field reveal" id="f16">
+    <div class="fno">FIELD<b>16</b></div>
+    <div>
+      <h3>底部指数条与功能栏<span class="tag">BENCHMARK</span></h3>
+      <table class="def">
+        <tr><th>元素</th><th>本例</th><th>含义</th></tr>
+        <tr><td>道指</td><td class="val down">51285.73 −0.46%</td><td>道琼斯工业平均指数当日下跌。点击 ▲ 可切换纳斯达克、标普 500 等。</td></tr>
+        <tr><td>下单</td><td class="val">—</td><td>跳转至绑定券商交易。</td></tr>
+        <tr><td>社区</td><td class="val">—</td><td>股民讨论区——情绪温度计，不是信息源。</td></tr>
+        <tr><td>删自选</td><td class="val">—</td><td>说明此股已在自选列表中，点击即移除。</td></tr>
+        <tr><td>功能</td><td class="val">—</td><td>预警、对比、指标设置等。</td></tr>
+      </table>
+      <div class="pm"><p><b>个股 +8.62%，道指 −0.46%</b>——这叫「逆市走强」，说明驱动力来自个股自身消息与板块（AI、航天）情绪，而非大盘普涨。好处是独立性强；风险是一旦个股叙事降温，没有大盘托底。对于科技成长股，<b>纳斯达克指数</b>是比道指更合适的参照物，建议把底部指数切过去。</p></div>
+    </div>
+  </article>
+</section>
+
+<!-- ================= 03 综合 ================= -->
+<section class="sec reveal">
+  <div class="sec-head">
+    <div class="sec-no">03</div>
+    <div>
+      <h2>把数字串起来：这张截图说了什么？</h2>
+      <p>单个字段只是零件，专业的读法是把它们拼成一幅图。以下是我对这一个交易日的「复盘笔记」——仅就截图信息而论，不构成任何买卖建议。</p>
+    </div>
+  </div>
+  <div class="verdict">
+    <div class="pos">
+      <h4><i>强</i>积极信号</h4>
+      <ul>
+        <li>跳空高开 5.9%，全天未回补缺口</li>
+        <li>收盘位于日内区间 84% 分位，接近最高价</li>
+        <li>下午起始终站在均价线（VWAP）上方，均价线上翘</li>
+        <li>逆大盘上涨，盘后继续 +1.02%</li>
+      </ul>
+    </div>
+    <div class="neu">
+      <h4><i>待</i>需要验证</h4>
+      <ul>
+        <li>量比 0.97：大涨未放量，持续性待观察</li>
+        <li>驱动来自板块反弹 + 创始人表态，属情绪 / 愿景型利好</li>
+        <li>尾盘主动卖单偏多，有获利了结迹象</li>
+        <li>需结合日K / 周K 判断所处位置</li>
+      </ul>
+    </div>
+    <div class="neg">
+      <h4><i>险</i>风险提示</h4>
+      <ul>
+        <li>市盈率 TTM 为亏损，估值缺乏利润支撑</li>
+        <li>1.82 万亿市值、单日 8.6% 波动，弹性大</li>
+        <li>流通比例估算约 32%，关注解禁供给</li>
+        <li>美股无涨跌停，单日下跌幅度没有上限</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 五步法 ================= -->
+<section class="sec reveal">
+  <div class="sec-head">
+    <div class="sec-no">04</div>
+    <div>
+      <h2>普通股民的 30 秒读盘五步法</h2>
+      <p>不需要记住所有字段。每次打开个股页，按这五步问自己五个问题就够了。</p>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step"><h5>对身份</h5><p>名称、代码、市场、币种。</p><div class="q">Q：我看的是我想买的那只吗？</div></div>
+    <div class="step"><h5>看位置</h5><p>现价对比昨收、高、低、开；收在区间哪里。</p><div class="q">Q：今天谁赢了——买方还是卖方？</div></div>
+    <div class="step"><h5>看成本</h5><p>价格与黄色均价线的关系。</p><div class="q">Q：今天进场的人赚钱还是被套？</div></div>
+    <div class="step"><h5>看热度</h5><p>量比、换手、成交额；量价是否配合。</p><div class="q">Q：涨跌是真金白银推动的吗？</div></div>
+    <div class="step"><h5>看背景</h5><p>大盘指数、异动原因、日K位置、F10 与财务。</p><div class="q">Q：这是公司变了，还是情绪变了？</div></div>
+  </div>
+</section>
+
+<!-- ================= 05 误区 ================= -->
+<section class="sec reveal">
+  <div class="sec-head">
+    <div class="sec-no">05</div>
+    <div>
+      <h2>看美股行情页的八个常见误区</h2>
+    </div>
+  </div>
+  <div class="myths">
+    <div class="myth"><h5><s>红色就是跌</s> → 同花顺里红色是涨</h5><p>国内软件红涨绿跌，美国本土软件绿涨红跌，切换软件时最容易看反。</p></div>
+    <div class="myth"><h5><s>跌多了会跌停</s> → 美股没有涨跌停</h5><p>只有针对极端波动的临时熔断暂停（LULD）。单日 −30% 在美股并不罕见。</p></div>
+    <div class="myth"><h5><s>成交量的单位是手</s> → 美股按「股」计</h5><p>明细里的 394 就是 394 股，最小可买 1 股（部分券商支持碎股）。</p></div>
+    <div class="myth"><h5><s>图上 111.92 是最低价</s> → 那是坐标轴镜像</h5><p>真实最低价看「低」字段：128.570。</p></div>
+    <div class="myth"><h5><s>盘后涨了明天一定高开</s> → 盘后量小、参考有限</h5><p>盘后价格可能被几笔小单左右，次日盘前还有新信息进来。</p></div>
+    <div class="myth"><h5><s>收盘那笔大单是主力抢筹</s> → 那是收盘竞价</h5><p>指数基金和机构调仓集中在收盘竞价，每天都有，是结构性现象。</p></div>
+    <div class="myth"><h5><s>市盈率越低越便宜</s> → 先看有没有利润</h5><p>亏损公司没有市盈率；即便有，也要结合增速、行业对比来看。</p></div>
+    <div class="myth"><h5><s>异动解读 = 上涨原因</s> → 是事后归因</h5><p>同一条新闻可以解释涨，也可以解释跌。追问它是否改变了公司的基本面。</p></div>
+  </div>
+</section>
+
+<footer>
+  <p><b>说明：</b>本页所有数值均取自用户提供的同花顺 App 截图（美东时间收盘后）。「流通股」「流通比例」「集合竞价金额」等为根据截图数据反推的估算值，可能与公司披露口径存在差异。</p>
+  <p><b>风险提示：</b>本文仅为投资者教育用途，讲解行情软件字段含义，不构成对任何证券的投资建议或买卖推荐。市场有风险，投资需谨慎。</p>
+</footer>
+</div>
+
+<script>
+// pins <-> index hover sync
+const links = document.querySelectorAll('[data-k]');
+links.forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.querySelectorAll(`[data-k="${el.dataset.k}"]`).forEach(x=>x.classList.add('on')));
+  el.addEventListener('mouseleave',()=>document.querySelectorAll(`[data-k="${el.dataset.k}"]`).forEach(x=>x.classList.remove('on')));
+});
+// scroll reveal
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} }),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
