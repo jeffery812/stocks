@@ -125,7 +125,7 @@ a{color:inherit}
 .card .en{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em;margin-top:2px}
 .lvl{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-align:right;white-space:nowrap}
 .lvl .d{display:inline-block;width:9px;height:9px;border-radius:50%;border:1.5px solid var(--red);margin-left:3px}
-.lvl .d.f{background:var(--red)}
+.lvl .d.lv-on{background:var(--red)}
 .one{font-size:15.5px;font-weight:500;margin:12px 0 10px;line-height:1.65}
 .f{font-family:var(--mono);font-size:12.5px;background:var(--ink);color:#f3e9d2;padding:9px 12px;border-radius:3px;line-height:1.7;overflow-x:auto}
 .f em{font-style:normal;color:var(--amber)}
@@ -626,7 +626,7 @@ const T = [
  truth:'买空是借钱<b>做多</b>。做空的亏损<b>没有上限</b>：股价涨多少你亏多少，还可能遇到逼空、追加保证金和强制平仓。',
  tip:'新手想表达看跌，优先用亏损有上限的工具（熊证、认沽期权），并且只用小仓位。',
  side:true,
- extra:`<h4>做空 ≠ 买空：先把词分清</h4><table class="xt"><tr><th>说法</th><th>怎么做</th><th>什么时候赚钱</th></tr><tr><td>卖空 / 做空</td><td>借股票先卖，以后买回还</td><td>股价<b>下跌</b>。A 股叫「融券」</td></tr><tr><td>买空 / 融资</td><td>借钱买股票（加杠杆）</td><td>股价<b>上涨</b>。A 股叫「融资」</td></tr></table><h4>想看跌，有哪几种工具？</h4><table class="xt"><tr><th>工具</th><th>最多亏多少</th><th>要注意</th></tr><tr><td>直接做空股票</td><td><b>无上限</b>，可能倒欠券商</td><td>要签借券协议、开通融资额度，只能借部分股票；每天付借券费，可能被追保或强平</td></tr><tr><td>熊证 / 空头 mini futures</td><td>投入的本金</td><td>有杠杆；每日重置的 Bear X5 等长期持有有损耗，mini futures 碰到敲出价就直接结束</td></tr><tr><td>认沽期权（put）</td><td>付出的权利金</td><td>要签衍生品协议；到期没跌到行权价，权利金就归零</td></tr><tr><td>反向 ETF</td><td>投入的本金</td><td>多为每日重置，震荡市里会慢慢损耗，只适合短线</td></tr></table><h4>做空为什么风险更大？</h4><ol class="xo"><li><b>亏损不对称。</b>做多 100 元的股票最多亏 100 元；做空时股价涨到 300 元，你就亏 200 元，涨多少亏多少。</li><li><b>逼空（short squeeze）。</b>空头集中被迫买回平仓，买盘越买越多，股价可能短时间内翻倍。</li><li><b>持有有成本。</b>借券费按天收，热门做空标的费率会很高；期间公司分红，做空方还要把股息补给出借人。</li><li><b>券商可以收回股票。</b>出借方要求还券时，你可能被迫在不利价位平仓。</li></ol><h4>例子：瑞典 Avanza</h4><p class="xl">Avanza 有单独的证券借贷（värdepapperslån）框架协议，协议里写明做空「原则上风险无上限，可能让客户负债」。直接做空（blankning）一般要签这份协议并开通融资额度，只能借部分股票，主要是瑞典的大盘股。散户更常用的看空方式是熊证（Bear-certifikat）和 Mini Short。账户类型（ISK / AF / KF）能不能做空、哪些股票能借、借券费率多少，<b>以 Avanza 官网最新说明为准</b>。</p>`},
+ extra:`<h4>做空 ≠ 买空：先把词分清</h4><table class="xt"><tr><th>说法</th><th>怎么做</th><th>什么时候赚钱</th></tr><tr><td>卖空 / 做空</td><td>借股票先卖，以后买回还</td><td>股价<b>下跌</b>。A 股叫「融券」</td></tr><tr><td>买空 / 融资</td><td>借钱买股票（加杠杆）</td><td>股价<b>上涨</b>。A 股叫「融资」</td></tr></table><h4>想看跌，有哪几种工具？</h4><table class="xt"><tr><th>工具</th><th>最多亏多少</th><th>要注意</th></tr><tr><td>直接做空股票</td><td><b>无上限</b>，可能倒欠券商</td><td>要签借券协议、开通融资额度，只能借部分股票；每天付借券费，可能被追保或强平</td></tr><tr><td>熊证 / 空头 mini futures</td><td>投入的本金</td><td>有杠杆；每日重置的 Bear X5 等长期持有有损耗，mini futures 碰到敲出价就直接结束</td></tr><tr><td>认沽期权（put）</td><td>付出的权利金</td><td>要签衍生品协议；到期没跌到行权价，权利金就归零</td></tr><tr><td>反向 ETF</td><td>投入的本金</td><td>多为每日重置，震荡市里会慢慢损耗，只适合短线</td></tr></table><h4>做空为什么风险更大？</h4><ol class="xo"><li><b>亏损不对称。</b>做多 100 元的股票最多亏 100 元；做空时股价涨到 300 元，你就亏 200 元，涨多少亏多少。</li><li><b>逼空（short squeeze）。</b>空头集中被迫买回平仓，买盘越买越多，股价可能短时间内翻倍。</li><li><b>持有有成本。</b>借券费按天收，热门做空标的费率会很高；期间公司分红，做空方还要把股息补给出借人。</li><li><b>券商可以收回股票。</b>出借方要求还券时，你可能被迫在不利价位平仓。</li></ol><h4>例子：瑞典 Avanza</h4><p class="xl">Avanza 有单独的证券借贷（värdepapperslån）框架协议，协议里写明做空「原则上风险无上限，可能让客户负债」。直接做空（blankning）一般要签这份协议并开通融资额度，只能借部分股票，主要是瑞典的大盘股。散户更常用的看空方式是熊证（Bear-certifikat）和 Mini Short。账户类型（ISK / AF / KF）能不能做空、哪些股票能借、借券费率多少，<b>以 Avanza 官网最新说明为准</b>。</p><h4>在 Avanza 上，美股（谷歌、英伟达、SpaceX）能做空或融资吗？</h4><table class="xt"><tr><th>想做什么</th><th>大致情况</th><th>说明</th></tr><tr><td>融资买入（买空）</td><td>大盘美股多半可以</td><td>看个股的可抵押比例（belåningsvärde），0%–约 80%，大于 0 才能借钱买。谷歌、英伟达这类超大盘股通常有一定比例；<b>SpaceX 刚上市，大概率是 0%</b>。股价大跌时比例可能被下调，引发追加保证金</td></tr><tr><td>直接做空</td><td>基本不能</td><td>查到的做空（blankning）资料都只讲瑞典股票，没有提到能直接做空美股</td></tr><tr><td>熊证 / Mini Short</td><td>热门美股一般有</td><td>发行商推出的空头产品，亏损上限是本金；新上市的 SpaceX 可能要过一段时间才有</td></tr><tr><td>反向 ETF</td><td>只能看空指数</td><td>例如做空纳斯达克 100，不能针对单只股票，每日重置有损耗</td></tr></table><p class="xl"><b>2 分钟自己查：</b>① 在 Avanza 搜索股票，看个股页面的 belåningsvärde；② 在同一页面的「Hävstångsprodukter / Certifikat」里找以它为标的的 Bear / Mini Short；③ 想确认能不能直接做空，问客服：「Kan jag blanka amerikanska aktier, t.ex. NVDA?」以上为整理时的理解，<b>以 Avanza 实际页面为准</b>。SpaceX 单日振幅常超过 5%，新手不要用杠杆碰它。</p>`},
 {cat:'rule',name:'打新 / 中签',en:'IPO Subscription',lvl:1,
  one:'申购新上市的股票，中签后以发行价买入。A 股需要持有一定市值才有申购额度。',
  myth:'打新稳赚不赔。',
@@ -716,7 +716,7 @@ const QUIZ = [
 
 /* ---------- render ---------- */
 const $ = s=>document.querySelector(s);
-const lvlHTML = n=>`<div class="lvl">迷惑度${[1,2,3].map(i=>`<span class="d${i<=n?' f':''}"></span>`).join('')}</div>`;
+const lvlHTML = n=>`<div class="lvl">迷惑度${[1,2,3].map(i=>`<span class="d${i<=n?' lv-on':''}"></span>`).join('')}</div>`;
 
 
 /* ---------- 估值尺子：多只股票 tab 切换，按卡片名称挂到对应卡片上 ---------- */
