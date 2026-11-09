@@ -161,6 +161,113 @@ footer a{color:var(--amber)}
   .count{margin-left:0}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card{opacity:1;transform:none}}
+
+/* ---------- valuation ruler ---------- */
+.rs{margin:56px 0 0;padding-top:40px;border-top:1px dashed var(--line);scroll-margin-top:80px}
+.rs-h{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:10px}
+.rs-h .k{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--c-val)}
+.rs-h h2{font-family:var(--display);font-weight:400;font-size:clamp(36px,4.4vw,56px);line-height:1.15;margin-top:6px}
+.rs-h p{color:var(--chalk-2);max-width:40em;margin-top:8px}
+.spx{border:1.5px solid var(--c-val);border-radius:6px;padding:14px 18px;font-family:var(--mono);font-size:12px;color:var(--chalk-2);min-width:250px;line-height:1.8}
+.spx b{color:var(--chalk);font-size:22px;display:block;font-family:var(--display);font-weight:400;letter-spacing:.02em}
+.spx em{font-style:normal;color:var(--c-val)}
+.legend2{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--chalk-2);margin:18px 0 6px}
+.legend2 span{display:flex;align-items:center;gap:6px}
+.legend2 i{width:14px;height:10px;border-radius:2px;display:inline-block}
+.z-na{background:repeating-linear-gradient(45deg,rgba(233,228,214,.12) 0 4px,rgba(233,228,214,.04) 4px 8px)}
+.z-good{background:rgba(63,174,125,.55)}
+.z-ok{background:rgba(233,228,214,.22)}
+.z-warn{background:rgba(231,169,58,.5)}
+.z-bad{background:rgba(224,68,47,.6)}
+.gauge{display:grid;grid-template-columns:210px 1fr 250px;gap:28px;align-items:center;padding:30px 0;border-bottom:1px solid var(--line)}
+.gauge .nm{font-family:var(--display);font-size:26px;line-height:1.2}
+.gauge .nm small{display:block;font-family:var(--mono);font-size:11.5px;color:var(--chalk-2);margin-top:4px}
+.bar{position:relative;height:38px;display:flex;border-radius:3px;margin:40px 0 80px}
+.bar .z{position:relative;height:100%;border-right:1px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--chalk);white-space:nowrap;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.bar .z:last-child{border-right:0}
+.tick{position:absolute;top:100%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--chalk-2);padding-top:5px}
+.tick::before{content:"";position:absolute;left:50%;top:-4px;width:1px;height:6px;background:var(--chalk-2)}
+.mk{position:absolute;bottom:100%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:2;animation:drop .8s cubic-bezier(.3,1.4,.5,1) both}
+.mk span{font-family:var(--mono);font-size:11.5px;font-weight:600;background:var(--chalk);color:var(--ink);padding:2px 7px;border-radius:3px;white-space:nowrap}
+.mk::after{content:"";width:2px;height:48px;background:var(--chalk);margin-top:0;box-shadow:0 0 10px rgba(233,228,214,.6)}
+.mk.alt span{background:none;color:var(--chalk);border:1.5px dashed var(--chalk)}
+.mk.alt::after{background:repeating-linear-gradient(var(--chalk) 0 4px,transparent 4px 7px);box-shadow:none}
+.mk.over span::after{content:" ➜"}
+.mk.na span{background:var(--chalk-2)}
+@keyframes drop{from{opacity:0;translate:0 -18px}to{opacity:1;translate:0 0}}
+.mk.el{transform:none;align-items:flex-start}
+.mk.er{transform:translateX(-100%);align-items:flex-end}
+.vd{font-size:13.5px;color:var(--chalk-2);line-height:1.7}
+.vd b{display:block;font-family:var(--display);font-weight:400;font-size:24px;color:var(--chalk);line-height:1.2;margin-bottom:4px}
+.vd b.r{color:var(--red)} .vd b.g{color:var(--jade)} .vd b.a{color:var(--amber)} .vd b.n{color:var(--chalk-2)}
+.sheet{width:100%;border-collapse:collapse;margin-top:34px;background:var(--card);color:var(--ink);border-radius:4px;overflow:hidden;font-size:14px}
+.sheet caption{caption-side:top;text-align:left;font-family:var(--display);font-size:28px;color:var(--chalk);padding-bottom:12px}
+.sheet th{background:var(--ink);color:#f3e9d2;font-weight:500;font-size:12.5px;letter-spacing:.06em;text-align:left;padding:11px 14px}
+.sheet td{padding:11px 14px;border-bottom:1px solid var(--card-2);vertical-align:top}
+.sheet td.v{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.sheet td.c{font-family:var(--mono);font-size:12.5px;color:var(--ink-2)}
+.tag2{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:999px;color:#fff;white-space:nowrap}
+.tag2.r{background:var(--red)}.tag2.g{background:var(--jade)}.tag2.a{background:#c98a17}.tag2.n{background:var(--ink-3)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:34px}
+.box{border:1px solid var(--line);border-radius:6px;padding:22px 24px;background:var(--bg-2)}
+.box h4{font-family:var(--display);font-weight:400;font-size:24px;margin-bottom:10px}
+.box table{width:100%;border-collapse:collapse;font-size:13.5px}
+.box td,.box th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
+.box th{color:var(--chalk-2);font-weight:500;font-size:12px}
+.box td:not(:first-child){font-family:var(--mono)}
+.box ol{padding-left:20px;font-size:14px;color:var(--chalk-2)}
+.box ol li{margin:6px 0}
+.box ol b{color:var(--chalk)}
+.src{font-size:12px;color:var(--chalk-2);margin-top:18px;line-height:1.8}
+.src a{color:var(--amber)}
+@media (max-width:900px){.gauge{grid-template-columns:1fr;gap:6px}.two,.rs-h{grid-template-columns:1fr}.sheet{display:block;overflow-x:auto}}
+
+/* ---------- per-metric valuation panel ---------- */
+.rs{margin:0 0 28px;padding:0;border:0}
+.rs-foot{margin-top:6px}
+.grid.wide{grid-template-columns:1fr}
+.vcard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:30px;align-items:start}
+.vp{background:var(--ink);color:var(--chalk);border-radius:4px;padding:18px 22px 20px;position:relative}
+.vp-h{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--c-val);border-bottom:1px solid var(--line);padding-bottom:8px}
+.vp-h span{color:var(--chalk-2);letter-spacing:.04em}
+.vp .bar{margin:84px 0 80px}
+.vp .vd{margin-bottom:14px}
+.sxr{border-top:1px dashed var(--line);padding:12px 0 2px}
+.sx-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sx-top b{font-size:13.5px;color:var(--chalk-2);font-weight:500}
+.sx-top .v{font-family:var(--mono);font-weight:600;font-size:17px;color:var(--chalk)}
+.sxr .c{font-family:var(--mono);font-size:12px;color:var(--chalk-2);margin-top:4px;line-height:1.7}
+.sxr p{font-size:13.5px;color:#d9d3c3;margin-top:6px;line-height:1.7}
+.sxr p b{color:var(--amber)}
+@media (max-width:900px){.vcard{grid-template-columns:1fr}}
+
+.vcard{grid-column:1/-1}
+.dd-svg{width:100%;height:auto;display:block;margin:14px 0 4px}
+.dd{margin-top:10px;display:grid;gap:6px}
+.dd-r{display:grid;grid-template-columns:62px 1fr 74px;gap:10px;align-items:center;font-family:var(--mono);font-size:12px}
+.dd-r .l{color:var(--chalk-2)}
+.dd-r .u{color:var(--red);font-weight:600;text-align:right}
+.dd-r .b{height:10px;background:rgba(233,228,214,.08);border-radius:2px;overflow:hidden}
+.dd-r .b i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--red))}
+
+.stabs{display:flex;gap:4px;flex-wrap:wrap}
+.stab{cursor:pointer;background:none;border:1px solid var(--line);color:var(--chalk-2);font:500 11px var(--mono);letter-spacing:.04em;padding:3px 9px;border-radius:999px;transition:all .18s}
+.stab:hover{color:var(--chalk);border-color:var(--chalk-2)}
+.stab.on{background:var(--c-val);border-color:var(--c-val);color:var(--ink);font-weight:600}
+.stabs.big{margin-bottom:10px;justify-content:flex-end}
+.stabs.big .stab{font:500 14px var(--sans);padding:7px 16px}
+.vp-h{align-items:center}
+.vp.nobar .vd{margin-top:14px}
+.mk span{background:var(--mc,var(--chalk))}
+.mk.alt span{background:none}
+.mk.tall::after{height:80px}
+.vp.cmp .bar{margin-top:118px;margin-bottom:84px}
+.cmpt{width:100%;border-collapse:collapse;margin:4px 0 6px;font-size:13.5px}
+.cmpt td{padding:8px 4px;border-top:1px dashed var(--line)}
+.cmpt td i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
+.cmpt td.v{font-family:var(--mono);font-weight:600;color:var(--chalk)}
+.cmpt td:last-child{text-align:right}
+.spx .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
 </style>
 </head>
 <body>
@@ -202,6 +309,60 @@ footer a{color:var(--amber)}
 <main id="list"></main>
 <div class="empty" id="empty">没有找到相关名词，换个关键词试试？</div>
 
+<div class="rs" id="ruler">
+  <div class="rs-h">
+    <div>
+      <div class="k">VALUATION RULER · 估值尺子</div>
+      <h2>多少倍算贵？<br>拿三只巨头量一量</h2>
+      <p>每个估值指标都有一个大致的「经验区间」。下面每张卡片的右侧都配有一把尺子：彩色区段是常见分界线，实心标记是所选股票当前所处的位置，虚线标记是换一种口径（例如前瞻）后的结果。用右侧或每张卡片上的标签切换 <b style="color:var(--chalk)">SpaceX / 英伟达 / 谷歌 / 三家对比</b>，所有卡片会同步切换。<b style="color:var(--chalk)">区间只是经验值，行业不同差异巨大</b>，请结合下方的行业参考表一起看。</p>
+    </div>
+    <div>
+      <div class="stabs big" id="stkTabs" role="tablist">
+        <button class="stab on" data-stk="spcx">SpaceX</button><button class="stab" data-stk="nvda">英伟达</button><button class="stab" data-stk="googl">谷歌</button><button class="stab" data-stk="cmp">三家对比</button>
+      </div>
+      <div class="spx" id="spx"><b>SpaceX · SPCX</b>股价 <em>134.27</em> 美元<br>总市值 <em>≈ 1.82 万亿</em> 美元<br>股价为截图收盘价；财务数据截至 2026 年三季报</div>
+    </div>
+  </div>
+  <div class="legend2">
+    <span><i class="z-good"></i>良好 / 合理</span>
+    <span><i class="z-ok"></i>中性 / 一般</span>
+    <span><i class="z-warn"></i>需警惕</span>
+    <span><i class="z-bad"></i>偏贵 / 偏差</span>
+    <span><i class="z-na"></i>不适用</span>
+    <span><i style="background:var(--chalk)"></i>当前值</span>
+    <span><i style="border:1.5px dashed var(--chalk)"></i>另一口径（前瞻 / 年化）</span>
+  </div>
+</div>
+<div class="rs-foot" id="ruler-foot">
+  <div class="two">
+    <div class="box">
+      <h4>行业参考：同一个 PE，意义完全不同</h4>
+      <table>
+        <tr><th>行业类型</th><th>常见 PE</th><th>常见 PB</th></tr>
+        <tr><td>银行</td><td>4–8</td><td>0.4–1</td></tr>
+        <tr><td>钢铁 / 煤炭 / 化工（周期股）</td><td>5–15（波动大）</td><td>0.8–2</td></tr>
+        <tr><td>公用事业 / 电力</td><td>12–20</td><td>1–2</td></tr>
+        <tr><td>消费品 / 医药</td><td>20–40</td><td>3–8</td></tr>
+        <tr><td>科技成长 / 软件</td><td>30–60+</td><td>5–15+</td></tr>
+        <tr><td>标普 500 整体</td><td>长期均值约 15–17，近年常在 20 以上</td><td>—</td></tr>
+        <tr><td>沪深 300 整体</td><td>多在 10–14</td><td>—</td></tr>
+      </table>
+      <p class="src" style="margin-top:10px">以上为多年来的大致经验区间，不同时期会有变化，仅供建立量级概念。</p>
+    </div>
+    <div class="box">
+      <h4>估值尺子的四条使用守则</h4>
+      <ol>
+        <li><b>先看能不能用：</b>亏损时 PE、PEG 失效；轻资产公司 PB 失效；银行不看 PS。</li>
+        <li><b>只和同类比：</b>和同行业公司比，和公司自己的历史比，不跨行业比。</li>
+        <li><b>多把尺子一起量：</b>PE 看利润，PB 看资产，PS 看收入，ROE 看效率，单看一把容易被骗。</li>
+        <li><b>贵不等于不能涨，便宜不等于会涨：</b>估值决定的是「犯错的代价」。像 SPCX 这样估值很高的股票，一旦增长不及预期，回撤往往非常猛烈。</li>
+      </ol>
+    </div>
+  </div>
+  <p class="src">SpaceX 数据来源：<a href="https://www.sec.gov/Archives/edgar/data/0001181412/000162828026052515/earningsreleaseq22608042.htm" target="_blank" rel="noopener">2026 年二季度财报（SEC 8-K）</a>；<a href="https://www.cnbc.com/2026/10/20/spacex-spcx-earnings-live-updates-q3-2026html.html" target="_blank" rel="noopener">CNBC：2026 年三季报报道</a>；<a href="https://www.morningstar.com/stocks/6-charts-spacexs-s-1-financials" target="_blank" rel="noopener">Morningstar：S-1 招股书财务数据</a>。TTM 营收中 2025 年四季度为根据已披露数据推算的估计值，三季度数据来自媒体报道。所有比率都以截图中的市值计算，会随股价变动。<br>英伟达、谷歌数据来源：<a href="https://stockanalysis.com/stocks/nvda/statistics/" target="_blank" rel="noopener">StockAnalysis · NVDA</a>；<a href="https://stockanalysis.com/stocks/googl/statistics/" target="_blank" rel="noopener">StockAnalysis · GOOGL</a>（2026/11/6 收盘）。前瞻 PE / PS、PEG 基于分析师一致预期。</p>
+</div>
+
+
 <section class="quiz" id="quiz">
   <h2>自测：你真的懂了吗？</h2>
   <p>8 道题，每道都对应新手最常犯的一个错误。点选答案即可查看解析。</p>
@@ -218,7 +379,7 @@ footer a{color:var(--amber)}
 <script>
 const CATS = [
   {id:'price', name:'价格与涨跌', c:'--c-price', d:'屏幕上最显眼的数字，误解也最多'},
-  {id:'val',   name:'估值指标',   c:'--c-val',   d:'判断「贵不贵」的尺子，每把尺子都有盲区'},
+  {id:'val',   name:'估值指标',   c:'--c-val',   d:'判断「贵不贵」的尺子，每把尺子都有盲区。<span style="color:var(--c-val)">每张卡片右侧附：多少倍算贵 + SpaceX / 英伟达 / 谷歌实例</span>'},
   {id:'vol',   name:'量能与资金', c:'--c-vol',   d:'今天有多少人、多少钱在交易'},
   {id:'rule',  name:'交易规则',   c:'--c-rule',  d:'不懂规则，第一笔交易就可能踩坑'},
   {id:'chart', name:'图表与技术', c:'--c-chart', d:'K 线、均线：看得懂，但别迷信'},
@@ -436,12 +597,14 @@ const T = [
  tip:'当身边不炒股的人都开始讨论股票时，要格外谨慎。'},
 
 /* ======== 概念与心态 ======== */
-{cat:'mind',name:'回撤 / 回本难度',en:'Drawdown',lvl:3,
- one:'资产从最高点跌下来的幅度。亏损和回本之间并不对称。',
- f:'回本所需涨幅 = 1 ÷ (1 − 跌幅) − 1<br>跌 <em>20%</em> → 要涨 25% · 跌 <em>50%</em> → 要涨 100% · 跌 <em>80%</em> → 要涨 400%',
- myth:'跌了 50%，涨回 50% 就回本了。',
- truth:'100 元跌 50% 剩 50 元，再涨 50% 只有 75 元，<b>要翻倍才能回本</b>。',
- tip:'控制亏损比追求收益重要得多，提前设好止损线。'},
+{cat:'mind',name:'回撤 / 最大回撤',en:'Drawdown / Max Drawdown',lvl:3,
+ one:'回撤是资产从<b>之前的最高点</b>往下跌的幅度。一段时间里最深的那一次叫<b>最大回撤</b>，是衡量风险最直观的指标：它告诉你「最坏的时候会难受到什么程度」。',
+ f:'回撤 = (最高点 − 当前值) ÷ 最高点<br>最大回撤 = 历史上所有回撤中的最大值<br>回本所需涨幅 = 1 ÷ (1 − 跌幅) − 1',
+ eg:'某基金近 3 年收益 +40%，最大回撤 −35%：意味着中途有一段时间，<b>最高点买入的人亏了 35%</b>。收益率相近时，最大回撤越小越好。',
+ myth:'账户还在赚钱，就谈不上回撤；跌了 50%，再涨 50% 就回本了。',
+ truth:'回撤以<b>最高点</b>为基准，浮盈缩水同样是回撤。亏损和回本不对称：100 元跌 50% 剩 50 元，再涨 50% 只有 75 元，<b>要涨 100% 才能回本</b>。',
+ tip:'买基金看「最大回撤」，问自己能不能扛住；给自己设一条最大回撤线（例如 15%），触及就减仓复盘，而不是死扛。',
+ panel:`<aside class="vp"><div class="vp-h">回撤图解<span>最高点 → 最低点 → 修复</span></div><svg class="dd-svg" viewBox="0 0 520 210" role="img" aria-label="账户净值从 10 万涨到 15 万，回撤到 12 万，再修复回 15 万的示意图"><path d="M200 80 L250 100 L300 116 L360 106 L420 92 L470 80 Z" fill="rgba(224,68,47,.28)"/><line x1="200" y1="80" x2="510" y2="80" stroke="#e9e4d6" stroke-dasharray="4 4" stroke-opacity=".5"/><polyline points="20,140 80,120 130,104 200,80 250,100 300,116 360,106 420,92 470,80 510,66" fill="none" stroke="#e9e4d6" stroke-width="2.5" stroke-linejoin="round"/><circle cx="200" cy="80" r="5" fill="#e7a93a"/><circle cx="300" cy="116" r="5" fill="#e0442f"/><circle cx="470" cy="80" r="5" fill="#3fae7d"/><g font-family="JetBrains Mono, monospace" font-size="12" fill="#e9e4d6"><text x="200" y="66" text-anchor="middle" fill="#e7a93a">最高点 15 万</text><text x="300" y="140" text-anchor="middle" fill="#e0442f">最低点 12 万</text><text x="470" y="66" text-anchor="middle" fill="#3fae7d">修复</text><line x1="300" y1="80" x2="300" y2="111" stroke="#e0442f" stroke-width="1.5"/><text x="310" y="99" fill="#e0442f" font-weight="600">回撤 20%</text><text x="20" y="160" fill="#a7a596">起点 10 万</text><line x1="200" y1="182" x2="470" y2="182" stroke="#a7a596"/><line x1="200" y1="177" x2="200" y2="187" stroke="#a7a596"/><line x1="470" y1="177" x2="470" y2="187" stroke="#a7a596"/><text x="335" y="201" text-anchor="middle" fill="#a7a596">回撤持续期 / 修复期</text></g></svg><div class="vd" style="margin-top:6px"><b class="a">即使还在赚钱，也可能有 20% 回撤</b>账户从 10 万涨到 15 万又跌到 12 万：相对本金还赚 20%，但相对最高点已经回撤了 20%。基金、策略的「最大回撤」就是这样算出来的，只是取整段历史里最深的那一次。</div><div class="sxr"><div class="sx-top"><b>回本难度表</b><span class="tag2 r">亏得越多越难回</span></div><div class="dd"><div class="dd-r"><span class="l">跌 10%</span><span class="b"><i style="width:11.1%"></i></span><span class="u">涨 11.1%</span></div><div class="dd-r"><span class="l">跌 20%</span><span class="b"><i style="width:16.7%"></i></span><span class="u">涨 25%</span></div><div class="dd-r"><span class="l">跌 30%</span><span class="b"><i style="width:21.8%"></i></span><span class="u">涨 42.9%</span></div><div class="dd-r"><span class="l">跌 40%</span><span class="b"><i style="width:27.2%"></i></span><span class="u">涨 66.7%</span></div><div class="dd-r"><span class="l">跌 50%</span><span class="b"><i style="width:33.3%"></i></span><span class="u">涨 100%</span></div><div class="dd-r"><span class="l">跌 70%</span><span class="b"><i style="width:50.9%"></i></span><span class="u">涨 233%</span></div><div class="dd-r"><span class="l">跌 80%</span><span class="b"><i style="width:66.7%"></i></span><span class="u">涨 400%</span></div><div class="dd-r"><span class="l">跌 90%</span><span class="b"><i style="width:100.0%"></i></span><span class="u">涨 900%</span></div></div><p>跌 10% 涨 11% 就能回来；跌 50% 要翻倍；跌 90% 要涨 9 倍。<b>这就是专业投资者把「控制回撤」放在「追求收益」前面的原因。</b></p></div><div class="sxr"><div class="sx-top"><b>SPCX 实例（截图当日）</b><span class="tag2 n">回撤计算</span></div><div class="c">开盘后回撤：130.94 → 128.57，(130.94 − 128.57) ÷ 130.94 ≈ <b style="color:#e9e4d6">1.8%</b><br>尾盘相对最高价：135.32 → 134.27，回撤 ≈ <b style="color:#e9e4d6">0.8%</b><br>抹平当天涨幅：134.27 → 123.62，只需下跌 ≈ <b style="color:#e9e4d6">7.9%</b></div><p>当天上涨 8.62%，但只要下跌 7.9% 就能全部抹平：涨和跌并不对称。对单日波动 5% 以上的股票，<b>回撤来得非常快</b>，买入前要先想好能承受多深的回撤。</p></div></aside>`},
 {cat:'mind',name:'套牢 / 止损 / 补仓',en:'Trapped / Stop-loss / Averaging Down',lvl:3,
  one:'买入后股价下跌、舍不得卖叫套牢；主动在亏到一定程度时卖出叫止损；下跌后继续买入以拉低平均成本叫补仓。',
  myth:'不卖就不算亏；跌了就补仓，摊低成本。',
@@ -471,7 +634,7 @@ const T = [
 
 const MARQ = [
  ['分红是白送钱','总资产不变'],['低市盈率一定便宜','可能是价值陷阱'],['主力资金流入','有买必有卖'],
- ['跌 50% 涨 50% 回本','要涨 100%'],['送转股是大利好','披萨没变大'],['涨停一定买得到','要排队'],
+ ['跌 50% 涨 50% 回本','要涨 100%'],['还在赚钱就没回撤','回撤看最高点'],['送转股是大利好','披萨没变大'],['涨停一定买得到','要排队'],
  ['不卖就不算亏','市值已经少了'],['红 K 线 = 上涨','比的是开盘价'],['市值涨 = 钱流入','市值≠资金'],['A 股当天能卖','T+1'],
 ];
 
@@ -490,22 +653,219 @@ const QUIZ = [
 const $ = s=>document.querySelector(s);
 const lvlHTML = n=>`<div class="lvl">迷惑度${[1,2,3].map(i=>`<span class="d${i<=n?' f':''}"></span>`).join('')}</div>`;
 
+
+/* ---------- 估值尺子：多只股票 tab 切换，按卡片名称挂到对应卡片上 ---------- */
+const STK = {
+  spcx: {tk:'SPCX', nm:'SpaceX', px:'134.27', cap:'≈ 1.82 万亿', asof:'股价为截图收盘价；财务数据截至 2026 年三季报', col:'#e9e4d6'},
+  nvda: {tk:'NVDA', nm:'英伟达 NVIDIA', px:'186.64', cap:'≈ 4.51 万亿', asof:'2026/11/6 收盘；TTM 财务数据', col:'#7fd66b'},
+  googl:{tk:'GOOGL', nm:'谷歌 Alphabet', px:'284.78', cap:'≈ 3.50 万亿', asof:'2026/11/6 收盘；TTM 财务数据', col:'#5fb4f0'},
+};
+const ORDER = ['spcx','nvda','googl'];
+let CUR = 'spcx';
+
+const G = {
+ '市盈率 PE':{min:-10,max:60,
+  zones:[[-10,0,'亏损','na'],[0,10,'很低·防陷阱','warn'],[10,20,'合理','good'],[20,40,'偏高·需成长','ok'],[40,60,'高估','bad']],
+  ticks:[0,10,20,40,60],
+  rule:'成熟公司 10–20 倍算合理，成长股可接受 20–40 倍，40 倍以上需要非常高的增速支撑；低于 10 倍要先排除价值陷阱。',
+  cmp:'谷歌 TTM 市盈率最低，但前瞻 PE 反而更高；英伟达 TTM 23.6 倍、前瞻 15.4 倍，市场押注利润继续高增长；SpaceX 还没有稳定的利润。',
+  s:{
+   spcx:{main:'亏损',mk:[{v:-5,t:'SPCX 亏损',cls:'na'},{v:60,t:'Q3 年化 ≈ 103',cls:'alt over'}],vd:['n','SpaceX：不适用'],
+    sx:[{m:'市盈率 PE（TTM）',v:'亏损',tag:['n','不适用'],c:'最近 12 个月净利润为负，无法计算；同花顺显示「亏损」',
+     t:'2026 年上半年亏损约 48 亿美元，三季度单季盈利约 44 亿美元。如果按三季度单季年化，PE 约 <b>103 倍</b>，但单季年化很不可靠，而且三季度营业利润只有 28 亿，净利润里含有非经营性收益。'}]},
+   nvda:{main:'23.6 倍',mk:[{v:23.6,t:'NVDA 23.6'},{v:15.43,t:'前瞻 15.4',cls:'alt'}],vd:['a','英伟达：23.6 倍 · 成长股里不算贵'],
+    sx:[{m:'市盈率 PE（TTM）',v:'23.6 倍',tag:['a','偏高·需成长'],c:'4.51 万亿 ÷ 最近 12 个月净利润 1,929 亿',
+     t:'落在「偏高·需成长」区间，但对一家利润仍在高速增长的公司并不夸张。'},
+        {m:'前瞻市盈率 PE',v:'15.4 倍',tag:['g','合理'],c:'市值 ÷ 分析师预测的未来 12 个月净利润',
+     t:'前瞻 PE 明显低于 TTM，说明市场预期利润继续大增。<b>前提是 AI 资本开支周期不掉头</b>；芯片行业有周期性，预测落空时 PE 会迅速被重估。'}]},
+   googl:{main:'14.9 倍',mk:[{v:14.87,t:'GOOGL 14.9'},{v:20.66,t:'前瞻 20.7',cls:'alt'}],vd:['g','谷歌：14.9 倍 · 合理区间'],
+    sx:[{m:'市盈率 PE（TTM）',v:'14.9 倍',tag:['g','合理'],c:'3.50 万亿 ÷ 最近 12 个月净利润 2,357 亿',
+     t:'对一家巨头科技公司来说，TTM 市盈率处在「合理」区间。'},
+        {m:'前瞻市盈率 PE',v:'20.7 倍',tag:['a','偏高·需成长'],c:'市值 ÷ 分析师预测的未来 12 个月净利润',
+     t:'<b>前瞻 PE 高于 TTM PE</b>，意味着市场预期未来利润比过去 12 个月更低。常见原因是过去的利润里包含一次性收益（例如所持投资的增值）。这正是「低 PE 不一定便宜」的活教材，看 PE 一定要两种口径一起看。'}]},
+  }},
+ '市净率 PB':{min:0,max:16,
+  zones:[[0,1,'破净','warn'],[1,3,'合理','good'],[3,8,'偏高','ok'],[8,16,'很高','bad']],
+  ticks:[0,1,3,8,16],
+  rule:'1–3 倍为常见合理区间；低于 1 倍叫破净，要先排除资产质量问题；轻资产科技股 PB 普遍偏高。',
+  cmp:'三家都远高于 1–3 倍的传统区间。轻资产科技公司的 PB 天然偏高，更应该和 ROE 一起看：PB 高、ROE 也高，往往说明资产的赚钱能力强。',
+  s:{
+   spcx:{main:'≈ 14 倍',mk:[{v:14.3,t:'SPCX ≈ 14'}],vd:['r','SpaceX：≈ 14 倍 · 很高'],
+    sx:[{m:'市净率 PB',v:'≈ 14 倍',tag:['r','很高'],c:'1.82 万亿 ÷ 净资产 1,272 亿（2026/6/30）',
+     t:'净资产里约 857 亿是 6 月 IPO 刚募集的现金，所以 PB 已经被「稀释」过了。即便如此，它仍是 14 倍。轻资产成长股的 PB 普遍偏高，参考意义有限。'}]},
+   nvda:{main:'19.7 倍',mk:[{v:19.68,t:'NVDA 19.7',cls:'over'}],vd:['r','英伟达：19.7 倍 · 超出量程'],
+    sx:[{m:'市净率 PB',v:'19.7 倍',tag:['r','很高'],c:'4.51 万亿 ÷ 净资产 2,290 亿',
+     t:'PB 很高，但这是 ROE 超过 100% 的结果：每 1 元净资产一年能赚 1 元以上。对这类公司，<b>PB 高不代表泡沫</b>，要看高 ROE 能持续多久。'}]},
+   googl:{main:'5.3 倍',mk:[{v:5.31,t:'GOOGL 5.3'}],vd:['a','谷歌：5.3 倍 · 偏高'],
+    sx:[{m:'市净率 PB',v:'5.3 倍',tag:['a','偏高'],c:'3.50 万亿 ÷ 净资产 6,776 亿',
+     t:'谷歌账上的净资产规模很大（现金、数据中心、投资），所以 PB 比英伟达低得多。5 倍左右对大型科技公司属于常见水平。'}]},
+  }},
+ '市销率 PS':{min:0,max:30,
+  zones:[[0,1,'低','good'],[1,3,'合理','good'],[3,10,'成长溢价','ok'],[10,20,'很贵','warn'],[20,30,'泡沫区','bad']],
+  ticks:[0,1,3,10,20,30],
+  rule:'传统行业 1–3 倍，高增长科技 5–15 倍，超过 20 倍时必须有超高速增长支撑。PS 一定要结合净利率看。',
+  cmp:'SpaceX TTM 约 55 倍，远超另外两家。英伟达 PS 不低，但净利率约 64%，每 1 元收入能留下 0.64 元利润；谷歌 7.4 倍是成熟巨头的典型水平。',
+  s:{
+   spcx:{main:'≈ 55 倍',mk:[{v:30,t:'TTM ≈ 55',cls:'over'},{v:13,t:'前瞻 ≈ 13',cls:'alt'}],vd:['r','SpaceX：TTM ≈ 55 倍 · 极高'],
+    sx:[{m:'市销率 PS（TTM）',v:'≈ 55 倍',tag:['r','极高'],c:'1.82 万亿 ÷ 最近 4 个季度营收约 320 亿（含 2025Q4 估算）',
+     t:'大型科技股通常在 5–15 倍。55 倍意味着市场在为<b>未来</b>的营收定价。'},
+        {m:'前瞻市销率 PS',v:'≈ 13 倍',tag:['a','偏高'],c:'1.82 万亿 ÷ (2027Q1 指引中值 350 亿 × 4)',
+     t:'公司给出的 2027 年一季度营收指引是 330–370 亿美元，单季就超过过去一整年。如果<b>兑现</b>，估值会一下子变得「合理」；如果落空，估值就要大幅回调。这就是这只股票的核心赌注。'}]},
+   nvda:{main:'14.9 倍',mk:[{v:14.88,t:'NVDA 14.9'},{v:8.37,t:'前瞻 8.4',cls:'alt'}],vd:['a','英伟达：14.9 倍 · 很贵但有利润撑'],
+    sx:[{m:'市销率 PS（TTM）',v:'14.9 倍',tag:['a','很贵'],c:'4.51 万亿 ÷ 营收 3,030 亿',
+     t:'单看 PS 落在「很贵」区间，但英伟达<b>净利率约 64%</b>（1,929 ÷ 3,030），远高于一般公司的 10–20%，所以高 PS 有利润支撑。'},
+        {m:'前瞻市销率 PS',v:'8.4 倍',tag:['n','成长溢价'],c:'市值 ÷ 分析师预测的未来 12 个月营收',
+     t:'预期营收继续快速增长，所以前瞻 PS 明显更低。'}]},
+   googl:{main:'7.4 倍',mk:[{v:7.43,t:'GOOGL 7.4'}],vd:['n','谷歌：7.4 倍 · 成长溢价区间'],
+    sx:[{m:'市销率 PS（TTM）',v:'7.4 倍',tag:['n','成长溢价'],c:'3.50 万亿 ÷ 营收 4,711 亿',
+     t:'营收规模全球顶级，PS 处于成熟科技巨头的常见水平。'}]},
+  }},
+ 'PEG':{min:0,max:3,
+  zones:[[0,1,'低估','good'],[1,2,'合理','ok'],[2,3,'偏贵','bad']],
+  ticks:[0,0.5,1,2,3],
+  rule:'PEG &lt; 1 被认为便宜，1 左右合理，&gt; 2 偏贵。没有稳定的正利润时无法使用；它依赖对未来增速的预测，预测本身可能落空。',
+  cmp:'英伟达 0.31 最低，但它基于分析师对高增速的预测；谷歌 1.58 属于合理区间；SpaceX 没有稳定利润，无法计算。',
+  s:{
+   spcx:{main:'不适用',mk:[{v:0,t:'SPCX 不适用',cls:'na'}],vd:['n','SpaceX：不适用'],
+    sx:[{m:'PEG',v:'不适用',tag:['n','不适用'],c:'TTM 亏损，没有 PE，也就算不出 PEG',
+     t:'利润刚由负转正，增速可以算出成百上千个百分点，没有参考意义。'}]},
+   nvda:{main:'0.31',mk:[{v:0.31,t:'NVDA 0.31'}],vd:['g','英伟达：0.31 · 低估区间'],
+    sx:[{m:'PEG',v:'0.31',tag:['g','低估'],c:'市盈率 ÷ 分析师预测的未来利润增速',
+     t:'按公式看非常便宜，但分母是<b>预测增速</b>。AI 芯片需求一旦放缓，增速预测下调，PEG 会立刻变高。PEG 越依赖乐观预测，越要打折看。'}]},
+   googl:{main:'1.58',mk:[{v:1.58,t:'GOOGL 1.58'}],vd:['n','谷歌：1.58 · 合理区间'],
+    sx:[{m:'PEG',v:'1.58',tag:['n','合理'],c:'市盈率 ÷ 分析师预测的未来利润增速',
+     t:'估值和增速大致匹配，没有明显便宜，也不算离谱。'}]},
+  }},
+ '总市值 / 流通市值':{
+  rule:'市值本身没有好坏之分，它决定的是「量级」：市值越大，再翻倍所需要的增量资金和盈利就越惊人。',
+  cmp:'英伟达 4.51 万亿 > 谷歌 3.50 万亿 > SpaceX 1.82 万亿。三家都是全球市值最大的一批公司。',
+  s:{
+   spcx:{main:'1.82 万亿',vd:['g','SpaceX：≈ 1.82 万亿美元 · 超大盘'],
+    sx:[{m:'总市值',v:'≈ 1.82 万亿',tag:['g','超大盘'],c:'截图数据：股价 134.27 美元',
+     t:'与全球市值最大的一批科技公司处在同一量级。单日上涨 8.62%，市值就增加了约 1,440 亿美元，相当于一家大型上市公司的市值。'}]},
+   nvda:{main:'4.51 万亿',vd:['g','英伟达：≈ 4.51 万亿美元 · 超大盘'],
+    sx:[{m:'总市值',v:'≈ 4.51 万亿',tag:['g','超大盘'],c:'股价 186.64 美元（2026/11/6）',
+     t:'处在全球市值最高的公司之列。市值越大，指数基金被动持有越多，它的涨跌对纳斯达克、标普 500 的影响也越大。'}]},
+   googl:{main:'3.50 万亿',vd:['g','谷歌：≈ 3.50 万亿美元 · 超大盘'],
+    sx:[{m:'总市值',v:'≈ 3.50 万亿',tag:['g','超大盘'],c:'股价 284.78 美元（2026/11/6，A 类股 GOOGL）',
+     t:'谷歌有 GOOGL（A 类，有投票权）和 GOOG（C 类，无投票权）两种股票，市值是按全部股份合计的。这是买美股时需要注意的「同一公司、多个代码」。'}]},
+  }},
+ '每股收益 EPS / ROE':{min:-10,max:30,
+  zones:[[-10,0,'亏损','na'],[0,8,'差','bad'],[8,15,'一般','ok'],[15,20,'良好','good'],[20,30,'优秀','good']],
+  ticks:[-10,0,8,15,20,30],
+  rule:'尺子量的是 ROE（%）：长期 15% 以上是好生意，20% 以上算优秀；要警惕靠高负债撑起来的高 ROE。EPS 没有好坏区间，看趋势。',
+  cmp:'英伟达 117%、谷歌 44%，都远超 20% 的优秀线；SpaceX TTM 为负。ROE 高到这个程度，更要关注它能否持续，而不是线性外推。',
+  s:{
+   spcx:{main:'为负',mk:[{v:-3,t:'TTM 为负',cls:'na'},{v:13.8,t:'Q3 年化 ≈ 14%',cls:'alt'}],vd:['a','SpaceX：ROE TTM 为负 · 正在改善'],
+    sx:[{m:'ROE',v:'TTM 为负',tag:['n','为负'],c:'净利润为负 ÷ 净资产<br>三季度年化：44 × 4 ÷ 1,272 ≈ 14%',
+     t:'三季度年化约 14%，处于「一般」区间，但被 IPO 现金拉低了。需要再观察几个季度的盈利，看是否稳定。'},
+        {m:'每股收益 EPS',v:'TTM 为负',tag:['a','刚转正'],c:'Q2：−0.09 美元<br>Q3（调整后）：+0.45 美元',
+     t:'EPS 本身没有「好坏区间」，要看的是<b>趋势</b>。正在由负转正是积极信号，但还需要连续确认。'}]},
+   nvda:{main:'117%',mk:[{v:117,t:'NVDA 117%',cls:'over'}],vd:['g','英伟达：ROE 117% · 远超优秀线'],
+    sx:[{m:'ROE',v:'117%',tag:['g','优秀'],c:'最近 12 个月净利润 ÷ 平均净资产',
+     t:'超过 100% 非常罕见：利润暴增，而净资产基数相对较小。<b>这种水平很难长期维持</b>，周期回落时 ROE 也会大幅下降。'},
+        {m:'每股收益 EPS（TTM）',v:'7.91 美元',tag:['g','高增长'],c:'净利润 ÷ 总股本',
+     t:'对应股价 186.64 美元，即 PE ≈ 23.6 倍。'}]},
+   googl:{main:'44%',mk:[{v:44.29,t:'GOOGL 44%',cls:'over'}],vd:['g','谷歌：ROE 44% · 远超优秀线'],
+    sx:[{m:'ROE',v:'44.3%',tag:['g','优秀'],c:'最近 12 个月净利润 ÷ 平均净资产',
+     t:'净资产规模很大的同时仍有 40% 以上的 ROE，赚钱效率很高。但如果利润里包含一次性投资收益，<b>扣除后的 ROE 会低一些</b>。'},
+        {m:'每股收益 EPS（TTM）',v:'19.15 美元',tag:['g','盈利稳健'],c:'净利润 ÷ 总股本',
+     t:'对应股价 284.78 美元，即 PE ≈ 14.9 倍。'}]},
+  }},
+ '股息率':{min:0,max:8,
+  zones:[[0,1,'低','ok'],[1,3,'一般','ok'],[3,6,'较高','good'],[6,8,'警惕','warn']],
+  ticks:[0,1,3,6,8],
+  rule:'3–6% 对价值股来说算较高；超过 6% 要警惕股价暴跌或分红不可持续。成长股不分红或少分红很常见。',
+  cmp:'三家股息率都低于 1%。美国科技公司主要用<b>股票回购</b>而不是现金分红来回馈股东：回购减少股本，每股收益随之提高。',
+  s:{
+   spcx:{main:'0%',mk:[{v:0,t:'SPCX 0%'}],vd:['n','SpaceX：0% · 不分红'],
+    sx:[{m:'股息率',v:'0%',tag:['n','不分红'],c:'未分红',
+     t:'高资本开支的成长公司普遍不分红：三季度单季资本开支约 196 亿美元。买它赚的只能是股价上涨的钱。'}]},
+   nvda:{main:'0.54%',mk:[{v:0.54,t:'NVDA 0.54%'}],vd:['n','英伟达：0.54% · 低'],
+    sx:[{m:'股息率',v:'0.54%',tag:['n','低'],c:'年度每股分红 ÷ 股价 186.64',
+     t:'分红只是象征性的，股东回报主要来自股价上涨和回购。'}]},
+   googl:{main:'0.31%',mk:[{v:0.31,t:'GOOGL 0.31%'}],vd:['n','谷歌：0.31% · 低'],
+    sx:[{m:'股息率',v:'0.31%',tag:['n','低'],c:'年度每股分红 ÷ 股价 284.78',
+     t:'谷歌开始派发股息的时间不长，金额较小；大规模回购才是主要的股东回报方式。'}]},
+  }},
+};
+Object.keys(G).forEach(k=>G[k].key=k);
+
+const pct=(g,v)=>Math.max(0,Math.min(100,(v-g.min)/(g.max-g.min)*100));
+function mkHTML(g,m,i,extra,bg){
+  const p=pct(g,m.v), over=m.v>g.max;
+  const edge=p<12?' el':p>88?' er':'';
+  const below=(m.cls||'').includes('alt')||extra==='below';
+  const tall=extra==='tall'?' tall':'';
+  return `<div class="mk ${m.cls||''}${over?' over':''}${edge}${tall}" style="left:${p}%;animation-delay:${.15+i*.2}s${below?';bottom:auto;top:100%;flex-direction:column-reverse':''}${bg?';--mc:'+bg:''}"><span>${m.t}</span></div>`;
+}
+function barHTML(g,cmp){
+  if(!g.zones) return '';
+  let mks;
+  if(cmp){
+    mks = ORDER.map((k,i)=>{const m=g.s[k].mk[0];return mkHTML(g,{...m,t:STK[k].tk+' '+g.s[k].main,cls:(m.cls||'').replace('alt','')},i,i===1?'below':i===2?'tall':'',STK[k].col)}).join('');
+  } else {
+    mks = g.s[CUR].mk.map((m,i)=>mkHTML(g,m,i)).join('');
+  }
+  return `<div class="bar">
+   ${g.zones.map(z=>`<div class="z z-${z[3]}" style="width:${(z[1]-z[0])/(g.max-g.min)*100}%" title="${z[0]}–${z[1]}">${z[2]}</div>`).join('')}
+   ${g.ticks.map(t=>`<span class="tick" style="left:${pct(g,t)}%">${t}</span>`).join('')}
+   ${mks}
+  </div>`;
+}
+const TABS = [...ORDER.map(k=>[k,STK[k].tk]),['cmp','对比']];
+const tabsHTML = ()=>`<div class="stabs" role="tablist">${TABS.map(([k,l])=>`<button role="tab" class="stab${k===CUR?' on':''}" data-stk="${k}" aria-selected="${k===CUR}">${l}</button>`).join('')}</div>`;
+function panelHTML(g){
+  const cmp = CUR==='cmp';
+  let body;
+  if(cmp){
+    body = `<div class="vd"><b class="n">三家对比</b>${g.rule}</div>
+      <table class="cmpt">${ORDER.map(k=>{const r=g.s[k].sx[0];return `<tr><td><i style="background:${STK[k].col}"></i>${STK[k].nm}</td><td class="v">${g.s[k].main}</td><td><span class="tag2 ${r.tag[0]}">${r.tag[1]}</span></td></tr>`}).join('')}</table>
+      <div class="sxr"><p>${g.cmp}</p></div>`;
+  } else {
+    const d = g.s[CUR];
+    body = `<div class="vd"><b class="${d.vd[0]}">${d.vd[1]}</b>${g.rule}</div>
+      ${d.sx.map(r=>`<div class="sxr"><div class="sx-top"><b>${r.m}</b><span class="v">${r.v}</span><span class="tag2 ${r.tag[0]}">${r.tag[1]}</span></div><div class="c">${r.c}</div><p>${r.t}</p></div>`).join('')}`;
+  }
+  return `<aside class="vp${cmp?' cmp':''}${g.zones?'':' nobar'}" data-k="${g.key}">
+    <div class="vp-h">估值尺子${tabsHTML()}</div>
+    ${barHTML(g,cmp)}
+    ${body}
+  </aside>`;
+}
+function setStock(k){
+  CUR=k;
+  document.querySelectorAll('aside.vp[data-k]').forEach(a=>{a.outerHTML=panelHTML(G[a.dataset.k])});
+  document.querySelectorAll('#stkTabs .stab').forEach(b=>{b.classList.toggle('on',b.dataset.stk===k);b.setAttribute('aria-selected',b.dataset.stk===k)});
+  const box=document.getElementById('spx');
+  if(k==='cmp'){
+    box.innerHTML=`<b>三家对比</b>${ORDER.map(x=>`<span class="dot" style="background:${STK[x].col}"></span>${STK[x].nm}　股价 <em>${STK[x].px}</em> · 市值 <em>${STK[x].cap}</em>`).join('<br>')}<br>单位：美元`;
+  } else {
+    const s=STK[k];
+    box.innerHTML=`<b>${s.nm} · ${s.tk}</b>股价 <em>${s.px}</em> 美元<br>总市值 <em>${s.cap}</em> 美元<br>${s.asof}`;
+  }
+}
+document.addEventListener('click',e=>{const b=e.target.closest('.stab');if(b)setStock(b.dataset.stk)});
+
 function card(t,idx){
   const cc = CATS.find(c=>c.id===t.cat).c;
-  return `<article class="card" data-i="${T.indexOf(t)}" style="--cc:var(${cc})" data-s="${(t.name+t.en+t.one+(t.myth||'')+(t.truth||'')).toLowerCase().replace(/<[^>]+>/g,'')}">
-    <div class="hd"><div><h3>${t.name}</h3><div class="en">${t.en}</div></div>${lvlHTML(t.lvl)}</div>
+  const g = G[t.name];
+  const pn = g ? panelHTML(g) : (t.panel||'');
+  return `<article class="card${pn?' vcard':''}" data-i="${T.indexOf(t)}" style="--cc:var(${cc})" data-s="${(t.name+t.en+t.one+(t.myth||'')+(t.truth||'')).toLowerCase().replace(/<[^>]+>/g,'')}">
+    ${pn?'<div class="vl">':''}<div class="hd"><div><h3>${t.name}</h3><div class="en">${t.en}</div></div>${lvlHTML(t.lvl)}</div>
     <p class="one">${t.one}</p>
     ${t.f?`<div class="f">${t.f}</div>`:''}
     ${t.eg?`<div class="eg">${t.eg}</div>`:''}
     <div class="mt"><div class="myth"><b>常见误解：</b>${t.myth}</div><div class="truth"><b>真相：</b>${t.truth}</div></div>
     ${t.tip?`<div class="tip">${t.tip}</div>`:''}
+    ${pn?'</div>'+pn:''}
   </article>`;
 }
 function render(){
   $('#list').innerHTML = CATS.map((c,i)=>`
     <section class="cat" data-cat="${c.id}" style="--cc:var(${c.c})">
       <div class="cat-h"><span class="no">0${i+1}</span><h2>${c.name}</h2><p>${c.d}</p></div>
-      <div class="grid">${T.filter(t=>t.cat===c.id).map(card).join('')}</div>
+      <div class="grid${c.id==='val'?' wide':''}">${T.filter(t=>t.cat===c.id).map(card).join('')}</div>
     </section>`).join('');
   $('#chips').innerHTML = `<button class="chip on" data-c="all">全部</button>`+
     CATS.map(c=>`<button class="chip" data-c="${c.id}" style="--dot:var(${c.c})">${c.name}</button>`).join('')+
@@ -516,6 +876,9 @@ function render(){
   let n=0; const N=T.length; const it=setInterval(()=>{n++;$('#nTerms').textContent=n;if(n>=N)clearInterval(it)},28);
 }
 render();
+{ const vc=document.querySelector('.cat[data-cat="val"]');
+  vc.insertBefore(document.getElementById('ruler'), vc.querySelector('.grid'));
+  vc.appendChild(document.getElementById('ruler-foot')); }
 
 let curCat='all';
 function filter(){
@@ -548,6 +911,8 @@ document.addEventListener('keydown',e=>{ if(e.key==='/' && document.activeElemen
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05});
 document.querySelectorAll('.card').forEach((el,i)=>{el.style.transitionDelay=(i%3)*80+'ms';io.observe(el)});
 $('#count').textContent = `显示 ${T.length} / ${T.length}`;
+
+
 
 // quiz
 let right=0, done=0;
