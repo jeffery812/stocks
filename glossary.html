@@ -292,6 +292,31 @@ footer a{color:var(--amber)}
 .xo{padding-left:20px;font-size:13.5px;color:var(--ink-2);line-height:1.7}
 .xo li{margin:6px 0}
 .xo b{color:var(--ink)}
+
+.mk.under span::before{content:"← "}
+.vp-h{flex-wrap:wrap;gap:8px}
+.dp{margin:18px 0 4px}
+.dp-r{display:grid;grid-template-columns:62px 1fr 150px;gap:12px;align-items:center;min-height:30px}
+.dp-tk-n{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--chalk);display:flex;align-items:center;gap:6px}
+.dp-tk-n i{width:9px;height:9px;border-radius:50%;flex:none}
+.dp-tr{position:relative;height:22px}
+.dp-bg{position:absolute;inset:6px 0;display:flex;opacity:.55;border-radius:2px;overflow:hidden}
+.dp-bg .z{height:100%;border-right:1px solid var(--bg)}
+.dp-tr .dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid #1c1a17;box-shadow:0 0 0 1.5px rgba(239,231,214,.7);animation:pop .5s cubic-bezier(.3,1.6,.5,1) both}
+.dp-tr .dot.over::after{content:"➜";position:absolute;left:14px;top:-5px;font-size:12px;color:var(--chalk)}
+.dp-tr .dot.under::after{content:"←";position:absolute;right:14px;top:-4px;font-size:12px;color:var(--chalk)}
+@keyframes pop{from{transform:translate(-50%,-50%) scale(0)}to{transform:translate(-50%,-50%) scale(1)}}
+.dp-tr em.na{position:absolute;left:0;top:50%;transform:translateY(-50%);font-style:normal;font-size:11.5px;color:var(--chalk-2);background:#1c1a17;padding:0 6px;border:1px dashed var(--chalk-2);border-radius:3px}
+.dp-tr.cap{display:flex;align-items:center}
+.dp-tr .capbar{display:block;height:12px;border-radius:2px}
+.dp-v{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--chalk);display:flex;align-items:center;gap:6px;justify-content:flex-end;white-space:nowrap}
+.dp-head{min-height:20px}
+.dp-zl{display:flex;font-size:10.5px;color:var(--chalk-2)}
+.dp-zl div{text-align:center;overflow:hidden;white-space:nowrap;text-overflow:clip;border-left:1px solid var(--line)}
+.dp-ticks{min-height:18px}
+.dp-tk{position:relative;height:16px}
+.dp-tk span{position:absolute;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;color:var(--chalk-2)}
+.spx{max-width:520px}
 </style>
 </head>
 <body>
@@ -337,12 +362,12 @@ footer a{color:var(--amber)}
   <div class="rs-h">
     <div>
       <div class="k">VALUATION RULER · 估值尺子</div>
-      <h2>多少倍算贵？<br>拿三只巨头量一量</h2>
-      <p>每个估值指标都有一个大致的「经验区间」。下面每张卡片的右侧都配有一把尺子：彩色区段是常见分界线，实心标记是所选股票当前所处的位置，虚线标记是换一种口径（例如前瞻）后的结果。用右侧或每张卡片上的标签切换 <b style="color:var(--chalk)">SpaceX / 英伟达 / 谷歌 / 三家对比</b>，所有卡片会同步切换。<b style="color:var(--chalk)">区间只是经验值，行业不同差异巨大</b>，请结合下方的行业参考表一起看。</p>
+      <h2>多少倍算贵？<br>拿 7 家公司量一量</h2>
+      <p>每个估值指标都有一个大致的「经验区间」。下面每张卡片的右侧都配有一把尺子：彩色区段是常见分界线，实心标记是所选股票当前所处的位置，虚线标记是换一种口径（例如前瞻）后的结果。用右侧或每张卡片上的标签切换 <b style="color:var(--chalk)">SpaceX / 英伟达 / 谷歌 / 苹果 / 特斯拉 / 微软 / CoreWeave / 全部对比</b>，所有卡片会同步切换。<b style="color:var(--chalk)">区间只是经验值，行业不同差异巨大</b>，请结合下方的行业参考表一起看。</p>
     </div>
     <div>
       <div class="stabs lg" id="stkTabs" role="tablist">
-        <button class="stab on" data-stk="spcx">SpaceX</button><button class="stab" data-stk="nvda">英伟达</button><button class="stab" data-stk="googl">谷歌</button><button class="stab" data-stk="cmp">三家对比</button>
+        <button class="stab on" data-stk="spcx">SpaceX</button><button class="stab" data-stk="nvda">英伟达</button><button class="stab" data-stk="googl">谷歌</button><button class="stab" data-stk="aapl">苹果</button><button class="stab" data-stk="tsla">特斯拉</button><button class="stab" data-stk="msft">微软</button><button class="stab" data-stk="crwv">CoreWeave</button><button class="stab" data-stk="cmp">全部对比</button>
       </div>
       <div class="spx" id="spx"><b>SpaceX · SPCX</b>股价 <em>134.27</em> 美元<br>总市值 <em>≈ 1.82 万亿</em> 美元<br>股价为截图收盘价；财务数据截至 2026 年三季报</div>
     </div>
@@ -383,7 +408,7 @@ footer a{color:var(--amber)}
       </ol>
     </div>
   </div>
-  <p class="src">SpaceX 数据来源：<a href="https://www.sec.gov/Archives/edgar/data/0001181412/000162828026052515/earningsreleaseq22608042.htm" target="_blank" rel="noopener">2026 年二季度财报（SEC 8-K）</a>；<a href="https://www.cnbc.com/2026/10/20/spacex-spcx-earnings-live-updates-q3-2026html.html" target="_blank" rel="noopener">CNBC：2026 年三季报报道</a>；<a href="https://www.morningstar.com/stocks/6-charts-spacexs-s-1-financials" target="_blank" rel="noopener">Morningstar：S-1 招股书财务数据</a>。TTM 营收中 2025 年四季度为根据已披露数据推算的估计值，三季度数据来自媒体报道。所有比率都以截图中的市值计算，会随股价变动。<br>英伟达、谷歌数据来源：<a href="https://stockanalysis.com/stocks/nvda/statistics/" target="_blank" rel="noopener">StockAnalysis · NVDA</a>；<a href="https://stockanalysis.com/stocks/googl/statistics/" target="_blank" rel="noopener">StockAnalysis · GOOGL</a>（2026/11/6 收盘）。前瞻 PE / PS、PEG 基于分析师一致预期。</p>
+  <p class="src">SpaceX 数据来源：<a href="https://www.sec.gov/Archives/edgar/data/0001181412/000162828026052515/earningsreleaseq22608042.htm" target="_blank" rel="noopener">2026 年二季度财报（SEC 8-K）</a>；<a href="https://www.cnbc.com/2026/10/20/spacex-spcx-earnings-live-updates-q3-2026html.html" target="_blank" rel="noopener">CNBC：2026 年三季报报道</a>；<a href="https://www.morningstar.com/stocks/6-charts-spacexs-s-1-financials" target="_blank" rel="noopener">Morningstar：S-1 招股书财务数据</a>。TTM 营收中 2025 年四季度为根据已披露数据推算的估计值，三季度数据来自媒体报道。所有比率都以截图中的市值计算，会随股价变动。<br>英伟达、谷歌、苹果、特斯拉、微软、CoreWeave 数据来源：StockAnalysis（<a href="https://stockanalysis.com/stocks/nvda/statistics/" target="_blank" rel="noopener">NVDA</a>、<a href="https://stockanalysis.com/stocks/googl/statistics/" target="_blank" rel="noopener">GOOGL</a>、<a href="https://stockanalysis.com/stocks/aapl/statistics/" target="_blank" rel="noopener">AAPL</a>、<a href="https://stockanalysis.com/stocks/tsla/statistics/" target="_blank" rel="noopener">TSLA</a>、<a href="https://stockanalysis.com/stocks/msft/statistics/" target="_blank" rel="noopener">MSFT</a>、<a href="https://stockanalysis.com/stocks/crwv/statistics/" target="_blank" rel="noopener">CRWV</a>）（2026/11/6 收盘）。前瞻 PE / PS、PEG 基于分析师一致预期。</p>
 </div>
 
 
@@ -403,7 +428,7 @@ footer a{color:var(--amber)}
 <script>
 const CATS = [
   {id:'price', name:'价格与涨跌', c:'--c-price', d:'屏幕上最显眼的数字，误解也最多'},
-  {id:'val',   name:'估值指标',   c:'--c-val',   d:'判断「贵不贵」的尺子，每把尺子都有盲区。<span style="color:var(--c-val)">每张卡片右侧附：多少倍算贵 + SpaceX / 英伟达 / 谷歌实例</span>'},
+  {id:'val',   name:'估值指标',   c:'--c-val',   d:'判断「贵不贵」的尺子，每把尺子都有盲区。<span style="color:var(--c-val)">每张卡片右侧附：多少倍算贵 + 7 家公司实例</span>'},
   {id:'vol',   name:'量能与资金', c:'--c-vol',   d:'今天有多少人、多少钱在交易'},
   {id:'rule',  name:'交易规则',   c:'--c-rule',  d:'不懂规则，第一笔交易就可能踩坑'},
   {id:'chart', name:'图表与技术', c:'--c-chart', d:'K 线、均线：看得懂，但别迷信'},
@@ -681,11 +706,15 @@ const lvlHTML = n=>`<div class="lvl">迷惑度${[1,2,3].map(i=>`<span class="d${
 
 /* ---------- 估值尺子：多只股票 tab 切换，按卡片名称挂到对应卡片上 ---------- */
 const STK = {
-  spcx: {tk:'SPCX', nm:'SpaceX', px:'134.27', cap:'≈ 1.82 万亿', asof:'股价为截图收盘价；财务数据截至 2026 年三季报', col:'#e9e4d6'},
+  spcx: {tk:'SPCX', nm:'SpaceX', px:'134.27', cap:'≈ 1.82 万亿', asof:'股价为截图收盘价；财务数据截至 2026 年三季报', col:'#efe7d6'},
   nvda: {tk:'NVDA', nm:'英伟达 NVIDIA', px:'186.64', cap:'≈ 4.51 万亿', asof:'2026/11/6 收盘；TTM 财务数据', col:'#7fd66b'},
   googl:{tk:'GOOGL', nm:'谷歌 Alphabet', px:'284.78', cap:'≈ 3.50 万亿', asof:'2026/11/6 收盘；TTM 财务数据', col:'#5fb4f0'},
+  aapl: {tk:'AAPL', nm:'苹果 Apple', px:'342.37', cap:'≈ 4.98 万亿', asof:'2026/11/6 收盘；TTM 财务数据', col:'#f2a7c3'},
+  tsla: {tk:'TSLA', nm:'特斯拉 Tesla', px:'358.22', cap:'≈ 1.42 万亿', asof:'2026/11/6 收盘；TTM 财务数据', col:'#ff7a5c'},
+  msft: {tk:'MSFT', nm:'微软 Microsoft', px:'530.61', cap:'≈ 3.94 万亿', asof:'2026/11/6 收盘；TTM 财务数据', col:'#ffd166'},
+  crwv: {tk:'CRWV', nm:'CoreWeave', px:'46.40', cap:'≈ 256 亿', asof:'2026/11/6 收盘；TTM 财务数据', col:'#b79cff'},
 };
-const ORDER = ['spcx','nvda','googl'];
+const ORDER = ['spcx','nvda','googl','aapl','tsla','msft','crwv'];
 let CUR = 'spcx';
 
 const G = {
@@ -816,45 +845,189 @@ const G = {
 };
 Object.keys(G).forEach(k=>G[k].key=k);
 
+/* ---------- 新增：苹果 / 特斯拉 / 微软 / CoreWeave ---------- */
+const NEW = {
+ '市盈率 PE':{
+  aapl:{main:'38.1 倍',mk:[{v:38.13,t:'AAPL 38.1'},{v:36.4,t:'前瞻 36.4',cls:'alt'}],vd:['a','苹果：38.1 倍 · 偏高'],
+   sx:[{m:'市盈率 PE（TTM）',v:'38.1 倍',tag:['a','偏高·需成长'],c:'4.98 万亿 ÷ 最近 12 个月净利润 1,322 亿',
+    t:'接近「偏高」区间的上沿，而苹果的利润增速并不快，这正是它 PEG 高达 4.4 的原因。市场给苹果的是<b>确定性溢价</b>：品牌、生态和稳定的现金流。'},
+       {m:'前瞻市盈率 PE',v:'36.4 倍',tag:['a','偏高·需成长'],c:'市值 ÷ 分析师预测的未来 12 个月净利润',
+    t:'前瞻 PE 和 TTM 几乎一样，说明市场<b>并不预期利润大幅增长</b>。高估值靠的是稳定，而不是增长。'}]},
+  tsla:{main:'394 倍',mk:[{v:393.57,t:'TSLA 394'},{v:167.56,t:'前瞻 168',cls:'alt'}],vd:['r','特斯拉：394 倍 · 远超量程'],
+   sx:[{m:'市盈率 PE（TTM）',v:'393.6 倍',tag:['r','高估'],c:'股价 358.22 ÷ 每股收益 0.91',
+    t:'过去 12 个月净利润只有约 32 亿美元，股价主要反映的是自动驾驶、机器人等<b>远期故事</b>。PE 到了几百倍时，利润的小幅波动就会让 PE 剧烈跳动，PE 这把尺子基本失灵。'},
+       {m:'前瞻市盈率 PE',v:'167.6 倍',tag:['r','高估'],c:'市值 ÷ 分析师预测的未来 12 个月净利润',
+    t:'即使按分析师预期利润翻倍以上，前瞻 PE 仍有一百多倍。买它，买的是对未来业务的信念。'}]},
+  msft:{main:'27.7 倍',mk:[{v:27.71,t:'MSFT 27.7'},{v:25.56,t:'前瞻 25.6',cls:'alt'}],vd:['a','微软：27.7 倍 · 优质成长的典型估值'],
+   sx:[{m:'市盈率 PE（TTM）',v:'27.7 倍',tag:['a','偏高·需成长'],c:'3.94 万亿 ÷ 最近 12 个月净利润 1,426 亿',
+    t:'处在「偏高·需成长」区间的中段。云计算和 AI 业务提供了持续增长，这是市场给「高质量成长股」的常见定价。'},
+       {m:'前瞻市盈率 PE',v:'25.6 倍',tag:['a','偏高·需成长'],c:'市值 ÷ 分析师预测的未来 12 个月净利润',
+    t:'前瞻 PE 略低于 TTM，代表预期利润温和增长。'}]},
+  crwv:{main:'亏损',mk:[{v:-5,t:'CRWV 亏损',cls:'na'}],vd:['n','CoreWeave：不适用'],
+   sx:[{m:'市盈率 PE（TTM）',v:'亏损',tag:['n','不适用'],c:'最近 12 个月净亏损约 19.3 亿美元',
+    t:'AI 算力租赁公司，营收增长很快，但折旧和利息支出巨大，目前仍然亏损，PE 无法使用。'}]},
+ },
+ '市净率 PB':{
+  aapl:{main:'44.4 倍',mk:[{v:44.39,t:'AAPL 44.4'}],vd:['r','苹果：44.4 倍 · 已失真'],
+   sx:[{m:'市净率 PB',v:'44.4 倍',tag:['r','很高'],c:'4.98 万亿 ÷ 净资产 1,121 亿',
+    t:'苹果多年来用大量现金<b>回购股票</b>，把账面净资产「买」得很小，所以 PB 极高。这时 PB 已经失真，不能说明苹果被高估了 40 多倍。'}]},
+  tsla:{main:'15.9 倍',mk:[{v:15.86,t:'TSLA 15.9'}],vd:['r','特斯拉：15.9 倍 · 很高'],
+   sx:[{m:'市净率 PB',v:'15.9 倍',tag:['r','很高'],c:'1.42 万亿 ÷ 净资产 899 亿',
+    t:'特斯拉有工厂、设备、存货，资产并不「轻」，但 ROE 只有 3.8%。<b>PB 高、ROE 低</b>，说明估值几乎完全建立在对未来的预期上。'}]},
+  msft:{main:'8.4 倍',mk:[{v:8.38,t:'MSFT 8.4'}],vd:['r','微软：8.4 倍 · 刚过「很高」线'],
+   sx:[{m:'市净率 PB',v:'8.4 倍',tag:['r','很高'],c:'3.94 万亿 ÷ 净资产 4,705 亿',
+    t:'净资产规模很大，PB 仍有 8 倍多，但 ROE 达 34%，资产的赚钱能力撑得住这个 PB。'}]},
+  crwv:{main:'5.1 倍',mk:[{v:5.09,t:'CRWV 5.1'}],vd:['a','CoreWeave：5.1 倍 · 偏高'],
+   sx:[{m:'市净率 PB',v:'5.1 倍',tag:['a','偏高'],c:'256 亿 ÷ 净资产 50.2 亿',
+    t:'只看 PB 不算夸张，但它的净资产很薄：总债务约 516 亿美元，<b>负债权益比约 10 倍</b>。高杠杆公司的股权价值对经营波动极其敏感。'}]},
+ },
+ '市销率 PS':{
+  aapl:{main:'10.4 倍',mk:[{v:10.39,t:'AAPL 10.4'},{v:9.49,t:'前瞻 9.5',cls:'alt'}],vd:['a','苹果：10.4 倍 · 很贵区间的下沿'],
+   sx:[{m:'市销率 PS（TTM）',v:'10.4 倍',tag:['a','很贵'],c:'4.98 万亿 ÷ 营收 4,788 亿',
+    t:'净利率约 27.6%，每 1 元收入留下约 0.28 元利润。PS 10 倍左右对应 PE 约 38 倍。'}]},
+  tsla:{main:'13.7 倍',mk:[{v:13.67,t:'TSLA 13.7'},{v:11.96,t:'前瞻 12.0',cls:'alt'}],vd:['r','特斯拉：13.7 倍 · 但净利率只有 3%'],
+   sx:[{m:'市销率 PS（TTM）',v:'13.7 倍',tag:['a','很贵'],c:'1.42 万亿 ÷ 营收 1,036 亿',
+    t:'和英伟达的 PS 几乎一样，但英伟达净利率约 64%，特斯拉只有 <b>3.1%</b>。同样的 PS，背后的利润差了 20 倍。<b>PS 一定要配合净利率看。</b>'}]},
+  msft:{main:'11.4 倍',mk:[{v:11.37,t:'MSFT 11.4'},{v:9.51,t:'前瞻 9.5',cls:'alt'}],vd:['a','微软：11.4 倍 · 有高利润率支撑'],
+   sx:[{m:'市销率 PS（TTM）',v:'11.4 倍',tag:['a','很贵'],c:'3.94 万亿 ÷ 营收 3,465 亿',
+    t:'净利率约 41%，属于全球最赚钱的商业模式之一，高 PS 有利润撑腰。'}]},
+  crwv:{main:'3.4 倍',mk:[{v:3.37,t:'CRWV 3.4'},{v:1.3,t:'前瞻 1.3',cls:'alt'}],vd:['a','CoreWeave：3.4 倍 · 看似便宜，实则高杠杆'],
+   sx:[{m:'市销率 PS（TTM）',v:'3.4 倍',tag:['n','成长溢价'],c:'256 亿 ÷ 营收 75.9 亿',
+    t:'7 家里 PS 最低，但这是<b>「低 PS 陷阱」</b>的典型：PS 只用股票市值，没算债务。把约 516 亿美元债务加进去，「市值 + 债务」约 772 亿，大约是营收的 10 倍（未扣除现金）。'},
+       {m:'前瞻市销率 PS',v:'1.3 倍',tag:['g','合理'],c:'市值 ÷ 分析师预测的未来 12 个月营收',
+    t:'预期营收大幅增长，前瞻 PS 更低。但营收增长需要持续借钱买 GPU，债务也会一起增长。'}]},
+ },
+ 'PEG':{
+  aapl:{main:'4.41',mk:[{v:4.41,t:'AAPL 4.41'}],vd:['r','苹果：4.41 · 远超偏贵线'],
+   sx:[{m:'PEG',v:'4.41',tag:['r','偏贵'],c:'市盈率 ÷ 分析师预测的未来利润增速',
+    t:'按增速衡量非常贵。投资者愿意为苹果付高价，买的是稳定性和回购，而不是增长。PEG 对这种公司参考意义有限。'}]},
+  tsla:{main:'4.87',mk:[{v:4.87,t:'TSLA 4.87'}],vd:['r','特斯拉：4.87 · 远超偏贵线'],
+   sx:[{m:'PEG',v:'4.87',tag:['r','偏贵'],c:'市盈率 ÷ 分析师预测的未来利润增速',
+    t:'即使分析师已经预期利润高速增长，PEG 仍然接近 5，估值远远跑在了利润前面。'}]},
+  msft:{main:'1.56',mk:[{v:1.56,t:'MSFT 1.56'}],vd:['n','微软：1.56 · 合理区间'],
+   sx:[{m:'PEG',v:'1.56',tag:['n','合理'],c:'市盈率 ÷ 分析师预测的未来利润增速',
+    t:'和谷歌（1.58）几乎一样，估值和增速大致匹配。'}]},
+  crwv:{main:'不适用',mk:[{v:0,t:'CRWV 不适用',cls:'na'}],vd:['n','CoreWeave：不适用'],
+   sx:[{m:'PEG',v:'不适用',tag:['n','不适用'],c:'亏损，没有 PE，也就算不出 PEG',
+    t:'亏损公司无法用 PEG 衡量。'}]},
+ },
+ '总市值 / 流通市值':{
+  aapl:{main:'4.98 万亿',vd:['g','苹果：≈ 4.98 万亿美元 · 7 家中最大'],
+   sx:[{m:'总市值',v:'≈ 4.98 万亿',tag:['g','超大盘'],c:'股价 342.37 美元（2026/11/6）',
+    t:'在这 7 家里市值最大。它在标普 500、纳斯达克 100 中的权重都很高，买指数基金就等于间接持有了不少苹果。'}]},
+  tsla:{main:'1.42 万亿',vd:['g','特斯拉：≈ 1.42 万亿美元 · 超大盘'],
+   sx:[{m:'总市值',v:'≈ 1.42 万亿',tag:['g','超大盘'],c:'股价 358.22 美元（2026/11/6）',
+    t:'营收约 1,036 亿美元，只有苹果的 1/5，市值却有苹果的近 30%，这是市场对它未来业务的定价。'}]},
+  msft:{main:'3.94 万亿',vd:['g','微软：≈ 3.94 万亿美元 · 超大盘'],
+   sx:[{m:'总市值',v:'≈ 3.94 万亿',tag:['g','超大盘'],c:'股价 530.61 美元（2026/11/6）',
+    t:'与谷歌、英伟达、苹果同属「万亿俱乐部」的头部。'}]},
+  crwv:{main:'256 亿',vd:['a','CoreWeave：≈ 256 亿美元 · 中盘股'],
+   sx:[{m:'总市值',v:'≈ 256 亿',tag:['a','中盘'],c:'股价 46.40 美元（2026/11/6）',
+    t:'比其他 6 家小了约两个数量级。市值小、杠杆高的公司，<b>股价波动通常大得多</b>，单日涨跌 10% 以上并不罕见。'}]},
+ },
+ '每股收益 EPS / ROE':{
+  aapl:{main:'142%',mk:[{v:142.26,t:'AAPL 142%'}],vd:['g','苹果：ROE 142% · 但被回购放大'],
+   sx:[{m:'ROE',v:'142.3%',tag:['g','优秀'],c:'最近 12 个月净利润 ÷ 平均净资产',
+    t:'ROE 超过 100%，主要是因为<b>回购把净资产压得很小</b>（分母小），而不只是更会赚钱。比较 ROE 时，要留意分母是否被回购或负债改变。'},
+       {m:'每股收益 EPS（TTM）',v:'8.98 美元',tag:['g','稳定'],c:'净利润 ÷ 总股本',
+    t:'回购会减少股本，所以即使利润增长不快，EPS 也会被推高。'}]},
+  tsla:{main:'3.8%',mk:[{v:3.84,t:'TSLA 3.8%'}],vd:['r','特斯拉：ROE 3.8% · 偏差'],
+   sx:[{m:'ROE',v:'3.8%',tag:['r','差'],c:'最近 12 个月净利润 ÷ 平均净资产',
+    t:'低于 8% 的「差」区间，甚至不如很多银行理财的收益率。按当前利润，股东的钱并没有被高效使用。'},
+       {m:'每股收益 EPS（TTM）',v:'0.91 美元',tag:['a','偏低'],c:'净利润 ÷ 总股本',
+    t:'股价 358 美元，EPS 只有 0.91 美元，这就是 PE 接近 400 倍的原因。'}]},
+  msft:{main:'34%',mk:[{v:34.22,t:'MSFT 34%'}],vd:['g','微软：ROE 34% · 优秀'],
+   sx:[{m:'ROE',v:'34.2%',tag:['g','优秀'],c:'最近 12 个月净利润 ÷ 平均净资产',
+    t:'在净资产规模很大（4,705 亿）的情况下仍有 34% 的 ROE，赚钱效率非常高，而且不是靠把净资产压小得来的。'},
+       {m:'每股收益 EPS（TTM）',v:'19.15 美元',tag:['g','稳健增长'],c:'净利润 ÷ 总股本',
+    t:'对应股价 530.61 美元，即 PE ≈ 27.7 倍。'}]},
+  crwv:{main:'−43.6%',mk:[{v:-43.6,t:'CRWV −43.6%'}],vd:['r','CoreWeave：ROE −43.6% · 亏损'],
+   sx:[{m:'ROE',v:'−43.6%',tag:['r','亏损'],c:'净亏损 19.3 亿 ÷ 平均净资产',
+    t:'亏损相对于很薄的净资产来说很大。<b>高杠杆会放大 ROE</b>：赚钱时放大收益，亏钱时放大亏损。'},
+       {m:'每股收益 EPS（TTM）',v:'−3.70 美元',tag:['r','亏损'],c:'净利润 ÷ 总股本',
+    t:'每股亏损 3.70 美元，股价 46.40 美元。'}]},
+ },
+ '股息率':{
+  aapl:{main:'0.32%',mk:[{v:0.32,t:'AAPL 0.32%'}],vd:['n','苹果：0.32% · 低'],
+   sx:[{m:'股息率',v:'0.32%',tag:['n','低'],c:'年度每股分红 ÷ 股价 342.37',
+    t:'苹果每年都分红，但真正的大头是<b>回购</b>，金额远超分红。'}]},
+  tsla:{main:'0%',mk:[{v:0,t:'TSLA 0%'}],vd:['n','特斯拉：0% · 不分红'],
+   sx:[{m:'股息率',v:'0%',tag:['n','不分红'],c:'从未分红',
+    t:'利润全部留在公司里继续投资。'}]},
+  msft:{main:'0.74%',mk:[{v:0.74,t:'MSFT 0.74%'}],vd:['n','微软：0.74% · 低'],
+   sx:[{m:'股息率',v:'0.74%',tag:['n','低'],c:'年度每股分红 ÷ 股价 530.61',
+    t:'7 家里股息率最高，且多年持续提高分红，但仍低于 1%。'}]},
+  crwv:{main:'0%',mk:[{v:0,t:'CRWV 0%'}],vd:['n','CoreWeave：0% · 不分红'],
+   sx:[{m:'股息率',v:'0%',tag:['n','不分红'],c:'未分红',
+    t:'亏损且高负债的成长公司，不可能分红。'}]},
+ },
+};
+Object.keys(NEW).forEach(k=>Object.assign(G[k].s, NEW[k]));
+const CMP = {
+ '市盈率 PE':'谷歌最低（14.9 倍）；英伟达、微软在 20–30 倍；苹果 38 倍偏高；特斯拉近 400 倍，远超量程；SpaceX、CoreWeave 亏损，PE 不适用。',
+ '市净率 PB':'科技公司的 PB 普遍偏高，要配合 ROE 看。苹果 44 倍是回购把净资产压小造成的，PB 已经失真；特斯拉 PB 15.9 倍而 ROE 只有 3.8%，估值几乎全靠预期。',
+ '市销率 PS':'同样十几倍的 PS，英伟达净利率约 64%、微软 41%，特斯拉只有 3%：<b>PS 必须和净利率一起看</b>。CoreWeave 的 PS 最低，但背着 516 亿美元债务，是典型的「低 PS 陷阱」。',
+ 'PEG':'英伟达 0.31 最低；谷歌、微软约 1.6，属于合理区间；苹果 4.4、特斯拉 4.9 偏贵；亏损公司无法计算。',
+ '总市值 / 流通市值':'苹果 4.98 万亿 > 英伟达 4.51 > 微软 3.94 > 谷歌 3.50 > SpaceX 1.82 > 特斯拉 1.42 万亿，CoreWeave 只有 256 亿，小了约两个数量级。',
+ '每股收益 EPS / ROE':'苹果 142%、英伟达 117% 远超优秀线，但苹果主要是回购压低了净资产；谷歌 44%、微软 34% 属于实打实的优秀；特斯拉 3.8% 偏差；CoreWeave −43.6%、SpaceX 为负。',
+ '股息率':'7 家全部低于 1%，微软 0.74% 最高。美国科技公司主要用回购回馈股东；特斯拉、SpaceX、CoreWeave 不分红。',
+};
+Object.keys(CMP).forEach(k=>G[k].cmp=CMP[k]);
+const CAPV = {spcx:1.82,nvda:4.51,googl:3.50,aapl:4.98,tsla:1.42,msft:3.94,crwv:0.0256};
+
 const pct=(g,v)=>Math.max(0,Math.min(100,(v-g.min)/(g.max-g.min)*100));
 function mkHTML(g,m,i,extra,bg){
-  const p=pct(g,m.v), over=m.v>g.max;
+  const p=pct(g,m.v), over=m.v>g.max, under=m.v<g.min;
   const edge=p<12?' el':p>88?' er':'';
   const below=(m.cls||'').includes('alt')||extra==='below';
   const tall=extra==='tall'?' tall':'';
-  return `<div class="mk ${m.cls||''}${over?' over':''}${edge}${tall}" style="left:${p}%;animation-delay:${.15+i*.2}s${below?';bottom:auto;top:100%;flex-direction:column-reverse':''}${bg?';--mc:'+bg:''}"><span>${m.t}</span></div>`;
+  return `<div class="mk ${m.cls||''}${over?' over':''}${under?' under':''}${edge}${tall}" style="left:${p}%;animation-delay:${.15+i*.2}s${below?';bottom:auto;top:100%;flex-direction:column-reverse':''}${bg?';--mc:'+bg:''}"><span>${m.t}</span></div>`;
 }
-function barHTML(g,cmp){
+function barHTML(g){
   if(!g.zones) return '';
-  let mks;
-  if(cmp){
-    mks = ORDER.map((k,i)=>{const m=g.s[k].mk[0];return mkHTML(g,{...m,t:STK[k].tk+' '+g.s[k].main,cls:(m.cls||'').replace('alt','')},i,i===1?'below':i===2?'tall':'',STK[k].col)}).join('');
-  } else {
-    mks = g.s[CUR].mk.map((m,i)=>mkHTML(g,m,i)).join('');
-  }
+  const mks = g.s[CUR].mk.map((m,i)=>mkHTML(g,m,i)).join('');
   return `<div class="bar">
    ${g.zones.map(z=>`<div class="z z-${z[3]}" style="width:${(z[1]-z[0])/(g.max-g.min)*100}%" title="${z[0]}–${z[1]}">${z[2]}</div>`).join('')}
    ${g.ticks.map(t=>`<span class="tick" style="left:${pct(g,t)}%">${t}</span>`).join('')}
    ${mks}
   </div>`;
 }
-const TABS = [...ORDER.map(k=>[k,STK[k].tk]),['cmp','对比']];
+/* 对比视图：点阵图，每只股票一行 */
+function dotplotHTML(g){
+  const zoneBg = g.zones ? g.zones.map(z=>`<div class="z z-${z[3]}" style="width:${(z[1]-z[0])/(g.max-g.min)*100}%"></div>`).join('') : '';
+  const head = g.zones ? `<div class="dp-r dp-head"><span></span><div class="dp-zl">${g.zones.map(z=>`<div style="width:${(z[1]-z[0])/(g.max-g.min)*100}%">${z[2]}</div>`).join('')}</div><span></span></div>` : '';
+  const ticks = g.zones ? `<div class="dp-r dp-ticks"><span></span><div class="dp-tk">${g.ticks.map(t=>`<span style="left:${pct(g,t)}%">${t}</span>`).join('')}</div><span></span></div>` : '';
+  const maxCap = Math.max(...Object.values(CAPV));
+  const rows = ORDER.map(k=>{
+    const d=g.s[k], st=STK[k], tag=d.sx[0].tag;
+    let track;
+    if(!g.zones){
+      track = `<div class="dp-tr cap"><b class="capbar" style="width:${Math.max(.6,CAPV[k]/maxCap*100)}%;background:${st.col}"></b></div>`;
+    } else {
+      const m=d.mk[0], na=(m.cls||'').includes('na');
+      const p=pct(g,m.v), over=m.v>g.max, under=m.v<g.min;
+      track = `<div class="dp-tr"><div class="dp-bg">${zoneBg}</div>${na?'<em class="na">不适用</em>':`<b class="dot${over?' over':''}${under?' under':''}" style="left:${p}%;background:${st.col}"></b>`}</div>`;
+    }
+    return `<div class="dp-r"><span class="dp-tk-n"><i style="background:${st.col}"></i>${st.tk}</span>${track}<span class="dp-v">${d.main} <span class="tag2 ${tag[0]}">${tag[1]}</span></span></div>`;
+  }).join('');
+  return `<div class="dp">${head}${rows}${ticks}</div>`;
+}
+const TABS = [...ORDER.map(k=>[k,STK[k].tk]),['cmp','全部对比']];
 const tabsHTML = ()=>`<div class="stabs" role="tablist">${TABS.map(([k,l])=>`<button role="tab" class="stab${k===CUR?' on':''}" data-stk="${k}" aria-selected="${k===CUR}">${l}</button>`).join('')}</div>`;
 function panelHTML(g){
   const cmp = CUR==='cmp';
   let body;
   if(cmp){
-    body = `<div class="vd"><b class="n">三家对比</b>${g.rule}</div>
-      <table class="cmpt">${ORDER.map(k=>{const r=g.s[k].sx[0];return `<tr><td><i style="background:${STK[k].col}"></i>${STK[k].nm}</td><td class="v">${g.s[k].main}</td><td><span class="tag2 ${r.tag[0]}">${r.tag[1]}</span></td></tr>`}).join('')}</table>
+    body = `${dotplotHTML(g)}
+      <div class="vd" style="margin-top:14px"><b class="n">${ORDER.length} 家对比</b>${g.rule}</div>
       <div class="sxr"><p>${g.cmp}</p></div>`;
   } else {
     const d = g.s[CUR];
-    body = `<div class="vd"><b class="${d.vd[0]}">${d.vd[1]}</b>${g.rule}</div>
+    body = `${barHTML(g)}<div class="vd"><b class="${d.vd[0]}">${d.vd[1]}</b>${g.rule}</div>
       ${d.sx.map(r=>`<div class="sxr"><div class="sx-top"><b>${r.m}</b><span class="v">${r.v}</span><span class="tag2 ${r.tag[0]}">${r.tag[1]}</span></div><div class="c">${r.c}</div><p>${r.t}</p></div>`).join('')}`;
   }
   return `<aside class="vp${cmp?' cmp':''}${g.zones?'':' nobar'}" data-k="${g.key}">
     <div class="vp-h">估值尺子${tabsHTML()}</div>
-    ${barHTML(g,cmp)}
     ${body}
   </aside>`;
 }
@@ -864,7 +1037,7 @@ function setStock(k){
   document.querySelectorAll('#stkTabs .stab').forEach(b=>{b.classList.toggle('on',b.dataset.stk===k);b.setAttribute('aria-selected',b.dataset.stk===k)});
   const box=document.getElementById('spx');
   if(k==='cmp'){
-    box.innerHTML=`<b>三家对比</b>${ORDER.map(x=>`<span class="dot" style="background:${STK[x].col}"></span>${STK[x].nm}　股价 <em>${STK[x].px}</em> · 市值 <em>${STK[x].cap}</em>`).join('<br>')}<br>单位：美元`;
+    box.innerHTML=`<b>${ORDER.length} 家对比</b>${ORDER.map(x=>`<span class="dot" style="background:${STK[x].col}"></span>${STK[x].nm}　股价 <em>${STK[x].px}</em> · 市值 <em>${STK[x].cap}</em>`).join('<br>')}<br>单位：美元`;
   } else {
     const s=STK[k];
     box.innerHTML=`<b>${s.nm} · ${s.tk}</b>股价 <em>${s.px}</em> 美元<br>总市值 <em>${s.cap}</em> 美元<br>${s.asof}`;
