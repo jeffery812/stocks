@@ -6,62 +6,73 @@
 <title>新手股民扫盲词典 · 那些你以为懂了的股市名词</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0e1714;
-  --bg-2:#15211d;
-  --card:#f1ead9;
+  /* 与 index.html 统一：纸张底色 + 墨色文字 + 朱红强调 */
+  --paper:#f4eee2;
+  --bg:#f4eee2;
+  --bg-2:#ebe3d2;
+  --card:#fbf8f1;
   --card-2:#e6dcc5;
-  --ink:#1a1712;
-  --ink-2:#4d463a;
-  --ink-3:#8b8170;
-  --chalk:#e9e4d6;
-  --chalk-2:#a7a596;
-  --line:rgba(233,228,214,.14);
+  --ink:#1c1a17;
+  --ink-2:#4a453d;
+  --ink-3:#8a8273;
+  --chalk:#1c1a17;
+  --chalk-2:#6e675b;
+  --line:rgba(28,26,23,.16);
+  --rule:#cfc4ae;
+  --red:#c8261d;
+  --jade:#1f7a4a;
+  --amber:#b5730b;
+  --c-price:#c8261d;
+  --c-val:#c27c0e;
+  --c-vol:#2f7fb5;
+  --c-rule:#8a4fb0;
+  --c-chart:#1f7a4a;
+  --c-mind:#c24d7a;
+  --display:"Noto Serif SC","Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB",sans-serif;
+  --mono:"IBM Plex Mono","SFMono-Regular",Menlo,monospace;
+}
+/* 深色墨块（尺子面板、公式框）保留亮色粉笔配色，对应 index.html 的黑底计算框 */
+.vp,.f{
+  --bg:#1c1a17;
+  --chalk:#efe7d6;
+  --chalk-2:#a9a08d;
+  --line:rgba(239,231,214,.15);
   --red:#e0442f;
   --jade:#3fae7d;
-  --amber:#e7a93a;
-  --c-price:#e0442f;
-  --c-val:#e7a93a;
-  --c-vol:#4fa3d9;
-  --c-rule:#b67ad6;
-  --c-chart:#3fae7d;
-  --c-mind:#e57aa0;
-  --display:"ZCOOL XiaoWei","Songti SC",serif;
-  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB",sans-serif;
-  --mono:"JetBrains Mono",Menlo,monospace;
+  --amber:#ffb15c;
+  --c-val:#ffb15c;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--chalk);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased;min-height:100vh}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(900px 500px at 85% -10%, rgba(224,68,47,.16), transparent 60%),
-    radial-gradient(700px 500px at -10% 30%, rgba(63,174,125,.12), transparent 60%),
-    repeating-linear-gradient(0deg, transparent 0 31px, rgba(233,228,214,.035) 31px 32px);
+body::before{ /* paper grain, same as index.html */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .18 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 28px}
 a{color:inherit}
 
 /* ---------- top bar ---------- */
-.top{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--chalk-2);letter-spacing:.08em}
+.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0 16px;border-bottom:3px double var(--ink);font-family:var(--mono);font-size:12px;color:var(--chalk-2);letter-spacing:.08em}
 .top a{text-decoration:none;border-bottom:1px dashed var(--chalk-2)}
 .top a:hover{color:var(--chalk)}
 
 /* ---------- hero ---------- */
 .hero{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;padding:64px 0 48px}
 .big{
-  font-family:var(--display);font-size:clamp(120px,18vw,240px);line-height:.85;
-  color:transparent;-webkit-text-stroke:2px var(--chalk);position:relative;user-select:none;
+  font-family:var(--display);font-weight:900;font-size:clamp(120px,18vw,240px);line-height:.85;
+  color:transparent;-webkit-text-stroke:2px var(--ink);position:relative;user-select:none;
   animation:rise 1s cubic-bezier(.2,.7,.2,1) both;
 }
 .big span{display:block}
-.big span:last-child{color:var(--red);-webkit-text-stroke:0;margin-left:.5em;margin-top:-.08em;text-shadow:0 0 60px rgba(224,68,47,.35)}
+.big span:last-child{color:var(--red);-webkit-text-stroke:0;margin-left:.5em;margin-top:-.08em;text-shadow:none}
 .hero-txt{animation:rise 1s .2s cubic-bezier(.2,.7,.2,1) both}
 .hero-txt .k{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--amber)}
-.hero-txt h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,4vw,52px);line-height:1.2;margin:10px 0 16px}
+.hero-txt h1{font-family:var(--display);font-weight:900;font-size:clamp(34px,4vw,52px);line-height:1.2;margin:10px 0 16px}
 .hero-txt p{color:var(--chalk-2);max-width:34em;font-size:16.5px}
 .stats{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap}
 .stats div{font-family:var(--mono);font-size:12px;color:var(--chalk-2)}
@@ -78,7 +89,7 @@ a{color:inherit}
 @keyframes scroll{to{transform:translateX(-50%)}}
 
 /* ---------- controls ---------- */
-.controls{position:sticky;top:0;z-index:10;background:rgba(14,23,20,.88);backdrop-filter:blur(10px);padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.controls{position:sticky;top:0;z-index:10;background:rgba(244,238,226,.93);backdrop-filter:blur(10px);padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .search{flex:1 1 260px;display:flex;align-items:center;gap:10px;border:1.5px solid var(--chalk-2);border-radius:999px;padding:8px 18px;transition:border-color .2s}
 .search:focus-within{border-color:var(--amber)}
 .search input{flex:1;background:none;border:0;outline:0;color:var(--chalk);font:500 15px var(--sans)}
@@ -88,29 +99,29 @@ a{color:inherit}
 .chip{cursor:pointer;border:1.5px solid var(--line);background:none;color:var(--chalk-2);font:500 13.5px var(--sans);padding:6px 14px;border-radius:999px;transition:all .2s;display:flex;gap:6px;align-items:center}
 .chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dot,var(--chalk-2))}
 .chip:hover{color:var(--chalk);border-color:var(--chalk-2)}
-.chip.on{background:var(--chalk);color:var(--ink);border-color:var(--chalk)}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .count{font-family:var(--mono);font-size:12px;color:var(--chalk-2);margin-left:auto}
 
 /* ---------- category blocks ---------- */
 .cat{padding:44px 0 8px}
 .cat-h{display:flex;align-items:baseline;gap:16px;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:12px}
 .cat-h .no{font-family:var(--mono);font-size:13px;color:var(--cc)}
-.cat-h h2{font-family:var(--display);font-weight:400;font-size:36px;color:var(--chalk)}
+.cat-h h2{font-family:var(--display);font-weight:900;font-size:36px;color:var(--chalk)}
 .cat-h p{color:var(--chalk-2);font-size:14px;margin-left:auto;text-align:right;max-width:28em}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:22px}
 .card{
-  background:var(--card);color:var(--ink);border-radius:4px;position:relative;
-  padding:22px 22px 18px 26px;
-  box-shadow:0 1px 0 var(--card-2), 0 18px 40px -22px rgba(0,0,0,.8);
+  background:var(--card);color:var(--ink);border-radius:2px;position:relative;
+  padding:22px 22px 18px 26px;border:1.5px solid var(--ink);
+  box-shadow:5px 5px 0 var(--ink);
   transition:transform .25s ease, box-shadow .25s ease;
   opacity:0;transform:translateY(16px);
 }
 .card.in{opacity:1;transform:none;transition:opacity .6s ease, transform .6s ease}
-.card:hover{transform:translateY(-4px) rotate(-.3deg);box-shadow:0 1px 0 var(--card-2), 0 26px 50px -20px rgba(0,0,0,.9)}
-.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--cc);border-radius:4px 0 0 4px}
+.card:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--cc,var(--red))}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--cc)}
 .card .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.card h3{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.15}
+.card h3{font-family:var(--display);font-weight:900;font-size:30px;line-height:1.15}
 .card .en{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em;margin-top:2px}
 .lvl{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-align:right;white-space:nowrap}
 .lvl .d{display:inline-block;width:9px;height:9px;border-radius:50%;border:1.5px solid var(--red);margin-left:3px}
@@ -134,8 +145,8 @@ a{color:inherit}
 mark{background:var(--amber);color:var(--ink);padding:0 2px;border-radius:2px}
 
 /* ---------- quiz ---------- */
-.quiz{margin:80px 0 30px;border:1.5px solid var(--chalk-2);border-radius:6px;padding:34px 34px 28px;background:var(--bg-2)}
-.quiz h2{font-family:var(--display);font-weight:400;font-size:38px}
+.quiz{margin:80px 0 30px;border:1.5px solid var(--ink);border-radius:2px;padding:34px 34px 28px;background:var(--card);box-shadow:8px 8px 0 var(--ink)}
+.quiz h2{font-family:var(--display);font-weight:900;font-size:38px}
 .quiz > p{color:var(--chalk-2);margin-bottom:20px}
 .q{border-top:1px solid var(--line);padding:18px 0}
 .q h4{font-weight:500;font-size:16.5px;margin-bottom:10px}
@@ -150,7 +161,7 @@ mark{background:var(--amber);color:var(--ink);padding:0 2px;border-radius:2px}
 .exp.show{display:block;animation:rise .4s ease both}
 .score{font-family:var(--mono);font-size:14px;color:var(--amber);margin-top:16px}
 
-footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 60px;font-size:13px;color:var(--chalk-2)}
+footer{border-top:3px double var(--ink);margin-top:60px;padding:26px 0 60px;font-size:13px;color:var(--chalk-2)}
 footer a{color:var(--amber)}
 
 @media (max-width:820px){
@@ -166,17 +177,17 @@ footer a{color:var(--amber)}
 .rs{margin:56px 0 0;padding-top:40px;border-top:1px dashed var(--line);scroll-margin-top:80px}
 .rs-h{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:10px}
 .rs-h .k{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--c-val)}
-.rs-h h2{font-family:var(--display);font-weight:400;font-size:clamp(36px,4.4vw,56px);line-height:1.15;margin-top:6px}
+.rs-h h2{font-family:var(--display);font-weight:900;font-size:clamp(36px,4.4vw,56px);line-height:1.15;margin-top:6px}
 .rs-h p{color:var(--chalk-2);max-width:40em;margin-top:8px}
-.spx{border:1.5px solid var(--c-val);border-radius:6px;padding:14px 18px;font-family:var(--mono);font-size:12px;color:var(--chalk-2);min-width:250px;line-height:1.8}
-.spx b{color:var(--chalk);font-size:22px;display:block;font-family:var(--display);font-weight:400;letter-spacing:.02em}
+.spx{border:1.5px solid var(--ink);background:var(--card);box-shadow:6px 6px 0 var(--ink);border-radius:2px;padding:14px 18px;font-family:var(--mono);font-size:12px;color:var(--chalk-2);min-width:250px;line-height:1.8}
+.spx b{color:var(--chalk);font-size:22px;display:block;font-family:var(--display);font-weight:900;letter-spacing:.02em}
 .spx em{font-style:normal;color:var(--c-val)}
 .legend2{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--chalk-2);margin:18px 0 6px}
 .legend2 span{display:flex;align-items:center;gap:6px}
 .legend2 i{width:14px;height:10px;border-radius:2px;display:inline-block}
-.z-na{background:repeating-linear-gradient(45deg,rgba(233,228,214,.12) 0 4px,rgba(233,228,214,.04) 4px 8px)}
+.z-na{background:repeating-linear-gradient(45deg,rgba(150,140,120,.35) 0 4px,rgba(150,140,120,.1) 4px 8px)}
 .z-good{background:rgba(63,174,125,.55)}
-.z-ok{background:rgba(233,228,214,.22)}
+.z-ok{background:rgba(120,112,98,.38)}
 .z-warn{background:rgba(231,169,58,.5)}
 .z-bad{background:rgba(224,68,47,.6)}
 .gauge{display:grid;grid-template-columns:210px 1fr 250px;gap:28px;align-items:center;padding:30px 0;border-bottom:1px solid var(--line)}
@@ -198,7 +209,7 @@ footer a{color:var(--amber)}
 .mk.el{transform:none;align-items:flex-start}
 .mk.er{transform:translateX(-100%);align-items:flex-end}
 .vd{font-size:13.5px;color:var(--chalk-2);line-height:1.7}
-.vd b{display:block;font-family:var(--display);font-weight:400;font-size:24px;color:var(--chalk);line-height:1.2;margin-bottom:4px}
+.vd b{display:block;font-family:var(--display);font-weight:900;font-size:24px;color:var(--chalk);line-height:1.2;margin-bottom:4px}
 .vd b.r{color:var(--red)} .vd b.g{color:var(--jade)} .vd b.a{color:var(--amber)} .vd b.n{color:var(--chalk-2)}
 .sheet{width:100%;border-collapse:collapse;margin-top:34px;background:var(--card);color:var(--ink);border-radius:4px;overflow:hidden;font-size:14px}
 .sheet caption{caption-side:top;text-align:left;font-family:var(--display);font-size:28px;color:var(--chalk);padding-bottom:12px}
@@ -209,8 +220,8 @@ footer a{color:var(--amber)}
 .tag2{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:999px;color:#fff;white-space:nowrap}
 .tag2.r{background:var(--red)}.tag2.g{background:var(--jade)}.tag2.a{background:#c98a17}.tag2.n{background:var(--ink-3)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:34px}
-.box{border:1px solid var(--line);border-radius:6px;padding:22px 24px;background:var(--bg-2)}
-.box h4{font-family:var(--display);font-weight:400;font-size:24px;margin-bottom:10px}
+.box{border:1.5px solid var(--ink);border-radius:2px;padding:22px 24px;background:var(--card)}
+.box h4{font-family:var(--display);font-weight:900;font-size:24px;margin-bottom:10px}
 .box table{width:100%;border-collapse:collapse;font-size:13.5px}
 .box td,.box th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
 .box th{color:var(--chalk-2);font-weight:500;font-size:12px}
@@ -253,9 +264,10 @@ footer a{color:var(--amber)}
 .stabs{display:flex;gap:4px;flex-wrap:wrap}
 .stab{cursor:pointer;background:none;border:1px solid var(--line);color:var(--chalk-2);font:500 11px var(--mono);letter-spacing:.04em;padding:3px 9px;border-radius:999px;transition:all .18s}
 .stab:hover{color:var(--chalk);border-color:var(--chalk-2)}
-.stab.on{background:var(--c-val);border-color:var(--c-val);color:var(--ink);font-weight:600}
-.stabs.big{margin-bottom:10px;justify-content:flex-end}
-.stabs.big .stab{font:500 14px var(--sans);padding:7px 16px}
+.stab.on{background:var(--c-val);border-color:var(--c-val);color:#1c1a17;font-weight:600}
+.stabs.lg .stab.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.stabs.lg{margin-bottom:10px;justify-content:flex-end}
+.stabs.lg .stab{font:500 14px var(--sans);padding:7px 16px}
 .vp-h{align-items:center}
 .vp.nobar .vd{margin-top:14px}
 .mk span{background:var(--mc,var(--chalk))}
@@ -267,10 +279,10 @@ footer a{color:var(--amber)}
 .cmpt td i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
 .cmpt td.v{font-family:var(--mono);font-weight:600;color:var(--chalk)}
 .cmpt td:last-child{text-align:right}
-.spx .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.spx .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;border:1px solid var(--ink)}
 
 .xtra{margin-top:16px;padding-top:4px;border-top:1.5px solid var(--ink)}
-.xtra h4{font-family:var(--display);font-weight:400;font-size:21px;margin:14px 0 6px}
+.xtra h4{font-family:var(--display);font-weight:900;font-size:21px;margin:14px 0 6px}
 .xtra .xl{font-size:13.5px;color:var(--ink-2)}
 .xt{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
 .xt th{text-align:left;font-weight:500;font-size:11.5px;color:var(--ink-3);border-bottom:1.5px solid var(--ink);padding:5px 6px}
@@ -329,7 +341,7 @@ footer a{color:var(--amber)}
       <p>每个估值指标都有一个大致的「经验区间」。下面每张卡片的右侧都配有一把尺子：彩色区段是常见分界线，实心标记是所选股票当前所处的位置，虚线标记是换一种口径（例如前瞻）后的结果。用右侧或每张卡片上的标签切换 <b style="color:var(--chalk)">SpaceX / 英伟达 / 谷歌 / 三家对比</b>，所有卡片会同步切换。<b style="color:var(--chalk)">区间只是经验值，行业不同差异巨大</b>，请结合下方的行业参考表一起看。</p>
     </div>
     <div>
-      <div class="stabs big" id="stkTabs" role="tablist">
+      <div class="stabs lg" id="stkTabs" role="tablist">
         <button class="stab on" data-stk="spcx">SpaceX</button><button class="stab" data-stk="nvda">英伟达</button><button class="stab" data-stk="googl">谷歌</button><button class="stab" data-stk="cmp">三家对比</button>
       </div>
       <div class="spx" id="spx"><b>SpaceX · SPCX</b>股价 <em>134.27</em> 美元<br>总市值 <em>≈ 1.82 万亿</em> 美元<br>股价为截图收盘价；财务数据截至 2026 年三季报</div>
