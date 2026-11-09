@@ -317,6 +317,10 @@ footer a{color:var(--amber)}
 .dp-tk{position:relative;height:16px}
 .dp-tk span{position:absolute;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;color:var(--chalk-2)}
 .spx{max-width:520px}
+.xtra.side{margin-top:0;padding:0 0 0 28px;border-top:0;border-left:1.5px solid var(--ink)}
+.xtra.side h4:first-child{margin-top:2px}
+.xtra .xt+.xt{margin-top:14px}
+@media (max-width:900px){.xtra.side{padding:4px 0 0;border-left:0;border-top:1.5px solid var(--ink);margin-top:16px}}
 </style>
 </head>
 <body>
@@ -590,7 +594,9 @@ const T = [
  one:'限价单：指定价格，只在该价格或更优价格成交。市价单：不指定价格，按当时市场上能成交的价格立即成交。',
  myth:'市价单最快，看好就用市价单。',
  truth:'在流动性差、波动剧烈或盘前盘后时，市价单可能以<b>远超预期的价格</b>成交（滑点）。',
- tip:'新手一律用限价单，价格可以挂在卖一 / 买一附近。'},
+ tip:'新手一律用限价单，价格可以挂在卖一 / 买一附近。',
+ side:true,
+ extra:`<h4>挂高价买入，会把股价拉到我的价格吗？</h4><p class="xl"><b>不会。</b>挂单价只是你愿意付的<b>最高价</b>，成交价取的是先挂在盘口上的对手方报价（价格优先、时间优先）。假设现价 10.00 元，卖盘如下，你挂 <b>10.50 元</b>买入：</p><table class="xt"><tr><th>档位</th><th>价格</th><th>挂单量</th></tr><tr><td>卖三</td><td>10.03</td><td>500 股</td></tr><tr><td>卖二</td><td>10.02</td><td>300 股</td></tr><tr><td>卖一</td><td>10.01</td><td>200 股</td></tr></table><table class="xt"><tr><th>买入数量</th><th>成交结果</th><th>股价变化</th></tr><tr><td>100 股</td><td>全部按 10.01 成交</td><td>最新价 10.01，没有被拉到 10.50，你还少付了 0.49 元/股</td></tr><tr><td>800 股</td><td>10.01×200 + 10.02×300 + 10.03×300</td><td>吃掉了三档卖盘，最新价被推到 10.03，但不是 10.50</td></tr><tr><td>2000 股</td><td>前 1000 股吃光三档，最高 10.03</td><td>剩下 1000 股以 10.50 挂在买一；没有人按 10.50 卖给你之前，最新价不会变成 10.50</td></tr></table><ol class="xo"><li><b>股价跟着实际成交价走，挂单价只是上限。</b>只有你的量吃穿了好几档卖盘，股价才会被推高，最多推到你吃到的最后一档。</li><li><b>卖盘越薄，推得越高。</b>小盘股、冷门股挂单少，同样的买单冲击更大，这就是「冲击成本」。</li><li><b>集合竞价按统一价成交。</b>开盘、收盘集合竞价时，所有成交都按交易所算出的同一个价格，你挂的高价一般只是让你排在前面。</li><li><b>A 股有「价格笼子」。</b>连续竞价阶段，买入申报价一般不能高于参考价的 102%（或参考价 + 0.1 元，取较高者），离谱的高价会被拒单或暂不撮合。具体以交易所最新规则为准。</li><li><b>美股没有涨跌停。</b>冷门股或盘前盘后成交稀少时，大单高价买入可能一路扫到很高的价格，更要用限价单并控制数量。</li><li><b>卖出同理。</b>挂低于市价的卖单，按买盘上更高的报价成交，不会把股价砸到你挂的低价。</li></ol>`},
 {cat:'rule',name:'ST / *ST / 退市',en:'Special Treatment / Delisting',lvl:2,
  one:'ST 表示公司财务或经营出现异常，被交易所「特别处理」；*ST 表示有退市风险。退市后的股票会转到场外市场，流动性极差。',
  myth:'ST 股便宜，「摘帽」后能翻倍，是捡便宜的机会。',
@@ -612,6 +618,15 @@ const T = [
  myth:'看准了就加杠杆，赚得更多。',
  truth:'杠杆会同样放大亏损。<b>维持担保比例</b>跌破警戒线会被要求补钱，否则<b>强制平仓</b>，可能卖在最低点。',
  tip:'新手不碰杠杆。先保证不被市场淘汰，再谈赚得多。'},
+{cat:'rule',name:'做空 / 买空',en:'Short Selling / Buying on Margin',lvl:3,
+ one:'做空（卖空）是<b>借股票先卖、以后低价买回还</b>，股价下跌才赚钱。买空恰好相反，是<b>借钱买股票</b>，押的是上涨。两个词只差一个字，方向完全相反。',
+ f:'做空盈亏 = (卖出价 − 买回价) × 股数 − 借券费 − 期间股息<br>最大盈利 = 卖出价（股价跌到 0）<br>最大亏损 = 无上限',
+ eg:'100 元借券卖出 100 股，收到 1 万元。跌到 70 元买回，赚 3000 元（未扣费用）；涨到 150 元买回，亏 5000 元。',
+ myth:'「买空」就是做空；做空和做多一样，大不了亏光本金。',
+ truth:'买空是借钱<b>做多</b>。做空的亏损<b>没有上限</b>：股价涨多少你亏多少，还可能遇到逼空、追加保证金和强制平仓。',
+ tip:'新手想表达看跌，优先用亏损有上限的工具（熊证、认沽期权），并且只用小仓位。',
+ side:true,
+ extra:`<h4>做空 ≠ 买空：先把词分清</h4><table class="xt"><tr><th>说法</th><th>怎么做</th><th>什么时候赚钱</th></tr><tr><td>卖空 / 做空</td><td>借股票先卖，以后买回还</td><td>股价<b>下跌</b>。A 股叫「融券」</td></tr><tr><td>买空 / 融资</td><td>借钱买股票（加杠杆）</td><td>股价<b>上涨</b>。A 股叫「融资」</td></tr></table><h4>想看跌，有哪几种工具？</h4><table class="xt"><tr><th>工具</th><th>最多亏多少</th><th>要注意</th></tr><tr><td>直接做空股票</td><td><b>无上限</b>，可能倒欠券商</td><td>要签借券协议、开通融资额度，只能借部分股票；每天付借券费，可能被追保或强平</td></tr><tr><td>熊证 / 空头 mini futures</td><td>投入的本金</td><td>有杠杆；每日重置的 Bear X5 等长期持有有损耗，mini futures 碰到敲出价就直接结束</td></tr><tr><td>认沽期权（put）</td><td>付出的权利金</td><td>要签衍生品协议；到期没跌到行权价，权利金就归零</td></tr><tr><td>反向 ETF</td><td>投入的本金</td><td>多为每日重置，震荡市里会慢慢损耗，只适合短线</td></tr></table><h4>做空为什么风险更大？</h4><ol class="xo"><li><b>亏损不对称。</b>做多 100 元的股票最多亏 100 元；做空时股价涨到 300 元，你就亏 200 元，涨多少亏多少。</li><li><b>逼空（short squeeze）。</b>空头集中被迫买回平仓，买盘越买越多，股价可能短时间内翻倍。</li><li><b>持有有成本。</b>借券费按天收，热门做空标的费率会很高；期间公司分红，做空方还要把股息补给出借人。</li><li><b>券商可以收回股票。</b>出借方要求还券时，你可能被迫在不利价位平仓。</li></ol><h4>例子：瑞典 Avanza</h4><p class="xl">Avanza 有单独的证券借贷（värdepapperslån）框架协议，协议里写明做空「原则上风险无上限，可能让客户负债」。直接做空（blankning）一般要签这份协议并开通融资额度，只能借部分股票，主要是瑞典的大盘股。散户更常用的看空方式是熊证（Bear-certifikat）和 Mini Short。账户类型（ISK / AF / KF）能不能做空、哪些股票能借、借券费率多少，<b>以 Avanza 官网最新说明为准</b>。</p>`},
 {cat:'rule',name:'打新 / 中签',en:'IPO Subscription',lvl:1,
  one:'申购新上市的股票，中签后以发行价买入。A 股需要持有一定市值才有申购额度。',
  myth:'打新稳赚不赔。',
@@ -1049,15 +1064,17 @@ function card(t,idx){
   const cc = CATS.find(c=>c.id===t.cat).c;
   const g = G[t.name];
   const pn = g ? panelHTML(g) : (t.panel||'');
-  return `<article class="card${pn?' vcard':''}" data-i="${T.indexOf(t)}" style="--cc:var(${cc})" data-s="${(t.name+t.en+t.one+(t.myth||'')+(t.truth||'')).toLowerCase().replace(/<[^>]+>/g,'')}">
-    ${pn?'<div class="vl">':''}<div class="hd"><div><h3>${t.name}</h3><div class="en">${t.en}</div></div>${lvlHTML(t.lvl)}</div>
+  const side = !pn && t.side && t.extra;   // extra 放右栏，卡片占满整行
+  const wide = pn || side;
+  return `<article class="card${wide?' vcard':''}" data-i="${T.indexOf(t)}" style="--cc:var(${cc})" data-s="${(t.name+t.en+t.one+(t.myth||'')+(t.truth||'')).toLowerCase().replace(/<[^>]+>/g,'')}">
+    ${wide?'<div class="vl">':''}<div class="hd"><div><h3>${t.name}</h3><div class="en">${t.en}</div></div>${lvlHTML(t.lvl)}</div>
     <p class="one">${t.one}</p>
     ${t.f?`<div class="f">${t.f}</div>`:''}
     ${t.eg?`<div class="eg">${t.eg}</div>`:''}
     <div class="mt"><div class="myth"><b>常见误解：</b>${t.myth}</div><div class="truth"><b>真相：</b>${t.truth}</div></div>
     ${t.tip?`<div class="tip">${t.tip}</div>`:''}
-    ${t.extra?`<div class="xtra">${t.extra}</div>`:''}
-    ${pn?'</div>'+pn:''}
+    ${t.extra&&!side?`<div class="xtra">${t.extra}</div>`:''}
+    ${pn?'</div>'+pn:''}${side?`</div><div class="xtra side">${t.extra}</div>`:''}
   </article>`;
 }
 function render(){
