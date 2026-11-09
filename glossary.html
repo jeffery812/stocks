@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新手股民扫盲词典 · 那些你以为懂了的股市名词</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1714;
+  --bg-2:#15211d;
+  --card:#f1ead9;
+  --card-2:#e6dcc5;
+  --ink:#1a1712;
+  --ink-2:#4d463a;
+  --ink-3:#8b8170;
+  --chalk:#e9e4d6;
+  --chalk-2:#a7a596;
+  --line:rgba(233,228,214,.14);
+  --red:#e0442f;
+  --jade:#3fae7d;
+  --amber:#e7a93a;
+  --c-price:#e0442f;
+  --c-val:#e7a93a;
+  --c-vol:#4fa3d9;
+  --c-rule:#b67ad6;
+  --c-chart:#3fae7d;
+  --c-mind:#e57aa0;
+  --display:"ZCOOL XiaoWei","Songti SC",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB",sans-serif;
+  --mono:"JetBrains Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--chalk);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased;min-height:100vh}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(224,68,47,.16), transparent 60%),
+    radial-gradient(700px 500px at -10% 30%, rgba(63,174,125,.12), transparent 60%),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(233,228,214,.035) 31px 32px);
+}
+.wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 28px}
+a{color:inherit}
+
+/* ---------- top bar ---------- */
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--chalk-2);letter-spacing:.08em}
+.top a{text-decoration:none;border-bottom:1px dashed var(--chalk-2)}
+.top a:hover{color:var(--chalk)}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;padding:64px 0 48px}
+.big{
+  font-family:var(--display);font-size:clamp(120px,18vw,240px);line-height:.85;
+  color:transparent;-webkit-text-stroke:2px var(--chalk);position:relative;user-select:none;
+  animation:rise 1s cubic-bezier(.2,.7,.2,1) both;
+}
+.big span{display:block}
+.big span:last-child{color:var(--red);-webkit-text-stroke:0;margin-left:.5em;margin-top:-.08em;text-shadow:0 0 60px rgba(224,68,47,.35)}
+.hero-txt{animation:rise 1s .2s cubic-bezier(.2,.7,.2,1) both}
+.hero-txt .k{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--amber)}
+.hero-txt h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,4vw,52px);line-height:1.2;margin:10px 0 16px}
+.hero-txt p{color:var(--chalk-2);max-width:34em;font-size:16.5px}
+.stats{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap}
+.stats div{font-family:var(--mono);font-size:12px;color:var(--chalk-2)}
+.stats b{display:block;font-size:34px;color:var(--chalk);font-weight:600;line-height:1.1}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+/* ---------- top myths ---------- */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:14px 0;margin-bottom:36px}
+.marquee .track{display:inline-flex;gap:48px;animation:scroll 60s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.marquee span{font-size:15px;color:var(--chalk-2)}
+.marquee s{color:var(--chalk);text-decoration-color:var(--red);text-decoration-thickness:2px}
+.marquee i{font-style:normal;color:var(--jade);margin-left:8px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- controls ---------- */
+.controls{position:sticky;top:0;z-index:10;background:rgba(14,23,20,.88);backdrop-filter:blur(10px);padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:10px;border:1.5px solid var(--chalk-2);border-radius:999px;padding:8px 18px;transition:border-color .2s}
+.search:focus-within{border-color:var(--amber)}
+.search input{flex:1;background:none;border:0;outline:0;color:var(--chalk);font:500 15px var(--sans)}
+.search input::placeholder{color:var(--chalk-2)}
+.search kbd{font-family:var(--mono);font-size:11px;color:var(--chalk-2);border:1px solid var(--line);padding:1px 6px;border-radius:4px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{cursor:pointer;border:1.5px solid var(--line);background:none;color:var(--chalk-2);font:500 13.5px var(--sans);padding:6px 14px;border-radius:999px;transition:all .2s;display:flex;gap:6px;align-items:center}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dot,var(--chalk-2))}
+.chip:hover{color:var(--chalk);border-color:var(--chalk-2)}
+.chip.on{background:var(--chalk);color:var(--ink);border-color:var(--chalk)}
+.count{font-family:var(--mono);font-size:12px;color:var(--chalk-2);margin-left:auto}
+
+/* ---------- category blocks ---------- */
+.cat{padding:44px 0 8px}
+.cat-h{display:flex;align-items:baseline;gap:16px;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.cat-h .no{font-family:var(--mono);font-size:13px;color:var(--cc)}
+.cat-h h2{font-family:var(--display);font-weight:400;font-size:36px;color:var(--chalk)}
+.cat-h p{color:var(--chalk-2);font-size:14px;margin-left:auto;text-align:right;max-width:28em}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:22px}
+.card{
+  background:var(--card);color:var(--ink);border-radius:4px;position:relative;
+  padding:22px 22px 18px 26px;
+  box-shadow:0 1px 0 var(--card-2), 0 18px 40px -22px rgba(0,0,0,.8);
+  transition:transform .25s ease, box-shadow .25s ease;
+  opacity:0;transform:translateY(16px);
+}
+.card.in{opacity:1;transform:none;transition:opacity .6s ease, transform .6s ease}
+.card:hover{transform:translateY(-4px) rotate(-.3deg);box-shadow:0 1px 0 var(--card-2), 0 26px 50px -20px rgba(0,0,0,.9)}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--cc);border-radius:4px 0 0 4px}
+.card .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card h3{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.15}
+.card .en{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em;margin-top:2px}
+.lvl{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-align:right;white-space:nowrap}
+.lvl .d{display:inline-block;width:9px;height:9px;border-radius:50%;border:1.5px solid var(--red);margin-left:3px}
+.lvl .d.f{background:var(--red)}
+.one{font-size:15.5px;font-weight:500;margin:12px 0 10px;line-height:1.65}
+.f{font-family:var(--mono);font-size:12.5px;background:var(--ink);color:#f3e9d2;padding:9px 12px;border-radius:3px;line-height:1.7;overflow-x:auto}
+.f em{font-style:normal;color:var(--amber)}
+.eg{font-size:13.5px;color:var(--ink-2);margin-top:10px;padding-left:12px;border-left:2px solid var(--card-2)}
+.eg b{color:var(--ink)}
+.mt{margin-top:14px;display:grid;gap:8px}
+.myth,.truth{font-size:13.5px;line-height:1.65;padding:9px 12px 9px 38px;position:relative;border-radius:3px}
+.myth{background:rgba(224,68,47,.1)}
+.truth{background:rgba(63,174,125,.13)}
+.myth::before,.truth::before{position:absolute;left:11px;top:8px;font:700 13px var(--mono);width:18px;height:18px;border-radius:50%;color:#fff;display:grid;place-items:center;line-height:1}
+.myth::before{content:"✕";background:var(--red)}
+.truth::before{content:"✓";background:var(--jade)}
+.myth b{color:#b8321f}.truth b{color:#1f7a52}
+.tip{font-size:13px;color:var(--ink-2);margin-top:12px;padding-top:10px;border-top:1px dashed #cbbfa6}
+.tip::before{content:"👉 怎么用　";font-weight:700;color:var(--ink)}
+.empty{display:none;text-align:center;color:var(--chalk-2);padding:80px 0;font-size:18px}
+mark{background:var(--amber);color:var(--ink);padding:0 2px;border-radius:2px}
+
+/* ---------- quiz ---------- */
+.quiz{margin:80px 0 30px;border:1.5px solid var(--chalk-2);border-radius:6px;padding:34px 34px 28px;background:var(--bg-2)}
+.quiz h2{font-family:var(--display);font-weight:400;font-size:38px}
+.quiz > p{color:var(--chalk-2);margin-bottom:20px}
+.q{border-top:1px solid var(--line);padding:18px 0}
+.q h4{font-weight:500;font-size:16.5px;margin-bottom:10px}
+.q h4 span{font-family:var(--mono);color:var(--amber);margin-right:8px}
+.opts{display:flex;gap:10px;flex-wrap:wrap}
+.opt{cursor:pointer;border:1.5px solid var(--line);background:none;color:var(--chalk);font:14px var(--sans);padding:8px 16px;border-radius:4px;transition:all .2s}
+.opt:hover:not(:disabled){border-color:var(--chalk-2)}
+.opt.ok{background:var(--jade);border-color:var(--jade);color:#fff}
+.opt.no{background:var(--red);border-color:var(--red);color:#fff}
+.opt:disabled{cursor:default}
+.exp{display:none;font-size:14px;color:var(--chalk-2);margin-top:10px;padding-left:12px;border-left:2px solid var(--amber)}
+.exp.show{display:block;animation:rise .4s ease both}
+.score{font-family:var(--mono);font-size:14px;color:var(--amber);margin-top:16px}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0 60px;font-size:13px;color:var(--chalk-2)}
+footer a{color:var(--amber)}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;gap:20px;padding-top:40px}
+  .big{font-size:120px}
+  .grid{grid-template-columns:1fr}
+  .cat-h{flex-wrap:wrap}.cat-h p{margin-left:0;text-align:left}
+  .count{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <span>散户看盘课 · 第 02 讲</span>
+  <a href="index.html">← 第 01 讲：读懂一张行情页</a>
+</div>
+
+<header class="hero">
+  <div class="big" aria-hidden="true"><span>扫</span><span>盲</span></div>
+  <div class="hero-txt">
+    <div class="k">GLOSSARY FOR NEW INVESTORS</div>
+    <h1>那些你以为懂了的<br>股市名词</h1>
+    <p>新手亏钱，很多时候不是因为不知道某个词，而是<b style="color:var(--chalk)">以为自己知道</b>。这本小词典收录了新手最常困惑、也最容易误解的名词。每个词都配有一句话解释、计算公式、实际例子，以及「常见误解 ✕ / 真相 ✓」的对照。</p>
+    <div class="stats">
+      <div><b id="nTerms">0</b>个名词</div>
+      <div><b>6</b>大类</div>
+      <div><b>8</b>道自测题</div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-label="最常见的误解">
+  <div class="track" id="marquee"></div>
+</div>
+
+<div class="controls">
+  <label class="search">
+    <span aria-hidden="true">⌕</span>
+    <input id="q" type="search" placeholder="搜索名词，如：市盈率、换手、复权、T+1…" autocomplete="off">
+    <kbd>/</kbd>
+  </label>
+  <div class="chips" id="chips"></div>
+  <span class="count" id="count"></span>
+</div>
+
+<main id="list"></main>
+<div class="empty" id="empty">没有找到相关名词，换个关键词试试？</div>
+
+<section class="quiz" id="quiz">
+  <h2>自测：你真的懂了吗？</h2>
+  <p>8 道题，每道都对应新手最常犯的一个错误。点选答案即可查看解析。</p>
+  <div id="qs"></div>
+  <div class="score" id="score"></div>
+</section>
+
+<footer>
+  <p>本页为投资者教育内容，不构成任何投资建议。文中税费、涨跌幅等交易规则以 A 股为主、兼顾美股，数值为编写时的常见口径。<b>交易所和监管部门的规则会调整，实际以交易所及券商的最新规定为准。</b></p>
+  <p style="margin-top:8px">← 返回 <a href="index.html">第 01 讲：同花顺行情页逐字段拆解</a></p>
+</footer>
+</div>
+
+<script>
+const CATS = [
+  {id:'price', name:'价格与涨跌', c:'--c-price', d:'屏幕上最显眼的数字，误解也最多'},
+  {id:'val',   name:'估值指标',   c:'--c-val',   d:'判断「贵不贵」的尺子，每把尺子都有盲区'},
+  {id:'vol',   name:'量能与资金', c:'--c-vol',   d:'今天有多少人、多少钱在交易'},
+  {id:'rule',  name:'交易规则',   c:'--c-rule',  d:'不懂规则，第一笔交易就可能踩坑'},
+  {id:'chart', name:'图表与技术', c:'--c-chart', d:'K 线、均线：看得懂，但别迷信'},
+  {id:'mind',  name:'概念与心态', c:'--c-mind',  d:'真正决定盈亏的，往往是这一类'},
+];
+
+/* lvl: 迷惑度 1-3 */
+const T = [
+/* ======== 价格与涨跌 ======== */
+{cat:'price',name:'昨收 / 开盘价',en:'Previous Close / Open',lvl:1,
+ one:'昨收是上一个交易日的收盘价，所有涨跌幅都以它为基准；开盘价是今天开盘集合竞价产生的第一个价格。',
+ eg:'昨收 10 元，今天开盘 10.5 元，叫<b>高开 5%</b>。',
+ myth:'今天涨了多少，是跟开盘价比的。',
+ truth:'涨跌幅一律跟<b>昨收</b>比。高开 5% 然后收盘涨 2%，其实是开盘后<b>一路在跌</b>。',
+ tip:'看完涨跌幅，顺手比一下现价和开盘价，就知道盘中是在走强还是在走弱。'},
+{cat:'price',name:'涨跌幅 / 振幅',en:'Change % / Amplitude',lvl:1,
+ one:'涨跌幅衡量今天和昨天比涨跌了多少；振幅衡量今天内部最高和最低之间差多少，反映「上蹿下跳」的程度。',
+ f:'涨跌幅 = (现价 − 昨收) ÷ 昨收<br>振幅 = (<em>最高 − 最低</em>) ÷ 昨收',
+ myth:'今天只涨了 1%，说明很平静。',
+ truth:'涨 1% 也可能振幅 10%，即先暴涨再暴跌。<b>振幅大代表分歧大</b>，追高的人可能当天就被套。',
+ tip:'振幅持续很大的股票，适合用更小的仓位。'},
+{cat:'price',name:'涨停 / 跌停',en:'Limit Up / Limit Down',lvl:2,
+ one:'A 股对单日涨跌幅设有上限，触及上限叫涨停，触及下限叫跌停，价格不能再往外走，但仍然可以成交。',
+ f:'主板 <em>±10%</em> · 创业板 / 科创板 <em>±20%</em> · 北交所 <em>±30%</em><br>ST 等风险警示股另有更窄限制；注册制新股上市前 5 日不设限',
+ myth:'涨停了就一定能买到 / 跌停了就一定能卖掉。',
+ truth:'涨停时卖的人很少，挂买单要<b>排队</b>，大多数散户排不上；跌停时同理，可能<b>连续几天都卖不出去</b>。美股、港股<b>没有涨跌停</b>，单日跌 50% 也可能出现。',
+ tip:'别指望「打板」暴富，排队买入的往往是最后一棒。'},
+{cat:'price',name:'高开 / 低开 / 跳空缺口',en:'Gap Up / Gap Down',lvl:1,
+ one:'开盘价高于昨收叫高开，低于昨收叫低开；如果当天最低价都高于昨天最高价，K 线图上会留下一段空白，叫跳空缺口。',
+ myth:'「缺口必补」，所以缺口出现后一定会跌回去。',
+ truth:'缺口<b>常常</b>会被回补，但没有「必然」。强势股的突破性缺口可能很长时间都不回补。',
+ tip:'把缺口当作一个可能的支撑 / 压力参考位，而不是预言。'},
+{cat:'price',name:'除权除息',en:'Ex-Dividend / Ex-Rights',lvl:3,
+ one:'公司分红或送股后，股价会按比例下调，让「分红前的总市值」等于「分红后的总市值 + 分出去的钱」。',
+ f:'除息价 = 昨收 − 每股现金分红<br>除权价 = 昨收 ÷ (1 + 每股送转比例)',
+ eg:'股价 20 元，<b>10 派 5 元</b>（每股 0.5 元）→ 除息后股价变成 19.5 元，你账户多了 0.5 元/股现金（还要扣红利税）。',
+ myth:'分红就是白送钱，所以分红前要赶紧买入。',
+ truth:'分红是从你的「左口袋」挪到「右口袋」，股价同步扣掉，<b>总资产不变</b>，持股不满 1 个月还要交 20% 的红利税。分红只有在股价「填权」（涨回原位）之后才真正赚到。',
+ tip:'持有一年以上的个人投资者，A 股现金分红免征个人所得税。'},
+{cat:'price',name:'复权（前复权 / 后复权）',en:'Price Adjustment',lvl:3,
+ one:'因为除权除息会让 K 线出现「断崖」，软件会把历史价格做调整，让走势连续可比，这就叫复权。',
+ eg:'<b>前复权</b>：以今天的价格为准，把过去的价格往下调，最常用。<br><b>后复权</b>：以上市首日为准，把后来的价格往上调，能看出真实的长期收益。<br><b>不复权</b>：原始成交价。',
+ myth:'K 线图上这只股从 50 元「暴跌」到 25 元，跌了一半！',
+ truth:'很可能只是<b>10 送 10</b>后的除权缺口，没有人亏钱。看长期走势一定要切换成复权视图。',
+ tip:'同花顺 K 线设置里可以切换复权方式；算历史收益用后复权。'},
+{cat:'price',name:'集合竞价',en:'Call Auction',lvl:2,
+ one:'开盘和收盘前的一段时间里，系统先收集所有买卖单，最后按「成交量最大」的原则统一撮合出一个价格。',
+ f:'A 股：9:15–9:25 开盘竞价（9:20 后不能撤单）· 14:57–15:00 收盘竞价（沪深）',
+ myth:'9:15–9:20 看到大单挂涨停，说明主力要拉升。',
+ truth:'9:20 之前<b>可以撤单</b>，挂出的单可能只是「虚晃一枪」。9:20–9:25 的数据才更真实。',
+ tip:'新手不必参与竞价，看清开盘后的走势再决定也不迟。'},
+
+/* ======== 估值 ======== */
+{cat:'val',name:'市盈率 PE',en:'Price-to-Earnings Ratio',lvl:3,
+ one:'你为公司每 1 元的年利润付了多少钱。也可以粗略理解为：利润不变的话，多少年能「回本」。',
+ f:'市盈率 = 总市值 ÷ 净利润 = 股价 ÷ 每股收益<br><em>静态</em>：上一完整年度利润 · <em>TTM</em>：最近 12 个月 · <em>动态</em>：预测利润',
+ eg:'市值 100 亿、年利润 10 亿 → PE = 10 倍。',
+ myth:'市盈率越低越便宜，低 PE 的股票一定值得买。',
+ truth:'低 PE 可能是<b>价值陷阱</b>：周期股在利润最高点时 PE 最低（之后利润会下滑）；夕阳行业利润年年下降。高 PE 也可能合理，比如利润高速增长的公司。<b>亏损公司没有市盈率</b>，软件会显示「亏损」或负数。',
+ tip:'只和同行业、和它自己的历史比，不要跨行业比。看清软件显示的是哪种 PE。'},
+{cat:'val',name:'市净率 PB',en:'Price-to-Book Ratio',lvl:2,
+ one:'股价相对于每股净资产（公司资产减负债，账面上属于股东的钱）的倍数。',
+ f:'市净率 = 总市值 ÷ 净资产',
+ myth:'PB 小于 1 就是「破净」，相当于打折买资产，稳赚。',
+ truth:'账面资产不等于真实价值：坏账、过时的设备、卖不掉的存货都可能让净资产「虚胖」。长期破净往往说明市场认为它的<b>资产回报很差</b>。',
+ tip:'PB 适合银行、保险、重资产行业，对科技、轻资产公司意义不大。配合 ROE 一起看。'},
+{cat:'val',name:'市销率 PS',en:'Price-to-Sales Ratio',lvl:2,
+ one:'市值相对于年营业收入的倍数，常用于还没盈利的成长型公司。',
+ f:'市销率 = 总市值 ÷ 年营业收入',
+ myth:'公司亏损，没法估值。',
+ truth:'亏损公司可以用 PS、营收增速、毛利率来衡量。但要记住：<b>收入不等于利润</b>，烧钱换来的收入未必能转化为盈利。',
+ tip:'对比同类公司的 PS 和增速，增速越快能接受的 PS 越高。'},
+{cat:'val',name:'PEG',en:'PE-to-Growth Ratio',lvl:2,
+ one:'把市盈率和利润增速放在一起看，衡量「为成长付的价格是否合理」。',
+ f:'PEG = 市盈率 ÷ (净利润增长率 × 100)<br>例：PE 30 倍、增速 30% → PEG = <em>1</em>',
+ myth:'PEG 小于 1 就一定被低估。',
+ truth:'PEG 依赖<b>对未来增速的预测</b>，而预测经常落空。增速一旦放缓，PE 和 PEG 都会被重估。',
+ tip:'只作为粗筛工具，不要当成买入信号。'},
+{cat:'val',name:'总市值 / 流通市值',en:'Market Cap / Float Cap',lvl:2,
+ one:'总市值 = 股价 × 全部股本；流通市值 = 股价 × 当前可以在市场上交易的股份。',
+ myth:'市值涨了 100 亿，就是有 100 亿资金流进来了。',
+ truth:'市值是用<b>最后一笔成交价</b>乘以全部股本算出来的，可能只是几千万的成交就把价格推高，进而「推出」百亿市值。市值不等于资金。',
+ tip:'流通市值远小于总市值的公司，要关注未来的限售股解禁。'},
+{cat:'val',name:'每股收益 EPS / ROE',en:'Earnings per Share / Return on Equity',lvl:2,
+ one:'EPS：每一股分到多少利润。ROE：公司用股东的钱一年能赚多少，衡量赚钱效率。',
+ f:'EPS = 净利润 ÷ 总股本<br>ROE = 净利润 ÷ 净资产',
+ myth:'EPS 下降了，说明公司变差了。',
+ truth:'送转股会让股本变多，EPS 被「稀释」，但利润总额可能没变。ROE 高也要看是不是<b>靠高负债</b>撑起来的。',
+ tip:'长期 ROE 稳定在 15% 以上、负债率不高的公司，通常是好生意。'},
+{cat:'val',name:'股息率',en:'Dividend Yield',lvl:2,
+ one:'按当前股价买入，一年能拿到的现金分红占买入价的比例。',
+ f:'股息率 = 每股年度分红 ÷ 当前股价',
+ myth:'股息率 8%，比存银行强多了，闭眼买。',
+ truth:'超高股息率常常是因为<b>股价已经暴跌</b>，而分红用的是去年的利润，今年可能削减甚至取消。股价再跌 10%，几年的股息就白拿了。',
+ tip:'看连续多年的分红记录和分红占利润的比例（派息率），而不是只看一年。'},
+
+/* ======== 量能与资金 ======== */
+{cat:'vol',name:'成交量 / 成交额',en:'Volume / Turnover Value',lvl:1,
+ one:'成交量是今天成交了多少股（A 股常以「手」显示，1 手 = 100 股）；成交额是成交了多少钱。',
+ myth:'成交量 10 万和 10 万手是一回事。',
+ truth:'差 100 倍。看清单位：股、手、万股、万手。<b>不同股价的股票要比成交额</b>，不要比成交量。',
+ tip:'「放量」「缩量」要和该股自己过去几天比，不同股票之间没有可比性。'},
+{cat:'vol',name:'量比',en:'Volume Ratio',lvl:3,
+ one:'今天的成交「速度」相比过去 5 天平均水平的倍数，用来判断今天是热闹还是冷清。',
+ f:'量比 = 今日每分钟平均成交量 ÷ 过去 5 日每分钟平均成交量',
+ eg:'<b>&lt; 0.8</b> 冷清 · <b>0.8–1.5</b> 正常 · <b>1.5–2.5</b> 温和放量 · <b>&gt; 3</b> 明显放量 · <b>&gt; 5</b> 剧烈放量',
+ myth:'量比大说明主力在买入，是好事。',
+ truth:'量比只告诉你<b>交易很活跃</b>，不告诉你方向。放量下跌说明卖的人急；开盘几分钟量比常常虚高。',
+ tip:'结合价格看：放量上涨比缩量上涨更可信；高位放量滞涨要警惕。'},
+{cat:'vol',name:'换手率',en:'Turnover Rate',lvl:3,
+ one:'今天成交的股数占流通股本的比例，反映这只股票「换手」有多频繁、人气有多旺。',
+ f:'换手率 = 成交量 ÷ 流通股本',
+ eg:'<b>&lt; 1%</b> 冷门 · <b>1–3%</b> 正常 · <b>3–7%</b> 活跃 · <b>7–10%</b> 很活跃 · <b>&gt; 15%</b> 极度投机（大盘股标准更低）',
+ myth:'换手率高说明有资金在抢筹，会继续涨。',
+ truth:'换手高意味着<b>有人大量买、也有人大量卖</b>。在高位出现的超高换手，往往是早期资金在<b>出货</b>给后来者。',
+ tip:'低位温和放大的换手更健康；连续多日 20% 以上的换手，新手最好远离。'},
+{cat:'vol',name:'内盘 / 外盘',en:'Active Sell / Active Buy',lvl:2,
+ one:'外盘：按卖方挂的价格成交（买方主动），计为主动买入；内盘：按买方挂的价格成交（卖方主动），计为主动卖出。',
+ myth:'外盘大于内盘，说明买的人比卖的人多。',
+ truth:'每一笔成交都是<b>一买一卖</b>，买的股数永远等于卖的股数。内外盘只反映<b>谁更急</b>，而且大资金可以刻意挂单制造「外盘大」的假象。',
+ tip:'只当参考，不要单凭内外盘判断方向。'},
+{cat:'vol',name:'主力资金 / 净流入',en:'Net Inflow of "Big Money"',lvl:3,
+ one:'软件按单笔成交金额把成交划分为特大单、大单、中单、小单，把大单的「主动买 − 主动卖」称为主力净流入。',
+ myth:'今天主力净流入 5 亿，说明有 5 亿新钱进了这只股票。',
+ truth:'有买必有卖，<b>资金不会「流入」一只股票</b>，钱只是从买方转到了卖方手里。所谓「净流入」是一种统计口径，不同软件算出的结果甚至相反；机构也常把大单拆成小单，并不会显示为「大单」。',
+ tip:'把它当作情绪指标，而不是「主力动向」的真相。'},
+{cat:'vol',name:'委比 / 买一卖一',en:'Bid-Ask / Order Imbalance',lvl:2,
+ one:'买一是当前最高的买入挂价，卖一是最低的卖出挂价；委比衡量挂着的买单和卖单哪边多。',
+ f:'委比 = (委买手数 − 委卖手数) ÷ (委买手数 + 委卖手数)',
+ myth:'买单挂得多，股价就要涨。',
+ truth:'挂单<b>可以随时撤销</b>，大额挂单常被用来制造假象（俗称「压单」「托单」）。',
+ tip:'下单尽量用限价单，并留意买一卖一之间的价差。'},
+{cat:'vol',name:'均价线',en:'VWAP',lvl:2,
+ one:'分时图上的黄线，代表今天所有成交的平均价格，也就是今天所有买家的平均成本。',
+ f:'均价 = 累计成交额 ÷ 累计成交量',
+ myth:'均价线是一条普通的移动平均线。',
+ truth:'它按<b>成交量加权</b>，机构常用它衡量自己的买入是否划算。价格在均价线之上，代表当天买入的人整体在赚钱。',
+ tip:'股价持续站在均价线上方，代表当天走势偏强。'},
+
+/* ======== 交易规则 ======== */
+{cat:'rule',name:'T+1 / T+0',en:'Settlement & Day Trading',lvl:2,
+ one:'A 股股票实行 T+1：今天买入的股票最早明天才能卖。美股、港股是 T+0，当天可以买卖多次。',
+ eg:'A 股里部分品种可以 T+0，例如<b>可转债、跨境 ETF、黄金 ETF、债券 ETF、货币 ETF</b>。',
+ myth:'今天买错了，发现不对马上卖掉止损。',
+ truth:'A 股做不到，至少要扛一夜。美股虽然可以 T+0，但保证金账户在资产不足 2.5 万美元时，日内交易次数受 PDT 规则限制（规则有修订动向，以券商为准）。',
+ tip:'A 股买入前要想好：如果明天低开 5%，你能接受吗？'},
+{cat:'rule',name:'手 / 最小交易单位',en:'Board Lot',lvl:1,
+ one:'A 股买入必须是 100 股（1 手）的整数倍；科创板最少买 200 股，超过 200 股后可以 1 股为单位增加。',
+ myth:'股价 1500 元，我 1 万块能买 6 股。',
+ truth:'A 股最少买 1 手，即 100 股 × 1500 元 = <b>15 万元</b>。卖出时零股（不足 100 股）可以一次性卖出。美股最少 1 股，部分券商支持碎股。',
+ tip:'高价股门槛很高，可以通过相关 ETF 间接持有。'},
+{cat:'rule',name:'交易费用',en:'Fees & Taxes',lvl:2,
+ one:'A 股每次交易会产生佣金（券商收）、印花税（国家收，仅卖出时收）、过户费等。',
+ f:'印花税：卖出成交额的 <em>0.05%</em><br>佣金：券商自定，常见万 1 – 万 3，很多有 <em>最低 5 元</em><br>过户费：成交额的 0.001%',
+ myth:'佣金万一，买 1000 元的股票只要 1 毛钱手续费。',
+ truth:'很多券商<b>最低收 5 元</b>，1000 元的交易实际费率高达 0.5%。频繁小额交易，手续费会悄悄吃掉利润。',
+ tip:'开户时问清楚是否「免五」（免收最低 5 元），并且减少交易次数。'},
+{cat:'rule',name:'限价单 / 市价单',en:'Limit / Market Order',lvl:2,
+ one:'限价单：指定价格，只在该价格或更优价格成交。市价单：不指定价格，按当时市场上能成交的价格立即成交。',
+ myth:'市价单最快，看好就用市价单。',
+ truth:'在流动性差、波动剧烈或盘前盘后时，市价单可能以<b>远超预期的价格</b>成交（滑点）。',
+ tip:'新手一律用限价单，价格可以挂在卖一 / 买一附近。'},
+{cat:'rule',name:'ST / *ST / 退市',en:'Special Treatment / Delisting',lvl:2,
+ one:'ST 表示公司财务或经营出现异常，被交易所「特别处理」；*ST 表示有退市风险。退市后的股票会转到场外市场，流动性极差。',
+ myth:'ST 股便宜，「摘帽」后能翻倍，是捡便宜的机会。',
+ truth:'注册制下<b>退市已经常态化</b>，财务造假、面值退市（股价长期低于 1 元）、市值过小都会被强制退市。赌摘帽的失败代价可能是<b>亏光本金</b>。',
+ tip:'新手账户直接远离 ST、*ST 股票。'},
+{cat:'rule',name:'限售股解禁',en:'Lock-up Expiration',lvl:2,
+ one:'IPO 前的股东、定向增发的认购者等，持有的股份在一定期限内不能卖出；期满可以交易，叫解禁。',
+ myth:'解禁就一定会砸盘暴跌。',
+ truth:'解禁只是「<b>可以卖</b>」，不是「一定卖」。但解禁规模大、原始成本极低时，抛压确实值得重视。',
+ tip:'在 F10 的「限售解禁」里可以查到时间表，解禁前后适当谨慎。'},
+{cat:'rule',name:'送股 / 转增',en:'Bonus Shares / Stock Split',lvl:3,
+ one:'公司把利润（送股）或资本公积（转增）变成新股票分给股东，股数变多，股价按比例下调。',
+ eg:'10 转 10：你的 1000 股变成 2000 股，股价从 40 元变成 20 元。',
+ myth:'「高送转」相当于送了一倍的股票，是大利好。',
+ truth:'就像把一块披萨切成 8 块，<b>披萨并没有变大</b>，你的总资产完全不变。炒作高送转是 A 股历史上典型的割韭菜题材。',
+ tip:'只关心公司本身是否在变好，不要为「送股」买单。'},
+{cat:'rule',name:'融资融券 / 杠杆',en:'Margin Trading',lvl:2,
+ one:'融资：向券商借钱买股票（加杠杆做多）。融券：向券商借股票卖出（做空）。',
+ myth:'看准了就加杠杆，赚得更多。',
+ truth:'杠杆会同样放大亏损。<b>维持担保比例</b>跌破警戒线会被要求补钱，否则<b>强制平仓</b>，可能卖在最低点。',
+ tip:'新手不碰杠杆。先保证不被市场淘汰，再谈赚得多。'},
+{cat:'rule',name:'打新 / 中签',en:'IPO Subscription',lvl:1,
+ one:'申购新上市的股票，中签后以发行价买入。A 股需要持有一定市值才有申购额度。',
+ myth:'打新稳赚不赔。',
+ truth:'注册制后<b>新股破发</b>（跌破发行价）屡见不鲜，尤其是高价发行的新股。',
+ tip:'申购前看看发行市盈率和同行业对比；中签后要按时缴款，多次弃购会被暂停打新资格。'},
+
+/* ======== 图表 ======== */
+{cat:'chart',name:'K 线（阴线 / 阳线）',en:'Candlestick',lvl:1,
+ one:'一根 K 线记录一段时间的开盘、收盘、最高、最低四个价格。收盘高于开盘是阳线，低于开盘是阴线。',
+ myth:'红色 K 线就是今天上涨。',
+ truth:'K 线颜色比较的是<b>收盘价和开盘价</b>，不是和昨收比。大幅高开后回落，可能出现「<b>上涨的阴线</b>」（绿色但涨了）。国内软件红阳绿阴，美国软件颜色相反。',
+ tip:'上下影线长，说明盘中被打回来；实体大，说明当天方向一致。'},
+{cat:'chart',name:'均线 MA',en:'Moving Average',lvl:2,
+ one:'过去 N 天收盘价的平均值连成的线，如 5 日线、20 日线、60 日线、250 日线（年线）。',
+ myth:'跌破均线就卖，站上均线就买，照做就能赚。',
+ truth:'均线是<b>滞后</b>指标，只描述过去。震荡行情里会反复给出错误信号，来回打脸。',
+ tip:'用来判断趋势方向：股价在 60 日线之上，且均线向上，属于中期上升趋势。'},
+{cat:'chart',name:'支撑位 / 压力位',en:'Support / Resistance',lvl:2,
+ one:'历史上价格多次止跌的区域叫支撑位，多次涨不上去的区域叫压力位，背后是大量投资者的成本和心理价位。',
+ myth:'到支撑位就一定会反弹。',
+ truth:'支撑位一旦被有效跌破，往往会<b>变成压力位</b>（原来在那里买的人想解套）。它们是概率区域，不是一条墙。',
+ tip:'在支撑位附近买入的同时，设好跌破后的止损。'},
+{cat:'chart',name:'MACD / KDJ 等技术指标',en:'Technical Indicators',lvl:2,
+ one:'由价格和成交量计算出来的辅助指标，比如 MACD 看趋势和动能，KDJ 看超买超卖。',
+ myth:'出现「金叉」就买，出现「死叉」就卖。',
+ truth:'所有指标都是价格的「二次加工」，<b>比价格本身更滞后</b>。单一指标的胜率常常接近抛硬币，叠加多个指标也不能保证结果。',
+ tip:'技术指标适合辅助判断，不能替代对公司和风险的理解。'},
+{cat:'chart',name:'牛市 / 熊市 / 震荡市',en:'Bull / Bear / Range-bound',lvl:1,
+ one:'通常把从低点上涨 20% 以上的趋势叫牛市，从高点下跌 20% 以上的趋势叫熊市，没有明确方向的叫震荡市。',
+ myth:'牛市里随便买都能赚钱。',
+ truth:'牛市里也有大量个股下跌；而且很多人<b>在牛市末期才大举入场</b>，最终亏损。',
+ tip:'当身边不炒股的人都开始讨论股票时，要格外谨慎。'},
+
+/* ======== 概念与心态 ======== */
+{cat:'mind',name:'回撤 / 回本难度',en:'Drawdown',lvl:3,
+ one:'资产从最高点跌下来的幅度。亏损和回本之间并不对称。',
+ f:'回本所需涨幅 = 1 ÷ (1 − 跌幅) − 1<br>跌 <em>20%</em> → 要涨 25% · 跌 <em>50%</em> → 要涨 100% · 跌 <em>80%</em> → 要涨 400%',
+ myth:'跌了 50%，涨回 50% 就回本了。',
+ truth:'100 元跌 50% 剩 50 元，再涨 50% 只有 75 元，<b>要翻倍才能回本</b>。',
+ tip:'控制亏损比追求收益重要得多，提前设好止损线。'},
+{cat:'mind',name:'套牢 / 止损 / 补仓',en:'Trapped / Stop-loss / Averaging Down',lvl:3,
+ one:'买入后股价下跌、舍不得卖叫套牢；主动在亏到一定程度时卖出叫止损；下跌后继续买入以拉低平均成本叫补仓。',
+ myth:'不卖就不算亏；跌了就补仓，摊低成本。',
+ truth:'市值已经实实在在减少了，<b>「不卖不亏」只是心理安慰</b>。补仓摊低成本的前提是公司没问题，否则就是在<b>越亏越多</b>。',
+ tip:'补仓前问自己：如果现在是空仓，我会以这个价格买入吗？'},
+{cat:'mind',name:'仓位',en:'Position Sizing',lvl:2,
+ one:'投入股票的资金占总资金的比例，以及单只股票占股票总资产的比例。',
+ myth:'看好就满仓，才能赚得多。',
+ truth:'满仓一只股票，一次黑天鹅就可能<b>伤筋动骨</b>。专业机构单只股票通常不超过总资产的 10%。',
+ tip:'新手建议：单只股票不超过 20%，随时保留部分现金，只用闲钱投资。'},
+{cat:'mind',name:'利好兑现 / 预期',en:'"Buy the rumor, sell the news"',lvl:3,
+ one:'股价反映的是对未来的预期。当好消息被提前猜到并炒作后，消息真正公布时反而可能下跌。',
+ myth:'业绩大增的新闻一出来，股价一定会涨。',
+ truth:'如果市场早就预期增长 50%，结果只增长了 40%，即使是「大增」，股价也会跌。<b>重要的是结果和预期的差距</b>。',
+ tip:'看到利好新闻时，先看股价在此之前已经涨了多少。'},
+{cat:'mind',name:'指数 / ETF / 基金',en:'Index / ETF / Fund',lvl:1,
+ one:'指数是一篮子股票的综合表现（如沪深 300、标普 500）；ETF 是跟踪指数、可以像股票一样买卖的基金。',
+ myth:'买个股才能赚大钱，指数基金太慢了。',
+ truth:'长期来看，<b>大多数主动选股的散户跑不赢指数</b>。宽基指数 ETF 分散了个股风险，费用低。',
+ tip:'新手可以先用宽基指数 ETF 定投打底，再拿小部分资金研究个股。'},
+{cat:'mind',name:'基本面 / 技术面 / 消息面',en:'Fundamental / Technical / News',lvl:1,
+ one:'基本面：公司本身赚不赚钱、值不值钱。技术面：价格和成交量的走势规律。消息面：新闻、政策、传闻。',
+ myth:'小道消息说某只股票要涨，赶紧上车。',
+ truth:'等消息传到普通散户耳朵里，往往已经是<b>最后一棒</b>，甚至是有人专门放出来让别人接盘的。',
+ tip:'买之前用一句话说清楚：我为什么买、什么情况下卖。说不清就别买。'},
+];
+
+const MARQ = [
+ ['分红是白送钱','总资产不变'],['低市盈率一定便宜','可能是价值陷阱'],['主力资金流入','有买必有卖'],
+ ['跌 50% 涨 50% 回本','要涨 100%'],['送转股是大利好','披萨没变大'],['涨停一定买得到','要排队'],
+ ['不卖就不算亏','市值已经少了'],['红 K 线 = 上涨','比的是开盘价'],['市值涨 = 钱流入','市值≠资金'],['A 股当天能卖','T+1'],
+];
+
+const QUIZ = [
+ {q:'某股 20 元，宣布 10 派 10 元并完成除息。你持有 1000 股，除息当天总资产会？',o:['增加 1000 元','基本不变（还要扣税）','减少 1000 元'],a:1,e:'股价同步扣掉 1 元，变成 19 元，你多了 1000 元现金，总资产不变；持股时间短还要交红利税。'},
+ {q:'一只股票从 100 元跌到 50 元，要涨多少才能回到 100 元？',o:['50%','75%','100%'],a:2,e:'50 元 → 100 元需要上涨 100%。亏损越大，回本越难。'},
+ {q:'今天「主力资金净流入 3 亿」，这意味着？',o:['有 3 亿新钱买入了这只股票','按某种口径统计，大单主动买比主动卖多 3 亿','这只股票明天会涨'],a:1,e:'每笔成交都有买方和卖方。净流入只是按单笔大小统计的口径，不同软件结果不同。'},
+ {q:'A 股周一买入的股票，最早什么时候能卖？',o:['周一当天','周二','周三'],a:1,e:'A 股股票 T+1，次一交易日才能卖出。部分 ETF、可转债支持 T+0。'},
+ {q:'一只股票 10 转 10 之后，你的总资产会？',o:['翻倍','不变','减半'],a:1,e:'股数翻倍，股价减半，总资产不变。'},
+ {q:'市盈率只有 5 倍的钢铁股，最可能说明？',o:['一定被严重低估','市场预期它的利润可能处于周期高点、将来会下滑','公司没有负债'],a:1,e:'周期股在景气高点利润最高，PE 反而最低，这是经典的「低 PE 陷阱」。'},
+ {q:'某股昨收 10 元，今开 11 元，收盘 10.5 元，今天的 K 线是？',o:['阳线（红）','阴线（绿），但股价是上涨的','阴线，股价下跌'],a:1,e:'收盘低于开盘是阴线；但比昨收高 5%，所以是上涨。'},
+ {q:'换手率连续多天超过 25%，最该想到的是？',o:['主力在建仓，安全','分歧巨大、投机性极强，风险很高','公司要出利好'],a:1,e:'极高换手意味着筹码在快速换手，常见于炒作的末期，新手应谨慎。'},
+];
+
+/* ---------- render ---------- */
+const $ = s=>document.querySelector(s);
+const lvlHTML = n=>`<div class="lvl">迷惑度${[1,2,3].map(i=>`<span class="d${i<=n?' f':''}"></span>`).join('')}</div>`;
+
+function card(t,idx){
+  const cc = CATS.find(c=>c.id===t.cat).c;
+  return `<article class="card" data-i="${T.indexOf(t)}" style="--cc:var(${cc})" data-s="${(t.name+t.en+t.one+(t.myth||'')+(t.truth||'')).toLowerCase().replace(/<[^>]+>/g,'')}">
+    <div class="hd"><div><h3>${t.name}</h3><div class="en">${t.en}</div></div>${lvlHTML(t.lvl)}</div>
+    <p class="one">${t.one}</p>
+    ${t.f?`<div class="f">${t.f}</div>`:''}
+    ${t.eg?`<div class="eg">${t.eg}</div>`:''}
+    <div class="mt"><div class="myth"><b>常见误解：</b>${t.myth}</div><div class="truth"><b>真相：</b>${t.truth}</div></div>
+    ${t.tip?`<div class="tip">${t.tip}</div>`:''}
+  </article>`;
+}
+function render(){
+  $('#list').innerHTML = CATS.map((c,i)=>`
+    <section class="cat" data-cat="${c.id}" style="--cc:var(${c.c})">
+      <div class="cat-h"><span class="no">0${i+1}</span><h2>${c.name}</h2><p>${c.d}</p></div>
+      <div class="grid">${T.filter(t=>t.cat===c.id).map(card).join('')}</div>
+    </section>`).join('');
+  $('#chips').innerHTML = `<button class="chip on" data-c="all">全部</button>`+
+    CATS.map(c=>`<button class="chip" data-c="${c.id}" style="--dot:var(${c.c})">${c.name}</button>`).join('')+
+    `<button class="chip" data-c="hard" style="--dot:var(--red)">最易误解</button>`;
+  const m = MARQ.map(([a,b])=>`<span><s>${a}</s><i>→ ${b}</i></span>`).join('');
+  $('#marquee').innerHTML = m+m;
+  // count-up
+  let n=0; const N=T.length; const it=setInterval(()=>{n++;$('#nTerms').textContent=n;if(n>=N)clearInterval(it)},28);
+}
+render();
+
+let curCat='all';
+function filter(){
+  const q = $('#q').value.trim().toLowerCase();
+  let shown=0;
+  document.querySelectorAll('.card').forEach((el,i)=>{
+    const t=T[+el.dataset.i];
+    const okC = curCat==='all' || t.cat===curCat || (curCat==='hard' && t.lvl===3);
+    const okQ = !q || el.dataset.s.includes(q);
+    const ok = okC&&okQ; el.style.display = ok?'':'none'; if(ok){shown++;el.classList.add('in')}
+  });
+  document.querySelectorAll('.cat').forEach(s=>{
+    s.style.display = [...s.querySelectorAll('.card')].some(c=>c.style.display!=='none')?'':'none';
+  });
+  $('#empty').style.display = shown?'none':'block';
+  $('#count').textContent = `显示 ${shown} / ${T.length}`;
+}
+// cards in DOM order match T order? ensure by sorting T by category order
+document.querySelectorAll('.card').forEach((el,i)=>{});
+$('#q').addEventListener('input',filter);
+$('#chips').addEventListener('click',e=>{
+  const b=e.target.closest('.chip'); if(!b) return;
+  document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===b));
+  curCat=b.dataset.c; filter();
+  window.scrollTo({top:$('.controls').offsetTop-0,behavior:'smooth'});
+});
+document.addEventListener('keydown',e=>{ if(e.key==='/' && document.activeElement!==$('#q')){e.preventDefault();$('#q').focus();} });
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05});
+document.querySelectorAll('.card').forEach((el,i)=>{el.style.transitionDelay=(i%3)*80+'ms';io.observe(el)});
+$('#count').textContent = `显示 ${T.length} / ${T.length}`;
+
+// quiz
+let right=0, done=0;
+$('#qs').innerHTML = QUIZ.map((x,i)=>`<div class="q"><h4><span>Q${i+1}</span>${x.q}</h4>
+  <div class="opts">${x.o.map((o,j)=>`<button class="opt" data-q="${i}" data-j="${j}">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}</div>
+  <div class="exp">${x.e}</div></div>`).join('');
+$('#qs').addEventListener('click',e=>{
+  const b=e.target.closest('.opt'); if(!b||b.disabled) return;
+  const i=+b.dataset.q, j=+b.dataset.j, box=b.closest('.q');
+  box.querySelectorAll('.opt').forEach(o=>{o.disabled=true; if(+o.dataset.j===QUIZ[i].a) o.classList.add('ok')});
+  if(j!==QUIZ[i].a) b.classList.add('no'); else right++;
+  done++; box.querySelector('.exp').classList.add('show');
+  $('#score').textContent = `已答 ${done} / ${QUIZ.length} · 答对 ${right}` + (done===QUIZ.length ? (right>=7?' · 很扎实！':right>=5?' · 不错，再翻翻上面的卡片':' · 建议从头把卡片再读一遍') : '');
+});
+</script>
+</body>
+</html>

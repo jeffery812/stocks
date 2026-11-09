@@ -46,6 +46,14 @@ body::before{ /* paper grain */
 .masthead{border-bottom:3px double var(--ink);padding:28px 0 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
 .masthead .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase}
 .masthead .meta{font-family:var(--mono);font-size:12px;color:var(--ink-3);text-align:right;line-height:1.6}
+.next-link{display:inline-flex;align-items:center;gap:8px;margin-top:8px;font-family:var(--serif);font-weight:600;font-size:15px;color:var(--red);text-decoration:none;border-bottom:1.5px solid var(--red);padding-bottom:1px;transition:gap .2s}
+.next-link:hover{gap:14px}
+.next-card{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:64px;padding:26px 30px;background:var(--ink);color:var(--paper);text-decoration:none;box-shadow:8px 8px 0 var(--red);transition:transform .2s,box-shadow .2s}
+.next-card:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--red)}
+.next-card small{font-family:var(--mono);font-size:12px;letter-spacing:.15em;color:#b9ad95}
+.next-card b{display:block;font-family:var(--serif);font-size:26px;font-weight:900;margin-top:4px}
+.next-card span{font-size:14px;color:#d8cdb6}
+.next-card i{font-style:normal;font-size:40px;color:var(--red)}
 .hero{padding:56px 0 40px;display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:end;border-bottom:1px solid var(--rule)}
 .hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,6.6vw,92px);line-height:1.02;letter-spacing:-.02em}
 .hero h1 em{font-style:normal;color:var(--red);position:relative}
@@ -180,6 +188,7 @@ footer{margin-top:80px;border-top:3px double var(--ink);padding:24px 0 60px;font
 <header class="masthead">
   <div>
     <div class="kicker">投资者教育 · 看盘基本功 · 第 01 讲</div>
+    <a class="next-link" href="glossary.html">名词看不懂？先读第 02 讲：新手扫盲词典 →</a>
   </div>
   <div class="meta">案例：同花顺 App 美股个股页<br>标的：SpaceX（SPCX.US） · 交易日收盘后截图</div>
 </header>
@@ -681,6 +690,11 @@ footer{margin-top:80px;border-top:3px double var(--ink);padding:24px 0 60px;font
     <div class="myth"><h5><s>异动解读 = 上涨原因</s> → 是事后归因</h5><p>同一条新闻可以解释涨，也可以解释跌。追问它是否改变了公司的基本面。</p></div>
   </div>
 </section>
+
+<a class="next-card" href="glossary.html">
+  <div><small>NEXT · 第 02 讲</small><b>新手股民扫盲词典</b><span>市盈率、量比、换手率、复权、T+1……41 个最容易误解的名词，附自测题</span></div>
+  <i>→</i>
+</a>
 
 <footer>
   <p><b>说明：</b>本页所有数值均取自用户提供的同花顺 App 截图（美东时间收盘后）。「流通股」「流通比例」「集合竞价金额」等为根据截图数据反推的估算值，可能与公司披露口径存在差异。</p>
